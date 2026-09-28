@@ -10,7 +10,6 @@ void main() {
 
     expect(find.byType(ManishApp), findsOneWidget);
     expect(find.text('Digital Manish'), findsWidgets);
-    expect(find.text("Let's Talk"), findsWidgets);
 
     // 1. Check Home Page
     expect(find.text('Services Overview'), findsWidgets);

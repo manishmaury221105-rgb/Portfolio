@@ -7,13 +7,13 @@ import 'app_smart_image.dart';
 class HeroSection extends StatelessWidget {
   final bool isDark;
   final ProfileConfigModel config;
-  final Function(String key) onNavigate;
+  final Function(String key)? onNavigate;
 
   const HeroSection({
     super.key,
     required this.isDark,
     required this.config,
-    required this.onNavigate,
+    this.onNavigate,
   });
 
   @override
@@ -38,7 +38,7 @@ class HeroSection extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 60 : 20,
-        vertical: isDesktop ? 60 : 36,
+        vertical: isDesktop ? 64 : 40,
       ),
       child: Center(
         child: ConstrainedBox(
@@ -123,64 +123,6 @@ class HeroSection extends StatelessWidget {
           config.heroSubtitle,
           textAlign: isDesktop ? TextAlign.start : TextAlign.center,
           style: AppTypography.bodyLarge(context, isDark: isDark),
-        ),
-        const SizedBox(height: 28),
-
-        // Main Action Buttons
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
-          children: [
-            ElevatedButton.icon(
-              onPressed: () => onNavigate('about'),
-              icon: const Icon(Icons.person_rounded, size: 18),
-              label: const Text('About Me'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                elevation: 4,
-              ),
-            ),
-            ElevatedButton.icon(
-              onPressed: () => onNavigate('projects'),
-              icon: const Icon(Icons.rocket_launch_rounded, size: 18),
-              label: const Text('My Projects'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: isDark ? AppColors.darkCard : const Color(0xFFE0E7FF),
-                foregroundColor: isDark ? Colors.white : AppColors.primary,
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
-            ElevatedButton.icon(
-              onPressed: () => onNavigate('services'),
-              icon: const Icon(Icons.miscellaneous_services_rounded, size: 18),
-              label: const Text('My Services'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: isDark ? AppColors.darkCard : const Color(0xFFE0E7FF),
-                foregroundColor: isDark ? Colors.white : AppColors.primary,
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
-            OutlinedButton.icon(
-              onPressed: () => onNavigate('contact'),
-              icon: const Icon(Icons.mail_outline_rounded, size: 18),
-              label: const Text('Contact Me'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: isDark ? Colors.white : AppColors.lightTextPrimary,
-                side: BorderSide(
-                  color: isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder,
-                  width: 1.5,
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
-          ],
         ),
       ],
     );

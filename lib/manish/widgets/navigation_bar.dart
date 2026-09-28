@@ -142,8 +142,8 @@ class PortfolioNavBar extends StatelessWidget {
                                       fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                                       fontSize: 13.5,
                                       color: isSelected
-                                        ? Colors.white
-                                        : (isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary),
+                                          ? Colors.white
+                                          : (isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary),
                                     ),
                                   ),
                                 ],
@@ -174,47 +174,6 @@ class PortfolioNavBar extends StatelessWidget {
                         size: 20,
                       ),
                       tooltip: isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
-                    ),
-                  ),
-
-                  const SizedBox(width: 10),
-
-                  // Let's Talk CTA
-                  InkWell(
-                    onTap: () => onNavigate('contact'),
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [AppColors.primary, AppColors.secondary],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.35),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.chat_bubble_outline_rounded, size: 16, color: Colors.white),
-                          SizedBox(width: 6),
-                          Text(
-                            "Let's Talk",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ],
