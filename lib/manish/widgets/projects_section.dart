@@ -9,13 +9,13 @@ import 'project_detail_dialog.dart';
 class ProjectsSection extends StatefulWidget {
   final List<ProjectModel> projects;
   final bool isDark;
-  final VoidCallback onOpenCms;
+  final VoidCallback? onOpenCms;
 
   const ProjectsSection({
     super.key,
     required this.projects,
     required this.isDark,
-    required this.onOpenCms,
+    this.onOpenCms,
   });
 
   @override
@@ -160,45 +160,80 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       },
                     ),
 
-              const SizedBox(height: 32),
-
-              // Add Project Floating / Banner CTA for easy addition
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                decoration: BoxDecoration(
-                  color: widget.isDark ? AppColors.darkCard : const Color(0xFFEEF2FF),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: widget.isDark ? AppColors.darkCardBorder : const Color(0xFFC7D2FE),
+              if (widget.onOpenCms != null) ...[
+                const SizedBox(height: 32),
+                // Add Project Floating / Banner CTA for easy addition
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: widget.isDark ? AppColors.darkCard : const Color(0xFFEEF2FF),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: widget.isDark ? AppColors.darkCardBorder : const Color(0xFFC7D2FE),
+                    ),
                   ),
-                ),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    if (constraints.maxWidth < 600) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.maxWidth < 600) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.add_circle_outline_rounded, color: AppColors.primary, size: 22),
+                                const SizedBox(width: 10),
+                                const Expanded(
+                                  child: Text(
+                                    'Want to add or update your live client projects?',
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              'Use the integrated CMS editor to add new screenshots, links & metrics anytime.',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            ElevatedButton(
+                              onPressed: widget.onOpenCms,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                              ),
+                              child: const Text('+ Add Project in Admin'),
+                            ),
+                          ],
+                        );
+                      }
+                      return Row(
                         children: [
-                          Row(
-                            children: [
-                              Icon(Icons.add_circle_outline_rounded, color: AppColors.primary, size: 22),
-                              const SizedBox(width: 10),
-                              const Expanded(
-                                child: Text(
+                          Icon(Icons.add_circle_outline_rounded, color: AppColors.primary, size: 24),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
                                   'Want to add or update your live client projects?',
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            'Use the integrated CMS editor to add new screenshots, links & metrics anytime.',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                                Text(
+                                  'Use the integrated CMS editor to add new screenshots, links & metrics anytime.',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(width: 12),
                           ElevatedButton(
                             onPressed: widget.onOpenCms,
                             style: ElevatedButton.styleFrom(
@@ -206,48 +241,14 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                             ),
-                            child: const Text('+ Add Project in Admin'),
+                            child: const Text('+ Add Project'),
                           ),
                         ],
                       );
-                    }
-                    return Row(
-                      children: [
-                        Icon(Icons.add_circle_outline_rounded, color: AppColors.primary, size: 24),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Want to add or update your live client projects?',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                              ),
-                              Text(
-                                'Use the integrated CMS editor to add new screenshots, links & metrics anytime.',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        ElevatedButton(
-                          onPressed: widget.onOpenCms,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                          ),
-                          child: const Text('+ Add Project'),
-                        ),
-                      ],
-                    );
-                  },
+                    },
+                  ),
                 ),
-              ),
+              ],
             ],
           ),
         ),
