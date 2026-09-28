@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/app_icons_helper.dart';
 
 class ServiceModel {
   final String id;
@@ -25,8 +26,7 @@ class ServiceModel {
     this.imageUrl = '',
   });
 
-  // ignore: non_const_argument_for_const_parameter
-  IconData get icon => IconData(iconCodePoint, fontFamily: 'MaterialIcons');
+  IconData get icon => AppIconsHelper.getIcon(iconCodePoint, fallback: Icons.miscellaneous_services_rounded);
   Color get accentColor => Color(accentColorValue);
 
   Map<String, dynamic> toJson() => {

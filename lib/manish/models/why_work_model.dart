@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/app_icons_helper.dart';
 
 class WhyWorkModel {
   final String id;
@@ -17,8 +18,7 @@ class WhyWorkModel {
     this.imageUrl = '',
   });
 
-  // ignore: non_const_argument_for_const_parameter
-  IconData get icon => IconData(iconCodePoint, fontFamily: 'MaterialIcons');
+  IconData get icon => AppIconsHelper.getIcon(iconCodePoint, fallback: Icons.star_rounded);
   Color get color => Color(colorValue);
 
   Map<String, dynamic> toJson() => {
