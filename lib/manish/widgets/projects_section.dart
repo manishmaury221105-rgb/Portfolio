@@ -151,7 +151,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                         crossAxisCount: crossAxisCount,
                         mainAxisSpacing: 24,
                         crossAxisSpacing: 24,
-                        childAspectRatio: isDesktop ? 0.78 : (isTablet ? 0.82 : 0.88),
+                        mainAxisExtent: isDesktop ? 440 : (isTablet ? 430 : 410),
                       ),
                       itemCount: filteredProjects.length,
                       itemBuilder: (context, i) {

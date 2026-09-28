@@ -73,9 +73,6 @@ class WhyWorkWithMeSection extends StatelessWidget {
               // Grid of value pillars
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final double aspect = isDesktop
-                      ? 1.3
-                      : (isTablet ? 1.2 : (constraints.maxWidth < 420 ? 1.1 : 1.2));
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -83,7 +80,7 @@ class WhyWorkWithMeSection extends StatelessWidget {
                       crossAxisCount: crossAxisCount,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
-                      childAspectRatio: aspect,
+                      mainAxisExtent: isDesktop ? 220 : (isTablet ? 210 : 190),
                     ),
                     itemCount: items.length,
                     itemBuilder: (context, i) {
@@ -163,8 +160,10 @@ class WhyWorkWithMeSection extends StatelessWidget {
                                         const Spacer(),
                                         Text(
                                           item.title,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 17,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                             shadows: [
@@ -172,13 +171,15 @@ class WhyWorkWithMeSection extends StatelessWidget {
                                             ],
                                           ),
                                         ),
-                                        const SizedBox(height: 6),
+                                        const SizedBox(height: 4),
                                         Text(
                                           item.subtitleHindi,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                            fontSize: 13.5,
+                                            fontSize: 13,
                                             color: Colors.white.withValues(alpha: 0.92),
-                                            height: 1.4,
+                                            height: 1.35,
                                             shadows: const [
                                               Shadow(color: Colors.black, blurRadius: 8, offset: Offset(0, 2)),
                                             ],
@@ -207,19 +208,21 @@ class WhyWorkWithMeSection extends StatelessWidget {
                                     const SizedBox(height: 12),
                                     Text(
                                       item.title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                         color: textPrimary,
                                       ),
                                     ),
-                                    const SizedBox(height: 6),
+                                    const SizedBox(height: 4),
                                     Flexible(
                                       child: Text(
                                         item.subtitleHindi,
-                                        style: const TextStyle(fontSize: 13.5, height: 1.4, color: Colors.grey),
+                                        style: const TextStyle(fontSize: 13, height: 1.35, color: Colors.grey),
                                         overflow: TextOverflow.ellipsis,
-                                        maxLines: 3,
+                                        maxLines: 2,
                                       ),
                                     ),
                                   ],

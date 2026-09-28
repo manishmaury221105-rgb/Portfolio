@@ -11,18 +11,31 @@ class UrlHelper {
   static const String githubProfile = 'https://github.com';
   static const String linkedinProfile = 'https://linkedin.com';
 
+  /// Helper to extract clean 10-digit Indian phone number or standard international digits
+  static String _normalizePhone(String rawPhone) {
+    String digits = rawPhone.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.startsWith('91') && digits.length == 12) {
+      return digits.substring(2);
+    }
+    if (digits.startsWith('0') && digits.length == 11) {
+      return digits.substring(1);
+    }
+    return digits;
+  }
+
   /// Launch WhatsApp chat directly with a pre-filled greeting message in Hinglish/Hindi
   static Future<bool> openWhatsApp({
     String? phone,
     String? message,
     BuildContext? context,
   }) async {
-    final targetPhone = phone != null && phone.isNotEmpty ? phone : phoneNumber;
+    final targetPhone = (phone != null && phone.trim().isNotEmpty) ? phone : phoneNumber;
     final text = message ??
         'Namaste Manish ji! Maine aapka portfolio website dekha aur mujhe aapke Digital Marketing / Web & App Development services ke bare me baat karni hai.';
-    
-    final cleanPhone = targetPhone.replaceAll(RegExp(r'[^0-9]'), '');
-    final uri = Uri.parse('https://wa.me/91$cleanPhone?text=${Uri.encodeComponent(text)}');
+
+    final cleanDigits = _normalizePhone(targetPhone);
+    final finalWhatsAppPhone = cleanDigits.length == 10 ? '91$cleanDigits' : cleanDigits;
+    final uri = Uri.parse('https://wa.me/$finalWhatsAppPhone?text=${Uri.encodeComponent(text)}');
 
     try {
       if (await canLaunchUrl(uri)) {
@@ -50,8 +63,9 @@ class UrlHelper {
     String phone = phoneNumber,
     BuildContext? context,
   }) async {
-    final cleanPhone = phone.replaceAll(RegExp(r'[^0-9]'), '');
-    final uri = Uri.parse('tel:+91$cleanPhone');
+    final cleanDigits = _normalizePhone(phone);
+    final finalTel = cleanDigits.length == 10 ? '+91$cleanDigits' : '+$cleanDigits';
+    final uri = Uri.parse('tel:$finalTel');
 
     try {
       if (await canLaunchUrl(uri)) {

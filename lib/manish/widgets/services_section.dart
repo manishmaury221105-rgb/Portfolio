@@ -88,11 +88,6 @@ class ServicesSection extends StatelessWidget {
                     )
                   : LayoutBuilder(
                       builder: (context, constraints) {
-                        final double aspect = isDesktop
-                            ? 0.92
-                            : (isTablet
-                                ? 0.95
-                                : (constraints.maxWidth < 400 ? 0.95 : 1.05));
                         return GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -100,7 +95,7 @@ class ServicesSection extends StatelessWidget {
                             crossAxisCount: crossAxisCount,
                             mainAxisSpacing: 20,
                             crossAxisSpacing: 20,
-                            childAspectRatio: aspect,
+                            mainAxisExtent: isDesktop ? 430 : (isTablet ? 420 : 390),
                           ),
                           itemCount: services.length,
                           itemBuilder: (context, i) {
