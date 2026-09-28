@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../data/cms_storage_service.dart';
 import '../models/profile_config_model.dart';
 import '../models/project_model.dart';
 import '../models/service_model.dart';
+import '../pages/admin_panel_page.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 import '../utils/url_helper.dart';
@@ -81,6 +83,17 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     }
   }
 
+  void _openAdminPanel() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => AdminPanelPage(
+          cmsService: _cmsService,
+          isDark: _isDark,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bg = _isDark ? AppColors.darkBg : AppColors.lightBg;
@@ -88,116 +101,126 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     final width = MediaQuery.of(context).size.width;
     final isDesktop = width > 860;
 
-    return Scaffold(
-      backgroundColor: bg,
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Top Multi-Page Navigation Bar
-            PortfolioNavBar(
-              isDark: _isDark,
-              activePage: _activePage,
-              config: config,
-              onToggleTheme: () => setState(() => _isDark = !_isDark),
-              onNavigate: _onNavigate,
-            ),
-
-            // Main Page Content with smooth transition
-            Expanded(
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  switchInCurve: Curves.easeOut,
-                  switchOutCurve: Curves.easeIn,
-                  child: KeyedSubtree(
-                    key: ValueKey<String>(_activePage),
-                    child: _buildCurrentPageContent(config, isDesktop),
-                  ),
+    return CallbackShortcuts(
+      bindings: <ShortcutActivator, VoidCallback>{
+        const SingleActivator(LogicalKeyboardKey.keyA, control: true, shift: true): _openAdminPanel,
+        const SingleActivator(LogicalKeyboardKey.keyA, meta: true, shift: true): _openAdminPanel,
+      },
+      child: Focus(
+        autofocus: true,
+        child: Scaffold(
+          backgroundColor: bg,
+          body: SafeArea(
+            child: Column(
+              children: [
+                // Top Multi-Page Navigation Bar
+                PortfolioNavBar(
+                  isDark: _isDark,
+                  activePage: _activePage,
+                  config: config,
+                  onToggleTheme: () => setState(() => _isDark = !_isDark),
+                  onNavigate: _onNavigate,
+                  onOpenAdmin: _openAdminPanel,
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
 
-      // Floating WhatsApp & Scroll To Top Buttons
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          if (_showScrollToTop) ...[
-            FloatingActionButton.small(
-              heroTag: 'scroll_top',
-              onPressed: () {
-                _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
-              },
-              backgroundColor: _isDark ? AppColors.darkCard : Colors.white,
-              foregroundColor: _isDark ? Colors.white : AppColors.lightTextPrimary,
-              child: const Icon(Icons.keyboard_arrow_up_rounded),
-            ),
-            const SizedBox(height: 10),
-          ],
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () => UrlHelper.openWhatsApp(
-                phone: config.whatsappNumber,
-                message: config.whatsappDefaultMessage,
-                context: context,
-              ),
-              borderRadius: BorderRadius.circular(30),
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 340),
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF25D366), Color(0xFF128C7E)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF25D366).withValues(alpha: 0.5),
-                      blurRadius: 18,
-                      spreadRadius: 2,
-                      offset: const Offset(0, 5),
-                    ),
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: _isDark ? 0.4 : 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const WhatsAppIcon(
-                      size: 28,
-                      color: Colors.white,
-                    ),
-                    if (config.whatsappMotivationText.isNotEmpty) ...[
-                      const SizedBox(width: 10),
-                      Flexible(
-                        child: Text(
-                          config.whatsappMotivationText,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 0.2,
-                          ),
-                        ),
+                // Main Page Content with smooth transition
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 250),
+                      switchInCurve: Curves.easeOut,
+                      switchOutCurve: Curves.easeIn,
+                      child: KeyedSubtree(
+                        key: ValueKey<String>(_activePage),
+                        child: _buildCurrentPageContent(config, isDesktop),
                       ),
-                    ],
-                  ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        ],
+
+          // Floating WhatsApp & Scroll To Top Buttons
+          floatingActionButton: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (_showScrollToTop) ...[
+                FloatingActionButton.small(
+                  heroTag: 'scroll_top',
+                  onPressed: () {
+                    _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
+                  },
+                  backgroundColor: _isDark ? AppColors.darkCard : Colors.white,
+                  foregroundColor: _isDark ? Colors.white : AppColors.lightTextPrimary,
+                  child: const Icon(Icons.keyboard_arrow_up_rounded),
+                ),
+                const SizedBox(height: 10),
+              ],
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () => UrlHelper.openWhatsApp(
+                    phone: config.whatsappNumber,
+                    message: config.whatsappDefaultMessage,
+                    context: context,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 340),
+                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF25D366), Color(0xFF128C7E)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF25D366).withValues(alpha: 0.5),
+                          blurRadius: 18,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 5),
+                        ),
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: _isDark ? 0.4 : 0.15),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const WhatsAppIcon(
+                          size: 28,
+                          color: Colors.white,
+                        ),
+                        if (config.whatsappMotivationText.isNotEmpty) ...[
+                          const SizedBox(width: 10),
+                          Flexible(
+                            child: Text(
+                              config.whatsappMotivationText,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                letterSpacing: 0.2,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -250,6 +273,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           isDark: _isDark,
           config: config,
           onNavigate: _onNavigate,
+          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );
@@ -285,6 +309,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           isDark: _isDark,
           config: config,
           onNavigate: _onNavigate,
+          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );
@@ -313,6 +338,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           isDark: _isDark,
           config: config,
           onNavigate: _onNavigate,
+          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );
@@ -341,6 +367,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           isDark: _isDark,
           config: config,
           onNavigate: _onNavigate,
+          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );
@@ -361,6 +388,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           isDark: _isDark,
           config: config,
           onNavigate: _onNavigate,
+          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );

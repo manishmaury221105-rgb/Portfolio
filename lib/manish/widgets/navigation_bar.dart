@@ -9,6 +9,7 @@ class PortfolioNavBar extends StatelessWidget {
   final ProfileConfigModel config;
   final VoidCallback onToggleTheme;
   final Function(String pageKey) onNavigate;
+  final VoidCallback? onOpenAdmin;
 
   const PortfolioNavBar({
     super.key,
@@ -17,6 +18,7 @@ class PortfolioNavBar extends StatelessWidget {
     required this.config,
     required this.onToggleTheme,
     required this.onNavigate,
+    this.onOpenAdmin,
   });
 
   static const List<Map<String, dynamic>> _pages = [
@@ -50,9 +52,11 @@ class PortfolioNavBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               child: Row(
                 children: [
-                  // Logo / Branding
+                  // Logo / Branding (Double tap / Long press opens Admin Panel)
                   InkWell(
                     onTap: () => onNavigate('home'),
+                    onDoubleTap: onOpenAdmin,
+                    onLongPress: onOpenAdmin,
                     borderRadius: BorderRadius.circular(12),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
