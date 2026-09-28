@@ -113,7 +113,7 @@ class FooterSection extends StatelessWidget {
                                 Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.primaryLight),
                                 const SizedBox(width: 6),
                                 Text(
-                                  'Admin Panel',
+                                  'Maury@',
                                   style: TextStyle(
                                     color: AppColors.primaryLight,
                                     fontSize: 13,
