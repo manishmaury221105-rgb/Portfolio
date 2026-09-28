@@ -97,19 +97,26 @@ class FooterSection extends StatelessWidget {
                       if (onOpenAdmin != null)
                         InkWell(
                           onTap: onOpenAdmin,
-                          borderRadius: BorderRadius.circular(6),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.06),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: AppColors.primaryLight.withValues(alpha: 0.3),
+                              ),
+                            ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.lock_outline_rounded, size: 13, color: AppColors.primaryLight),
-                                const SizedBox(width: 4),
+                                Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.primaryLight),
+                                const SizedBox(width: 6),
                                 Text(
                                   'Admin Panel',
                                   style: TextStyle(
                                     color: AppColors.primaryLight,
-                                    fontSize: 12,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

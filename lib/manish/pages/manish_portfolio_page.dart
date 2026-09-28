@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../data/cms_storage_service.dart';
 import '../models/profile_config_model.dart';
 import '../models/project_model.dart';
@@ -101,27 +100,19 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     final width = MediaQuery.of(context).size.width;
     final isDesktop = width > 860;
 
-    return CallbackShortcuts(
-      bindings: <ShortcutActivator, VoidCallback>{
-        const SingleActivator(LogicalKeyboardKey.keyA, control: true, shift: true): _openAdminPanel,
-        const SingleActivator(LogicalKeyboardKey.keyA, meta: true, shift: true): _openAdminPanel,
-      },
-      child: Focus(
-        autofocus: true,
-        child: Scaffold(
-          backgroundColor: bg,
-          body: SafeArea(
-            child: Column(
-              children: [
-                // Top Multi-Page Navigation Bar
-                PortfolioNavBar(
-                  isDark: _isDark,
-                  activePage: _activePage,
-                  config: config,
-                  onToggleTheme: () => setState(() => _isDark = !_isDark),
-                  onNavigate: _onNavigate,
-                  onOpenAdmin: _openAdminPanel,
-                ),
+    return Scaffold(
+      backgroundColor: bg,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Top Multi-Page Navigation Bar
+            PortfolioNavBar(
+              isDark: _isDark,
+              activePage: _activePage,
+              config: config,
+              onToggleTheme: () => setState(() => _isDark = !_isDark),
+              onNavigate: _onNavigate,
+            ),
 
                 // Main Page Content with smooth transition
                 Expanded(
@@ -220,9 +211,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        );
   }
 
   Widget _buildCurrentPageContent(ProfileConfigModel config, bool isDesktop) {
