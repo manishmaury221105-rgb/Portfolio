@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/profile_config_model.dart';
@@ -14,11 +15,18 @@ class CmsStorageService extends ChangeNotifier {
   static const String _keyProjects = 'manish_cms_projects_v2';
   static const String _keyWhyWork = 'manish_cms_why_work_v2';
 
+  static const String _collectionName = 'portfolio_cms';
+  static const String _docConfig = 'config';
+  static const String _docServices = 'services';
+  static const String _docProjects = 'projects';
+  static const String _docWhyWork = 'why_work';
+
   ProfileConfigModel _config = PortfolioData.defaultConfig;
   List<ServiceModel> _services = List.from(PortfolioData.defaultServices);
   List<ProjectModel> _projects = List.from(PortfolioData.defaultProjects);
   List<WhyWorkModel> _whyWorkList = List.from(PortfolioData.defaultWhyWorkList);
   bool _isLoaded = false;
+  bool _isSyncingWithCloud = false;
   Future<void>? _loadFuture;
 
   ProfileConfigModel get config => _config;
@@ -26,6 +34,7 @@ class CmsStorageService extends ChangeNotifier {
   List<ProjectModel> get projects => _projects;
   List<WhyWorkModel> get whyWorkList => _whyWorkList;
   bool get isLoaded => _isLoaded;
+  bool get isSyncingWithCloud => _isSyncingWithCloud;
 
   CmsStorageService() {
     loadData();
@@ -37,19 +46,17 @@ class CmsStorageService extends ChangeNotifier {
   }
 
   Future<void> _performLoadData() async {
+    // 1. Fast local cache load for 0ms initial render
     try {
       final prefs = await SharedPreferences.getInstance();
 
-      // 1. Profile & Site-wide Config
       final configRaw = prefs.getString(_keyProfileConfig);
       if (configRaw != null && configRaw.isNotEmpty) {
         _config = ProfileConfigModel.fromJson(jsonDecode(configRaw));
-        await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
       } else {
         _config = PortfolioData.defaultConfig;
       }
 
-      // 2. Services List
       final servicesRaw = prefs.getString(_keyServices);
       if (servicesRaw != null && servicesRaw.isNotEmpty) {
         final List<dynamic> decoded = jsonDecode(servicesRaw);
@@ -58,7 +65,6 @@ class CmsStorageService extends ChangeNotifier {
         _services = List.from(PortfolioData.defaultServices);
       }
 
-      // 3. Projects List
       final projectsRaw = prefs.getString(_keyProjects);
       if (projectsRaw != null && projectsRaw.isNotEmpty) {
         final List<dynamic> decoded = jsonDecode(projectsRaw);
@@ -67,7 +73,6 @@ class CmsStorageService extends ChangeNotifier {
         _projects = List.from(PortfolioData.defaultProjects);
       }
 
-      // 4. Why Work With Me Pillars
       final whyWorkRaw = prefs.getString(_keyWhyWork);
       if (whyWorkRaw != null && whyWorkRaw.isNotEmpty) {
         final List<dynamic> decoded = jsonDecode(whyWorkRaw);
@@ -80,7 +85,7 @@ class CmsStorageService extends ChangeNotifier {
       AppColors.applyFromConfig(_config);
       notifyListeners();
     } catch (e) {
-      debugPrint('Error loading CMS data: $e');
+      debugPrint('Error loading local CMS cache: $e');
       _config = PortfolioData.defaultConfig;
       _services = List.from(PortfolioData.defaultServices);
       _projects = List.from(PortfolioData.defaultProjects);
@@ -88,6 +93,96 @@ class CmsStorageService extends ChangeNotifier {
       _isLoaded = true;
       AppColors.applyFromConfig(_config);
       notifyListeners();
+    }
+
+    // 2. Fetch and listen to live Cloud Firestore data
+    _listenToCloudFirestore();
+  }
+
+  void _listenToCloudFirestore() {
+    try {
+      final collection = FirebaseFirestore.instance.collection(_collectionName);
+
+      // Listen to Config doc
+      collection.doc(_docConfig).snapshots().listen((snapshot) async {
+        if (snapshot.exists && snapshot.data() != null) {
+          try {
+            final data = snapshot.data()!;
+            _config = ProfileConfigModel.fromJson(data);
+            AppColors.applyFromConfig(_config);
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
+            notifyListeners();
+          } catch (e) {
+            debugPrint('Error parsing cloud config: $e');
+          }
+        } else {
+          // If document doesn't exist in Firestore yet, initialize it
+          _syncConfigToFirestore();
+        }
+      }, onError: (err) => debugPrint('Cloud config stream error: $err'));
+
+      // Listen to Services doc
+      collection.doc(_docServices).snapshots().listen((snapshot) async {
+        if (snapshot.exists && snapshot.data() != null) {
+          try {
+            final data = snapshot.data()!;
+            if (data.containsKey('list') && data['list'] is List) {
+              final List<dynamic> list = data['list'];
+              _services = list.map((e) => ServiceModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString(_keyServices, jsonEncode(_services.map((s) => s.toJson()).toList()));
+              notifyListeners();
+            }
+          } catch (e) {
+            debugPrint('Error parsing cloud services: $e');
+          }
+        } else {
+          _syncServicesToFirestore();
+        }
+      }, onError: (err) => debugPrint('Cloud services stream error: $err'));
+
+      // Listen to Projects doc
+      collection.doc(_docProjects).snapshots().listen((snapshot) async {
+        if (snapshot.exists && snapshot.data() != null) {
+          try {
+            final data = snapshot.data()!;
+            if (data.containsKey('list') && data['list'] is List) {
+              final List<dynamic> list = data['list'];
+              _projects = list.map((e) => ProjectModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString(_keyProjects, jsonEncode(_projects.map((p) => p.toJson()).toList()));
+              notifyListeners();
+            }
+          } catch (e) {
+            debugPrint('Error parsing cloud projects: $e');
+          }
+        } else {
+          _syncProjectsToFirestore();
+        }
+      }, onError: (err) => debugPrint('Cloud projects stream error: $err'));
+
+      // Listen to Why Work doc
+      collection.doc(_docWhyWork).snapshots().listen((snapshot) async {
+        if (snapshot.exists && snapshot.data() != null) {
+          try {
+            final data = snapshot.data()!;
+            if (data.containsKey('list') && data['list'] is List) {
+              final List<dynamic> list = data['list'];
+              _whyWorkList = list.map((e) => WhyWorkModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString(_keyWhyWork, jsonEncode(_whyWorkList.map((w) => w.toJson()).toList()));
+              notifyListeners();
+            }
+          } catch (e) {
+            debugPrint('Error parsing cloud whyWork: $e');
+          }
+        } else {
+          _syncWhyWorkToFirestore();
+        }
+      }, onError: (err) => debugPrint('Cloud whyWork stream error: $err'));
+    } catch (e) {
+      debugPrint('Firestore initialization failed: $e');
     }
   }
 
@@ -98,6 +193,21 @@ class CmsStorageService extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
     notifyListeners();
+    await _syncConfigToFirestore();
+  }
+
+  Future<void> _syncConfigToFirestore() async {
+    try {
+      _isSyncingWithCloud = true;
+      await FirebaseFirestore.instance
+          .collection(_collectionName)
+          .doc(_docConfig)
+          .set(_config.toJson(), SetOptions(merge: true));
+    } catch (e) {
+      debugPrint('Firestore sync config error: $e');
+    } finally {
+      _isSyncingWithCloud = false;
+    }
   }
 
   // --- Services Full CRUD ---
@@ -105,6 +215,7 @@ class CmsStorageService extends ChangeNotifier {
     _services.add(service);
     await _saveServices();
     notifyListeners();
+    await _syncServicesToFirestore();
   }
 
   Future<void> updateService(ServiceModel service) async {
@@ -113,6 +224,7 @@ class CmsStorageService extends ChangeNotifier {
       _services[index] = service;
       await _saveServices();
       notifyListeners();
+      await _syncServicesToFirestore();
     }
   }
 
@@ -120,6 +232,7 @@ class CmsStorageService extends ChangeNotifier {
     _services.removeWhere((s) => s.id == id);
     await _saveServices();
     notifyListeners();
+    await _syncServicesToFirestore();
   }
 
   Future<void> reorderServices(int oldIndex, int newIndex) async {
@@ -128,6 +241,7 @@ class CmsStorageService extends ChangeNotifier {
     _services.insert(newIndex, item);
     await _saveServices();
     notifyListeners();
+    await _syncServicesToFirestore();
   }
 
   Future<void> _saveServices() async {
@@ -136,11 +250,26 @@ class CmsStorageService extends ChangeNotifier {
     await prefs.setString(_keyServices, jsonStr);
   }
 
+  Future<void> _syncServicesToFirestore() async {
+    try {
+      _isSyncingWithCloud = true;
+      await FirebaseFirestore.instance
+          .collection(_collectionName)
+          .doc(_docServices)
+          .set({'list': _services.map((s) => s.toJson()).toList()}, SetOptions(merge: true));
+    } catch (e) {
+      debugPrint('Firestore sync services error: $e');
+    } finally {
+      _isSyncingWithCloud = false;
+    }
+  }
+
   // --- Projects Full CRUD ---
   Future<void> addProject(ProjectModel project) async {
     _projects.insert(0, project);
     await _saveProjects();
     notifyListeners();
+    await _syncProjectsToFirestore();
   }
 
   Future<void> updateProject(ProjectModel project) async {
@@ -149,6 +278,7 @@ class CmsStorageService extends ChangeNotifier {
       _projects[index] = project;
       await _saveProjects();
       notifyListeners();
+      await _syncProjectsToFirestore();
     }
   }
 
@@ -156,6 +286,7 @@ class CmsStorageService extends ChangeNotifier {
     _projects.removeWhere((p) => p.id == id);
     await _saveProjects();
     notifyListeners();
+    await _syncProjectsToFirestore();
   }
 
   Future<void> reorderProjects(int oldIndex, int newIndex) async {
@@ -164,6 +295,7 @@ class CmsStorageService extends ChangeNotifier {
     _projects.insert(newIndex, item);
     await _saveProjects();
     notifyListeners();
+    await _syncProjectsToFirestore();
   }
 
   Future<void> _saveProjects() async {
@@ -172,11 +304,26 @@ class CmsStorageService extends ChangeNotifier {
     await prefs.setString(_keyProjects, jsonStr);
   }
 
+  Future<void> _syncProjectsToFirestore() async {
+    try {
+      _isSyncingWithCloud = true;
+      await FirebaseFirestore.instance
+          .collection(_collectionName)
+          .doc(_docProjects)
+          .set({'list': _projects.map((p) => p.toJson()).toList()}, SetOptions(merge: true));
+    } catch (e) {
+      debugPrint('Firestore sync projects error: $e');
+    } finally {
+      _isSyncingWithCloud = false;
+    }
+  }
+
   // --- Why Work With Me Pillars Full CRUD ---
   Future<void> addWhyWorkItem(WhyWorkModel item) async {
     _whyWorkList.add(item);
     await _saveWhyWork();
     notifyListeners();
+    await _syncWhyWorkToFirestore();
   }
 
   Future<void> updateWhyWorkItem(WhyWorkModel item) async {
@@ -185,6 +332,7 @@ class CmsStorageService extends ChangeNotifier {
       _whyWorkList[index] = item;
       await _saveWhyWork();
       notifyListeners();
+      await _syncWhyWorkToFirestore();
     }
   }
 
@@ -192,12 +340,27 @@ class CmsStorageService extends ChangeNotifier {
     _whyWorkList.removeWhere((w) => w.id == id);
     await _saveWhyWork();
     notifyListeners();
+    await _syncWhyWorkToFirestore();
   }
 
   Future<void> _saveWhyWork() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonStr = jsonEncode(_whyWorkList.map((w) => w.toJson()).toList());
     await prefs.setString(_keyWhyWork, jsonStr);
+  }
+
+  Future<void> _syncWhyWorkToFirestore() async {
+    try {
+      _isSyncingWithCloud = true;
+      await FirebaseFirestore.instance
+          .collection(_collectionName)
+          .doc(_docWhyWork)
+          .set({'list': _whyWorkList.map((w) => w.toJson()).toList()}, SetOptions(merge: true));
+    } catch (e) {
+      debugPrint('Firestore sync whyWork error: $e');
+    } finally {
+      _isSyncingWithCloud = false;
+    }
   }
 
   // --- Backup Export & Import ---
@@ -221,15 +384,15 @@ class CmsStorageService extends ChangeNotifier {
       }
       if (decoded.containsKey('services')) {
         final List<dynamic> list = decoded['services'];
-        _services = list.map((e) => ServiceModel.fromJson(e as Map<String, dynamic>)).toList();
+        _services = list.map((e) => ServiceModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
       }
       if (decoded.containsKey('projects')) {
         final List<dynamic> list = decoded['projects'];
-        _projects = list.map((e) => ProjectModel.fromJson(e as Map<String, dynamic>)).toList();
+        _projects = list.map((e) => ProjectModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
       }
       if (decoded.containsKey('whyWorkList')) {
         final List<dynamic> list = decoded['whyWorkList'];
-        _whyWorkList = list.map((e) => WhyWorkModel.fromJson(e as Map<String, dynamic>)).toList();
+        _whyWorkList = list.map((e) => WhyWorkModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
       }
 
       final prefs = await SharedPreferences.getInstance();
@@ -240,6 +403,13 @@ class CmsStorageService extends ChangeNotifier {
 
       AppColors.applyFromConfig(_config);
       notifyListeners();
+
+      // Sync all imported data to Firestore
+      await _syncConfigToFirestore();
+      await _syncServicesToFirestore();
+      await _syncProjectsToFirestore();
+      await _syncWhyWorkToFirestore();
+
       return true;
     } catch (e) {
       debugPrint('Error importing JSON: $e');
@@ -262,5 +432,10 @@ class CmsStorageService extends ChangeNotifier {
 
     AppColors.applyFromConfig(_config);
     notifyListeners();
+
+    await _syncConfigToFirestore();
+    await _syncServicesToFirestore();
+    await _syncProjectsToFirestore();
+    await _syncWhyWorkToFirestore();
   }
 }
