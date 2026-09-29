@@ -216,7 +216,7 @@ class PortfolioData {
           'Conducted full on-page keyword optimization, technical site speed tuning, Google Map citations, local schema markup, and authentic review acquisition strategy.',
       techStack: ['Google Search Console', 'Google My Business', 'Ahrefs', 'Technical SEO'],
       liveDemoUrl: '',
-      imageUrl: 'https://images.unsplash.com/photo-1571786256017-aee7a0c009b6?w=800&auto=format&fit=crop&q=60',
+      imageUrl: 'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=800&auto=format&fit=crop&q=60',
       keyFeatures: [
         'Ranked #1 for local high-intent keyword searches',
         'Google Business Profile 100% verified & optimized',
@@ -224,7 +224,7 @@ class PortfolioData {
         'Clean metadata and JSON-LD schema',
       ],
       resultsMetric: 'Top 3 Google Rank & 3x Calls',
-      isFeatured: false,
+      isFeatured: true,
     ),
     const ProjectModel(
       id: 'p5',
@@ -243,7 +243,7 @@ class PortfolioData {
         'Mobile-first responsive speed score 95+',
       ],
       resultsMetric: '150+ Direct Property Enquiries',
-      isFeatured: false,
+      isFeatured: true,
     ),
   ];
 

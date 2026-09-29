@@ -48,6 +48,32 @@ class CmsStorageService extends ChangeNotifier {
     return _loadFuture!;
   }
 
+  List<ServiceModel> _mergeServicesWithDefaults(List<ServiceModel> input) {
+    final list = List<ServiceModel>.from(input);
+    if (list.length < 4) {
+      for (final ds in PortfolioData.defaultServices) {
+        if (!list.any((s) => s.id == ds.id)) {
+          list.add(ds);
+        }
+        if (list.length >= 4) break;
+      }
+    }
+    return list;
+  }
+
+  List<ProjectModel> _mergeProjectsWithDefaults(List<ProjectModel> input) {
+    final list = List<ProjectModel>.from(input);
+    if (list.length < 4) {
+      for (final dp in PortfolioData.defaultProjects) {
+        if (!list.any((p) => p.id == dp.id)) {
+          list.add(dp);
+        }
+        if (list.length >= 4) break;
+      }
+    }
+    return list;
+  }
+
   Future<void> _performLoadData() async {
     // 1. Fast local cache load for 0ms initial render
     try {
@@ -63,7 +89,8 @@ class CmsStorageService extends ChangeNotifier {
       final servicesRaw = prefs.getString(_keyServices);
       if (servicesRaw != null && servicesRaw.isNotEmpty) {
         final List<dynamic> decoded = jsonDecode(servicesRaw);
-        _services = decoded.map((e) => ServiceModel.fromJson(e as Map<String, dynamic>)).toList();
+        final loaded = decoded.map((e) => ServiceModel.fromJson(e as Map<String, dynamic>)).toList();
+        _services = _mergeServicesWithDefaults(loaded);
       } else {
         _services = List.from(PortfolioData.defaultServices);
       }
@@ -71,7 +98,8 @@ class CmsStorageService extends ChangeNotifier {
       final projectsRaw = prefs.getString(_keyProjects);
       if (projectsRaw != null && projectsRaw.isNotEmpty) {
         final List<dynamic> decoded = jsonDecode(projectsRaw);
-        _projects = decoded.map((e) => ProjectModel.fromJson(e as Map<String, dynamic>)).toList();
+        final loaded = decoded.map((e) => ProjectModel.fromJson(e as Map<String, dynamic>)).toList();
+        _projects = _mergeProjectsWithDefaults(loaded);
       } else {
         _projects = List.from(PortfolioData.defaultProjects);
       }
@@ -132,7 +160,8 @@ class CmsStorageService extends ChangeNotifier {
             final dynamic val = event.snapshot.value;
             if (val is Map && val.containsKey('list')) {
               final List<dynamic> list = val['list'];
-              _services = list.map((e) => ServiceModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final loaded = list.map((e) => ServiceModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              _services = _mergeServicesWithDefaults(loaded);
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString(_keyServices, jsonEncode(_services.map((s) => s.toJson()).toList()));
               notifyListeners();
@@ -150,7 +179,8 @@ class CmsStorageService extends ChangeNotifier {
             final dynamic val = event.snapshot.value;
             if (val is Map && val.containsKey('list')) {
               final List<dynamic> list = val['list'];
-              _projects = list.map((e) => ProjectModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final loaded = list.map((e) => ProjectModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              _projects = _mergeProjectsWithDefaults(loaded);
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString(_keyProjects, jsonEncode(_projects.map((p) => p.toJson()).toList()));
               notifyListeners();
@@ -210,7 +240,8 @@ class CmsStorageService extends ChangeNotifier {
             final data = snapshot.data()!;
             if (data.containsKey('list') && data['list'] is List) {
               final List<dynamic> list = data['list'];
-              _services = list.map((e) => ServiceModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final loaded = list.map((e) => ServiceModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              _services = _mergeServicesWithDefaults(loaded);
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString(_keyServices, jsonEncode(_services.map((s) => s.toJson()).toList()));
               notifyListeners();
@@ -228,7 +259,8 @@ class CmsStorageService extends ChangeNotifier {
             final data = snapshot.data()!;
             if (data.containsKey('list') && data['list'] is List) {
               final List<dynamic> list = data['list'];
-              _projects = list.map((e) => ProjectModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final loaded = list.map((e) => ProjectModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              _projects = _mergeProjectsWithDefaults(loaded);
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString(_keyProjects, jsonEncode(_projects.map((p) => p.toJson()).toList()));
               notifyListeners();

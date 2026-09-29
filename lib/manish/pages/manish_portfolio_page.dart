@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/cms_storage_service.dart';
+import '../data/portfolio_data.dart';
 import '../models/profile_config_model.dart';
 import '../models/project_model.dart';
 import '../models/service_model.dart';
@@ -385,7 +386,16 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
 
   // ==================== HOME PAGE PREVIEWS ====================
   Widget _buildHomeFeaturedServices(bool isDesktop) {
-    final services = _cmsService.services.take(4).toList();
+    final List<ServiceModel> allServices = List.from(_cmsService.services);
+    if (allServices.length < 4) {
+      for (final ds in PortfolioData.defaultServices) {
+        if (!allServices.any((s) => s.id == ds.id)) {
+          allServices.add(ds);
+        }
+        if (allServices.length >= 4) break;
+      }
+    }
+    final services = allServices.take(4).toList();
     if (services.isEmpty) return const SizedBox.shrink();
 
     return Container(
@@ -650,7 +660,16 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   Widget _buildHomeFeaturedProjects(bool isDesktop) {
-    final projects = _cmsService.projects.take(4).toList();
+    final List<ProjectModel> allProjects = List.from(_cmsService.projects);
+    if (allProjects.length < 4) {
+      for (final dp in PortfolioData.defaultProjects) {
+        if (!allProjects.any((p) => p.id == dp.id)) {
+          allProjects.add(dp);
+        }
+        if (allProjects.length >= 4) break;
+      }
+    }
+    final projects = allProjects.take(4).toList();
     if (projects.isEmpty) return const SizedBox.shrink();
 
     return Container(
