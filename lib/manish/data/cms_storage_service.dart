@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/profile_config_model.dart';
@@ -27,6 +28,7 @@ class CmsStorageService extends ChangeNotifier {
   List<WhyWorkModel> _whyWorkList = List.from(PortfolioData.defaultWhyWorkList);
   bool _isLoaded = false;
   bool _isSyncingWithCloud = false;
+  bool _isRealtimeConnected = true;
   Future<void>? _loadFuture;
 
   ProfileConfigModel get config => _config;
@@ -35,6 +37,7 @@ class CmsStorageService extends ChangeNotifier {
   List<WhyWorkModel> get whyWorkList => _whyWorkList;
   bool get isLoaded => _isLoaded;
   bool get isSyncingWithCloud => _isSyncingWithCloud;
+  bool get isRealtimeConnected => _isRealtimeConnected;
 
   CmsStorageService() {
     loadData();
@@ -95,8 +98,89 @@ class CmsStorageService extends ChangeNotifier {
       notifyListeners();
     }
 
-    // 2. Fetch and listen to live Cloud Firestore data
+    // 2. Fetch and listen to live Firebase Realtime Database & Cloud Firestore
+    _listenToFirebaseRealtime();
     _listenToCloudFirestore();
+  }
+
+  void _listenToFirebaseRealtime() {
+    try {
+      final rtdbRef = FirebaseDatabase.instance.ref(_collectionName);
+
+      // Listen to Config node
+      rtdbRef.child(_docConfig).onValue.listen((event) async {
+        if (event.snapshot.exists && event.snapshot.value != null) {
+          try {
+            final dynamic val = event.snapshot.value;
+            final Map<String, dynamic> map = Map<String, dynamic>.from(val as Map);
+            _config = ProfileConfigModel.fromJson(map);
+            AppColors.applyFromConfig(_config);
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
+            _isRealtimeConnected = true;
+            notifyListeners();
+          } catch (e) {
+            debugPrint('Error parsing RTDB config: $e');
+          }
+        }
+      }, onError: (err) => debugPrint('RTDB config stream error: $err'));
+
+      // Listen to Services node
+      rtdbRef.child(_docServices).onValue.listen((event) async {
+        if (event.snapshot.exists && event.snapshot.value != null) {
+          try {
+            final dynamic val = event.snapshot.value;
+            if (val is Map && val.containsKey('list')) {
+              final List<dynamic> list = val['list'];
+              _services = list.map((e) => ServiceModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString(_keyServices, jsonEncode(_services.map((s) => s.toJson()).toList()));
+              notifyListeners();
+            }
+          } catch (e) {
+            debugPrint('Error parsing RTDB services: $e');
+          }
+        }
+      }, onError: (err) => debugPrint('RTDB services stream error: $err'));
+
+      // Listen to Projects node
+      rtdbRef.child(_docProjects).onValue.listen((event) async {
+        if (event.snapshot.exists && event.snapshot.value != null) {
+          try {
+            final dynamic val = event.snapshot.value;
+            if (val is Map && val.containsKey('list')) {
+              final List<dynamic> list = val['list'];
+              _projects = list.map((e) => ProjectModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString(_keyProjects, jsonEncode(_projects.map((p) => p.toJson()).toList()));
+              notifyListeners();
+            }
+          } catch (e) {
+            debugPrint('Error parsing RTDB projects: $e');
+          }
+        }
+      }, onError: (err) => debugPrint('RTDB projects stream error: $err'));
+
+      // Listen to Why Work node
+      rtdbRef.child(_docWhyWork).onValue.listen((event) async {
+        if (event.snapshot.exists && event.snapshot.value != null) {
+          try {
+            final dynamic val = event.snapshot.value;
+            if (val is Map && val.containsKey('list')) {
+              final List<dynamic> list = val['list'];
+              _whyWorkList = list.map((e) => WhyWorkModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString(_keyWhyWork, jsonEncode(_whyWorkList.map((w) => w.toJson()).toList()));
+              notifyListeners();
+            }
+          } catch (e) {
+            debugPrint('Error parsing RTDB whyWork: $e');
+          }
+        }
+      }, onError: (err) => debugPrint('RTDB whyWork stream error: $err'));
+    } catch (e) {
+      debugPrint('Realtime Database stream setup error: $e');
+    }
   }
 
   void _listenToCloudFirestore() {
@@ -117,7 +201,6 @@ class CmsStorageService extends ChangeNotifier {
             debugPrint('Error parsing cloud config: $e');
           }
         } else {
-          // If document doesn't exist in Firestore yet, initialize it
           _syncConfigToFirestore();
         }
       }, onError: (err) => debugPrint('Cloud config stream error: $err'));
@@ -193,7 +276,10 @@ class CmsStorageService extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
     notifyListeners();
-    await _syncConfigToFirestore();
+    await Future.wait([
+      _syncConfigToFirestore(),
+      _syncConfigToRealtime(),
+    ]);
   }
 
   Future<void> _syncConfigToFirestore() async {
@@ -210,12 +296,26 @@ class CmsStorageService extends ChangeNotifier {
     }
   }
 
+  Future<void> _syncConfigToRealtime() async {
+    try {
+      await FirebaseDatabase.instance
+          .ref(_collectionName)
+          .child(_docConfig)
+          .set(_config.toJson());
+    } catch (e) {
+      debugPrint('RTDB sync config error: $e');
+    }
+  }
+
   // --- Services Full CRUD ---
   Future<void> addService(ServiceModel service) async {
     _services.add(service);
     await _saveServices();
     notifyListeners();
-    await _syncServicesToFirestore();
+    await Future.wait([
+      _syncServicesToFirestore(),
+      _syncServicesToRealtime(),
+    ]);
   }
 
   Future<void> updateService(ServiceModel service) async {
@@ -224,7 +324,10 @@ class CmsStorageService extends ChangeNotifier {
       _services[index] = service;
       await _saveServices();
       notifyListeners();
-      await _syncServicesToFirestore();
+      await Future.wait([
+        _syncServicesToFirestore(),
+        _syncServicesToRealtime(),
+      ]);
     }
   }
 
@@ -232,7 +335,10 @@ class CmsStorageService extends ChangeNotifier {
     _services.removeWhere((s) => s.id == id);
     await _saveServices();
     notifyListeners();
-    await _syncServicesToFirestore();
+    await Future.wait([
+      _syncServicesToFirestore(),
+      _syncServicesToRealtime(),
+    ]);
   }
 
   Future<void> reorderServices(int oldIndex, int newIndex) async {
@@ -241,7 +347,10 @@ class CmsStorageService extends ChangeNotifier {
     _services.insert(newIndex, item);
     await _saveServices();
     notifyListeners();
-    await _syncServicesToFirestore();
+    await Future.wait([
+      _syncServicesToFirestore(),
+      _syncServicesToRealtime(),
+    ]);
   }
 
   Future<void> _saveServices() async {
@@ -264,12 +373,26 @@ class CmsStorageService extends ChangeNotifier {
     }
   }
 
+  Future<void> _syncServicesToRealtime() async {
+    try {
+      await FirebaseDatabase.instance
+          .ref(_collectionName)
+          .child(_docServices)
+          .set({'list': _services.map((s) => s.toJson()).toList()});
+    } catch (e) {
+      debugPrint('RTDB sync services error: $e');
+    }
+  }
+
   // --- Projects Full CRUD ---
   Future<void> addProject(ProjectModel project) async {
     _projects.insert(0, project);
     await _saveProjects();
     notifyListeners();
-    await _syncProjectsToFirestore();
+    await Future.wait([
+      _syncProjectsToFirestore(),
+      _syncProjectsToRealtime(),
+    ]);
   }
 
   Future<void> updateProject(ProjectModel project) async {
@@ -278,7 +401,10 @@ class CmsStorageService extends ChangeNotifier {
       _projects[index] = project;
       await _saveProjects();
       notifyListeners();
-      await _syncProjectsToFirestore();
+      await Future.wait([
+        _syncProjectsToFirestore(),
+        _syncProjectsToRealtime(),
+      ]);
     }
   }
 
@@ -286,7 +412,10 @@ class CmsStorageService extends ChangeNotifier {
     _projects.removeWhere((p) => p.id == id);
     await _saveProjects();
     notifyListeners();
-    await _syncProjectsToFirestore();
+    await Future.wait([
+      _syncProjectsToFirestore(),
+      _syncProjectsToRealtime(),
+    ]);
   }
 
   Future<void> reorderProjects(int oldIndex, int newIndex) async {
@@ -295,7 +424,10 @@ class CmsStorageService extends ChangeNotifier {
     _projects.insert(newIndex, item);
     await _saveProjects();
     notifyListeners();
-    await _syncProjectsToFirestore();
+    await Future.wait([
+      _syncProjectsToFirestore(),
+      _syncProjectsToRealtime(),
+    ]);
   }
 
   Future<void> _saveProjects() async {
@@ -318,12 +450,26 @@ class CmsStorageService extends ChangeNotifier {
     }
   }
 
+  Future<void> _syncProjectsToRealtime() async {
+    try {
+      await FirebaseDatabase.instance
+          .ref(_collectionName)
+          .child(_docProjects)
+          .set({'list': _projects.map((p) => p.toJson()).toList()});
+    } catch (e) {
+      debugPrint('RTDB sync projects error: $e');
+    }
+  }
+
   // --- Why Work With Me Pillars Full CRUD ---
   Future<void> addWhyWorkItem(WhyWorkModel item) async {
     _whyWorkList.add(item);
     await _saveWhyWork();
     notifyListeners();
-    await _syncWhyWorkToFirestore();
+    await Future.wait([
+      _syncWhyWorkToFirestore(),
+      _syncWhyWorkToRealtime(),
+    ]);
   }
 
   Future<void> updateWhyWorkItem(WhyWorkModel item) async {
@@ -332,7 +478,10 @@ class CmsStorageService extends ChangeNotifier {
       _whyWorkList[index] = item;
       await _saveWhyWork();
       notifyListeners();
-      await _syncWhyWorkToFirestore();
+      await Future.wait([
+        _syncWhyWorkToFirestore(),
+        _syncWhyWorkToRealtime(),
+      ]);
     }
   }
 
@@ -340,7 +489,10 @@ class CmsStorageService extends ChangeNotifier {
     _whyWorkList.removeWhere((w) => w.id == id);
     await _saveWhyWork();
     notifyListeners();
-    await _syncWhyWorkToFirestore();
+    await Future.wait([
+      _syncWhyWorkToFirestore(),
+      _syncWhyWorkToRealtime(),
+    ]);
   }
 
   Future<void> _saveWhyWork() async {
@@ -360,6 +512,17 @@ class CmsStorageService extends ChangeNotifier {
       debugPrint('Firestore sync whyWork error: $e');
     } finally {
       _isSyncingWithCloud = false;
+    }
+  }
+
+  Future<void> _syncWhyWorkToRealtime() async {
+    try {
+      await FirebaseDatabase.instance
+          .ref(_collectionName)
+          .child(_docWhyWork)
+          .set({'list': _whyWorkList.map((w) => w.toJson()).toList()});
+    } catch (e) {
+      debugPrint('RTDB sync whyWork error: $e');
     }
   }
 
@@ -404,11 +567,17 @@ class CmsStorageService extends ChangeNotifier {
       AppColors.applyFromConfig(_config);
       notifyListeners();
 
-      // Sync all imported data to Firestore
-      await _syncConfigToFirestore();
-      await _syncServicesToFirestore();
-      await _syncProjectsToFirestore();
-      await _syncWhyWorkToFirestore();
+      // Sync all imported data to Firestore and Realtime Database
+      await Future.wait([
+        _syncConfigToFirestore(),
+        _syncConfigToRealtime(),
+        _syncServicesToFirestore(),
+        _syncServicesToRealtime(),
+        _syncProjectsToFirestore(),
+        _syncProjectsToRealtime(),
+        _syncWhyWorkToFirestore(),
+        _syncWhyWorkToRealtime(),
+      ]);
 
       return true;
     } catch (e) {
@@ -433,9 +602,15 @@ class CmsStorageService extends ChangeNotifier {
     AppColors.applyFromConfig(_config);
     notifyListeners();
 
-    await _syncConfigToFirestore();
-    await _syncServicesToFirestore();
-    await _syncProjectsToFirestore();
-    await _syncWhyWorkToFirestore();
+    await Future.wait([
+      _syncConfigToFirestore(),
+      _syncConfigToRealtime(),
+      _syncServicesToFirestore(),
+      _syncServicesToRealtime(),
+      _syncProjectsToFirestore(),
+      _syncProjectsToRealtime(),
+      _syncWhyWorkToFirestore(),
+      _syncWhyWorkToRealtime(),
+    ]);
   }
 }

@@ -306,7 +306,38 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
           ),
           backgroundColor: widget.isDark ? AppColors.darkSurface : Colors.white,
           elevation: 1,
-        actions: [
+          actions: [
+            Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: AppColors.success.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 7,
+                  height: 7,
+                  decoration: const BoxDecoration(
+                    color: AppColors.success,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  isDesktop ? 'Realtime Firebase Active' : 'Live Sync',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.success,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
           ElevatedButton.icon(
             onPressed: _saveAllConfig,
             icon: const Icon(Icons.save_rounded, size: 16, color: Colors.white),
