@@ -59,8 +59,10 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     final maxScroll = _scrollController.position.maxScrollExtent;
 
     final showTop = offset > 400;
-    // Hide floating WhatsApp button when reaching the Footer section (within 450px of bottom)
-    final nearFooter = maxScroll > 0 && (maxScroll - offset) < 450;
+    // Responsive footer proximity threshold (650px on mobile, 520px on desktop)
+    final width = MediaQuery.of(context).size.width;
+    final footerThreshold = width > 900 ? 520.0 : 650.0;
+    final nearFooter = maxScroll > 0 && (maxScroll - offset) < footerThreshold;
 
     if (showTop != _showScrollToTop || nearFooter != _hideWhatsAppInFooter) {
       setState(() {
@@ -163,15 +165,19 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                 const SizedBox(height: 10),
               ],
               AnimatedSlide(
-                offset: _hideWhatsAppInFooter ? const Offset(0, 1.5) : Offset.zero,
+                offset: _hideWhatsAppInFooter ? const Offset(0, 1.8) : Offset.zero,
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
-                child: AnimatedOpacity(
-                  opacity: _hideWhatsAppInFooter ? 0.0 : 1.0,
+                child: AnimatedScale(
+                  scale: _hideWhatsAppInFooter ? 0.0 : 1.0,
                   duration: const Duration(milliseconds: 250),
-                  child: IgnorePointer(
-                    ignoring: _hideWhatsAppInFooter,
-                    child: Material(
+                  curve: Curves.easeInOut,
+                  child: AnimatedOpacity(
+                    opacity: _hideWhatsAppInFooter ? 0.0 : 1.0,
+                    duration: const Duration(milliseconds: 250),
+                    child: IgnorePointer(
+                      ignoring: _hideWhatsAppInFooter,
+                      child: Material(
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () => UrlHelper.openWhatsApp(
@@ -233,9 +239,10 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   ),
                 ),
               ),
-            ],
-          ),
-        );
+            ),
+          ],
+        ),
+      );
   }
 
   Widget _buildCurrentPageContent(ProfileConfigModel config, bool isDesktop) {
