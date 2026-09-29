@@ -54,15 +54,18 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   void _onScroll() {
-    if (!_scrollController.hasClients) return;
-    final offset = _scrollController.offset;
-    final maxScroll = _scrollController.position.maxScrollExtent;
+    _checkScrollPosition();
+  }
 
-    final showTop = offset > 400;
-    // Responsive footer proximity threshold (650px on mobile, 520px on desktop)
-    final width = MediaQuery.of(context).size.width;
-    final footerThreshold = width > 900 ? 520.0 : 650.0;
-    final nearFooter = maxScroll > 0 && (maxScroll - offset) < footerThreshold;
+  void _checkScrollPosition() {
+    if (!_scrollController.hasClients) return;
+    final pos = _scrollController.position;
+    final offset = pos.pixels;
+    final extentAfter = pos.extentAfter;
+
+    final showTop = offset > 350;
+    // Hide floating WhatsApp button when within 550px of bottom (reached Footer)
+    final nearFooter = pos.maxScrollExtent > 0 && extentAfter < 550;
 
     if (showTop != _showScrollToTop || nearFooter != _hideWhatsAppInFooter) {
       setState(() {
@@ -130,15 +133,21 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
 
                 // Main Page Content with smooth transition
                 Expanded(
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 250),
-                      switchInCurve: Curves.easeOut,
-                      switchOutCurve: Curves.easeIn,
-                      child: KeyedSubtree(
-                        key: ValueKey<String>(_activePage),
-                        child: _buildCurrentPageContent(config, isDesktop),
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: (notification) {
+                      _checkScrollPosition();
+                      return false;
+                    },
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 250),
+                        switchInCurve: Curves.easeOut,
+                        switchOutCurve: Curves.easeIn,
+                        child: KeyedSubtree(
+                          key: ValueKey<String>(_activePage),
+                          child: _buildCurrentPageContent(config, isDesktop),
+                        ),
                       ),
                     ),
                   ),
