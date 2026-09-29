@@ -30,25 +30,36 @@ class AppSmartImage extends StatelessWidget {
 
     if (cleanUrl.isEmpty) {
       content = placeholder ?? _defaultPlaceholder();
-    } else if (cleanUrl.startsWith('data:image')) {
+    } else if (cleanUrl.startsWith('data:image') || cleanUrl.startsWith('data:application')) {
       try {
         final commaIdx = cleanUrl.indexOf(',');
-        if (commaIdx != -1) {
-          final base64Data = cleanUrl.substring(commaIdx + 1);
-          final bytes = base64Decode(base64Data);
-          content = Image.memory(
-            bytes,
-            width: width,
-            height: height,
-            fit: fit,
-            errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
-          );
-        } else {
-          content = errorWidget ?? _defaultError();
-        }
+        final base64Data = commaIdx != -1 ? cleanUrl.substring(commaIdx + 1).trim() : cleanUrl;
+        final bytes = base64Decode(base64Data);
+        content = Image.memory(
+          bytes,
+          width: width,
+          height: height,
+          fit: fit,
+          errorBuilder: (context, error, stackTrace) {
+            debugPrint('AppSmartImage data:image error: $error');
+            return errorWidget ?? _defaultError();
+          },
+        );
       } catch (e) {
+        debugPrint('AppSmartImage data:image parse error: $e');
         content = errorWidget ?? _defaultError();
       }
+    } else if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://') || cleanUrl.startsWith('blob:')) {
+      content = Image.network(
+        cleanUrl,
+        width: width,
+        height: height,
+        fit: fit,
+        errorBuilder: (context, error, stackTrace) {
+          debugPrint('AppSmartImage network error: $error for $cleanUrl');
+          return errorWidget ?? _defaultError();
+        },
+      );
     } else if (cleanUrl.startsWith('assets/')) {
       content = Image.asset(
         cleanUrl,
@@ -58,13 +69,26 @@ class AppSmartImage extends StatelessWidget {
         errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
       );
     } else {
-      content = Image.network(
-        cleanUrl,
-        width: width,
-        height: height,
-        fit: fit,
-        errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
-      );
+      // Attempt raw base64 decode if string length > 50 and has no URI scheme
+      try {
+        final bytes = base64Decode(cleanUrl);
+        content = Image.memory(
+          bytes,
+          width: width,
+          height: height,
+          fit: fit,
+          errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
+        );
+      } catch (e) {
+        // Fallback to Image.network
+        content = Image.network(
+          cleanUrl,
+          width: width,
+          height: height,
+          fit: fit,
+          errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
+        );
+      }
     }
 
     if (borderRadius != null) {
