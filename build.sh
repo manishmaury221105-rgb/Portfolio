@@ -30,7 +30,7 @@ const fs = require("fs");
 const file = "build/web/flutter_bootstrap.js";
 if (fs.existsSync(file)) {
   let content = fs.readFileSync(file, "utf8");
-  content = content.replace(/serviceWorkerSettings:\s*\{[^}]*\}/g, "serviceWorkerSettings: null");
+  content = content.replace(/serviceWorkerSettings:\s*\{[\s\S]*?\}/g, "serviceWorkerSettings: null");
   fs.writeFileSync(file, content);
   console.log("Successfully removed service worker registration from flutter_bootstrap.js");
 }
