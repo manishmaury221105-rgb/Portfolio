@@ -23,11 +23,20 @@
       ]
     },
     {
-      "source": "/(assets/.*|flutter.js|main.dart.js|canvaskit/.*|flutter_bootstrap.js)",
+      "source": "/(index.html|flutter_bootstrap.js|flutter_service_worker.js|version.json|manifest.json)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(assets/.*|canvaskit/.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
         }
       ]
     }
