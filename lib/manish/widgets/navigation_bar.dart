@@ -57,7 +57,7 @@ class PortfolioNavBar extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        BrandLogoBadge(config: config, size: 40, borderRadius: 10),
+                        BrandLogoBadge(config: config, size: 42, borderRadius: 21),
                         const SizedBox(width: 12),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -229,7 +229,7 @@ class FooterSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            BrandLogoBadge(config: config, size: 38, borderRadius: 10),
+            BrandLogoBadge(config: config, size: 40, borderRadius: 20),
             const SizedBox(width: 10),
             Text(
               config.name,

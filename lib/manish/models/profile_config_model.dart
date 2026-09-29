@@ -73,7 +73,7 @@ class ProfileConfigModel {
     this.locationShort = 'Harahua, Varanasi (UP)',
     this.avatarUrl = '',
     this.logoText = 'DM',
-    this.logoImageUrl = '',
+    this.logoImageUrl = 'assets/images/digital_manish_logo.png',
     this.themePreset = 'indigo_purple',
     this.primaryColorHex = '#6366F1',
     this.secondaryColorHex = '#8B5CF6',
@@ -196,7 +196,9 @@ class ProfileConfigModel {
       locationShort: json['locationShort'] as String? ?? 'Harahua, Varanasi (UP)',
       avatarUrl: json['avatarUrl'] as String? ?? '',
       logoText: json['logoText'] as String? ?? 'DM',
-      logoImageUrl: json['logoImageUrl'] as String? ?? '',
+      logoImageUrl: (json['logoImageUrl'] as String?)?.isNotEmpty == true
+          ? (json['logoImageUrl'] as String)
+          : 'assets/images/digital_manish_logo.png',
       themePreset: json['themePreset'] as String? ?? 'indigo_purple',
       primaryColorHex: json['primaryColorHex'] as String? ?? '#6366F1',
       secondaryColorHex: json['secondaryColorHex'] as String? ?? '#8B5CF6',

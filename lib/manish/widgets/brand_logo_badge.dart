@@ -21,21 +21,24 @@ class BrandLogoBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasImage = config.logoImageUrl.trim().isNotEmpty;
-    final text = config.logoText.trim().isNotEmpty ? config.logoText.trim() : 'MM';
+    final customUrl = config.logoImageUrl.trim();
+    final effectiveImageUrl = customUrl.isNotEmpty
+        ? customUrl
+        : 'assets/images/digital_manish_logo.png';
 
+    final text = config.logoText.trim().isNotEmpty ? config.logoText.trim() : 'DM';
     final effectiveFontSize = fontSize ?? (text.length <= 2 ? (size * 0.44) : (size * 0.32));
 
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
-        gradient: AppColors.primaryGradient,
-        borderRadius: BorderRadius.circular(borderRadius),
+        color: Colors.white,
+        shape: BoxShape.circle,
         boxShadow: hasShadow
             ? [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.38),
+                  color: AppColors.primary.withValues(alpha: 0.25),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -43,31 +46,35 @@ class BrandLogoBadge extends StatelessWidget {
             : null,
       ),
       clipBehavior: Clip.antiAlias,
-      child: hasImage
-          ? AppSmartImage(
-              imageUrl: config.logoImageUrl,
-              width: size,
-              height: size,
-              fit: BoxFit.cover,
-              errorWidget: _buildTextLogo(text, effectiveFontSize),
-            )
-          : _buildTextLogo(text, effectiveFontSize),
+      child: AppSmartImage(
+        imageUrl: effectiveImageUrl,
+        width: size,
+        height: size,
+        fit: BoxFit.contain,
+        errorWidget: _buildFallback(text, effectiveFontSize),
+      ),
     );
   }
 
-  Widget _buildTextLogo(String text, double effectiveFontSize) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            text,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontSize: effectiveFontSize,
-              letterSpacing: text.length <= 2 ? 1.0 : 0.5,
+  Widget _buildFallback(String text, double effectiveFontSize) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: AppColors.primaryGradient,
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: effectiveFontSize,
+                letterSpacing: text.length <= 2 ? 1.0 : 0.5,
+              ),
             ),
           ),
         ),

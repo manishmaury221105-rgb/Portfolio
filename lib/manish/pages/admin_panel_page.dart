@@ -1682,7 +1682,7 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
                             logoImageUrl: _logoImageUrlCtrl.text.trim(),
                           ),
                           size: 68,
-                          borderRadius: 16,
+                          borderRadius: 34,
                           fontSize: 24,
                         ),
                         const SizedBox(height: 6),
