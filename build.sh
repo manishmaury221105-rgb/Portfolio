@@ -1,30 +1,35 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-echo "=== Starting Flutter Web Build for Vercel ==="
+echo "=== Starting Flutter Web Production Build for Vercel ==="
 
-# Check if flutter is already installed in environment or cached
+# CI environment variables to prevent interactive prompts and background analytics hangs
+export CI=true
+export FLUTTER_SUPPRESS_ANALYTICS=true
+export PUB_ENVIRONMENT=vercel:flutter_web
+
+# Install Flutter SDK if not already in PATH or cached
 if ! command -v flutter &> /dev/null; then
-  echo "Flutter not found. Cloning Flutter SDK (stable branch)..."
+  echo "Flutter CLI not detected. Fetching Flutter SDK (stable channel)..."
   if [ ! -d "flutter_sdk" ]; then
-    git clone https://github.com/flutter/flutter.git -b stable --depth 1 flutter_sdk
+    git clone --depth 1 -b stable --single-branch https://github.com/flutter/flutter.git flutter_sdk
   fi
-  export PATH="$PATH:$(pwd)/flutter_sdk/bin"
+  export PATH="$(pwd)/flutter_sdk/bin:$PATH"
 fi
 
-echo "Checking Flutter version..."
-flutter --version
+echo "Configuring Flutter for headless Web build..."
+flutter config --no-analytics --enable-web
 
-echo "Enabling Flutter Web support..."
-flutter config --enable-web --no-analytics
+echo "Pre-caching Web engine artifacts..."
+flutter precache --web
 
-echo "Fetching Flutter dependencies..."
+echo "Resolving dependencies..."
 flutter pub get
 
-echo "Compiling Flutter Web release build..."
-flutter build web --release
+echo "Compiling optimized Flutter Web release build..."
+flutter build web --release --no-wasm-dry-run
 
-echo "Disabling Flutter Service Worker to guarantee instant live updates across all domains..."
+echo "Removing Service Worker registration to guarantee instant updates across all domains..."
 node -e '
 const fs = require("fs");
 const file = "build/web/flutter_bootstrap.js";
@@ -32,9 +37,9 @@ if (fs.existsSync(file)) {
   let content = fs.readFileSync(file, "utf8");
   content = content.replace(/serviceWorkerSettings:\s*\{[\s\S]*?\}/g, "serviceWorkerSettings: null");
   fs.writeFileSync(file, content);
-  console.log("Successfully removed service worker registration from flutter_bootstrap.js");
+  console.log("Service Worker registration successfully removed from flutter_bootstrap.js");
 }
 '
 rm -f build/web/flutter_service_worker.js
 
-echo "=== Flutter Web Build successfully generated in build/web ==="
+echo "=== Flutter Web Production Build successfully generated in build/web ==="
