@@ -11,10 +11,10 @@ import '../theme/app_colors.dart';
 import 'portfolio_data.dart';
 
 class CmsStorageService extends ChangeNotifier {
-  static const String _keyProfileConfig = 'manish_cms_profile_config_v2';
-  static const String _keyServices = 'manish_cms_services_v2';
-  static const String _keyProjects = 'manish_cms_projects_v2';
-  static const String _keyWhyWork = 'manish_cms_why_work_v2';
+  static const String _keyProfileConfig = 'manish_cms_profile_config_v3';
+  static const String _keyServices = 'manish_cms_services_v3';
+  static const String _keyProjects = 'manish_cms_projects_v3';
+  static const String _keyWhyWork = 'manish_cms_why_work_v3';
 
   static const String _collectionName = 'portfolio_cms';
   static const String _docConfig = 'config';
