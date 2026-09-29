@@ -38,6 +38,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   final CmsStorageService _cmsService = CmsStorageService();
   final ScrollController _scrollController = ScrollController();
   bool _showScrollToTop = false;
+  bool _hideWhatsAppInFooter = false;
   String _activePage = 'home';
 
   @override
@@ -53,10 +54,19 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   void _onScroll() {
-    if (_scrollController.offset > 400 && !_showScrollToTop) {
-      setState(() => _showScrollToTop = true);
-    } else if (_scrollController.offset <= 400 && _showScrollToTop) {
-      setState(() => _showScrollToTop = false);
+    if (!_scrollController.hasClients) return;
+    final offset = _scrollController.offset;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+
+    final showTop = offset > 400;
+    // Hide floating WhatsApp button when reaching the Footer section (within 450px of bottom)
+    final nearFooter = maxScroll > 0 && (maxScroll - offset) < 450;
+
+    if (showTop != _showScrollToTop || nearFooter != _hideWhatsAppInFooter) {
+      setState(() {
+        _showScrollToTop = showTop;
+        _hideWhatsAppInFooter = nearFooter;
+      });
     }
   }
 
@@ -72,6 +82,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   void _onNavigate(String pageKey) {
     setState(() {
       _activePage = pageKey;
+      _hideWhatsAppInFooter = false;
     });
 
     if (_scrollController.hasClients) {
@@ -151,61 +162,73 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                 ),
                 const SizedBox(height: 10),
               ],
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () => UrlHelper.openWhatsApp(
-                    phone: config.whatsappNumber,
-                    message: config.whatsappDefaultMessage,
-                    context: context,
-                  ),
-                  borderRadius: BorderRadius.circular(30),
-                  child: Container(
-                    constraints: const BoxConstraints(maxWidth: 340),
-                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF25D366), Color(0xFF128C7E)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF25D366).withValues(alpha: 0.5),
-                          blurRadius: 18,
-                          spreadRadius: 2,
-                          offset: const Offset(0, 5),
+              AnimatedSlide(
+                offset: _hideWhatsAppInFooter ? const Offset(0, 1.5) : Offset.zero,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                child: AnimatedOpacity(
+                  opacity: _hideWhatsAppInFooter ? 0.0 : 1.0,
+                  duration: const Duration(milliseconds: 250),
+                  child: IgnorePointer(
+                    ignoring: _hideWhatsAppInFooter,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () => UrlHelper.openWhatsApp(
+                          phone: config.whatsappNumber,
+                          message: config.whatsappDefaultMessage,
+                          context: context,
                         ),
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: _isDark ? 0.4 : 0.15),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const WhatsAppIcon(
-                          size: 28,
-                          color: Colors.white,
-                        ),
-                        if (config.whatsappMotivationText.isNotEmpty) ...[
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: Text(
-                              config.whatsappMotivationText,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                letterSpacing: 0.2,
-                              ),
+                        borderRadius: BorderRadius.circular(30),
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 340),
+                          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF25D366), Color(0xFF128C7E)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF25D366).withValues(alpha: 0.5),
+                                blurRadius: 18,
+                                spreadRadius: 2,
+                                offset: const Offset(0, 5),
+                              ),
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: _isDark ? 0.4 : 0.15),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
-                        ],
-                      ],
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const WhatsAppIcon(
+                                size: 28,
+                                color: Colors.white,
+                              ),
+                              if (config.whatsappMotivationText.isNotEmpty) ...[
+                                const SizedBox(width: 10),
+                                Flexible(
+                                  child: Text(
+                                    config.whatsappMotivationText,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      letterSpacing: 0.2,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
