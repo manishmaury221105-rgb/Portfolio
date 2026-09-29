@@ -492,6 +492,9 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   Widget _buildFeaturedServiceCard(ServiceModel service) {
+    final textPrimary = _isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+    final hasImage = service.imageUrl.trim().isNotEmpty;
+
     return InkWell(
       onTap: () {
         showDialog(
@@ -501,69 +504,144 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
       },
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           color: _isDark ? AppColors.darkCard : AppColors.lightCard,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: _isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: _isDark ? 0.2 : 0.04),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: service.accentColor.withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(14),
+            // Background Image with dark gradient overlay if present
+            if (hasImage) ...[
+              AppSmartImage(
+                imageUrl: service.imageUrl,
+                fit: BoxFit.cover,
+                errorWidget: Container(color: service.accentColor.withValues(alpha: 0.15)),
               ),
-              child: Icon(service.icon, color: service.accentColor, size: 28),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              service.titleHindi,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              service.titleEnglish,
-              style: TextStyle(
-                color: _isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: Text(
-                service.shortDesc,
-                style: TextStyle(
-                  color: _isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
-                  fontSize: 13,
-                  height: 1.5,
-                ),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Row(
-              children: [
-                Text(
-                  'Know Details',
-                  style: TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withValues(alpha: 0.35),
+                      Colors.black.withValues(alpha: 0.70),
+                      Colors.black.withValues(alpha: 0.95),
+                    ],
+                    stops: const [0.0, 0.45, 1.0],
                   ),
                 ),
-                const SizedBox(width: 4),
-                Icon(Icons.arrow_forward_rounded, size: 14, color: AppColors.primary),
-              ],
+              ),
+            ],
+
+            // Content
+            Padding(
+              padding: const EdgeInsets.all(22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: hasImage
+                          ? service.accentColor.withValues(alpha: 0.95)
+                          : service.accentColor.withValues(alpha: 0.14),
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: hasImage
+                          ? [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.4),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: Icon(
+                      service.icon,
+                      color: hasImage ? Colors.white : service.accentColor,
+                      size: 26,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    service.titleHindi,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: hasImage ? Colors.white : textPrimary,
+                      shadows: hasImage
+                          ? const [Shadow(color: Colors.black87, blurRadius: 8, offset: Offset(0, 2))]
+                          : null,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    service.titleEnglish,
+                    style: TextStyle(
+                      color: hasImage
+                          ? Colors.white70
+                          : (_isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      shadows: hasImage
+                          ? const [Shadow(color: Colors.black87, blurRadius: 6, offset: Offset(0, 1))]
+                          : null,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: Text(
+                      service.shortDesc,
+                      style: TextStyle(
+                        color: hasImage
+                            ? Colors.white.withValues(alpha: 0.85)
+                            : (_isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
+                        fontSize: 13,
+                        height: 1.5,
+                        shadows: hasImage
+                            ? const [Shadow(color: Colors.black87, blurRadius: 6, offset: Offset(0, 1))]
+                            : null,
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Know Details',
+                        style: TextStyle(
+                          color: hasImage ? Colors.white : AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 14,
+                        color: hasImage ? Colors.white : AppColors.primary,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
