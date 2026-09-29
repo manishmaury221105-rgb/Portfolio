@@ -24,4 +24,17 @@ flutter pub get
 echo "Compiling Flutter Web release build..."
 flutter build web --release
 
+echo "Disabling Flutter Service Worker to guarantee instant live updates across all domains..."
+node -e '
+const fs = require("fs");
+const file = "build/web/flutter_bootstrap.js";
+if (fs.existsSync(file)) {
+  let content = fs.readFileSync(file, "utf8");
+  content = content.replace(/serviceWorkerSettings:\s*\{[^}]*\}/g, "serviceWorkerSettings: null");
+  fs.writeFileSync(file, content);
+  console.log("Successfully removed service worker registration from flutter_bootstrap.js");
+}
+'
+rm -f build/web/flutter_service_worker.js
+
 echo "=== Flutter Web Build successfully generated in build/web ==="
