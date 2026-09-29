@@ -32,39 +32,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBedvmLj7UW0bI83CixXq38A38wxFX5grA',
-    appId: '1:237047753852:web:ddda5f49a0431542b16df9',
-    messagingSenderId: '237047753852',
-    projectId: 'qr-maker-cf84a',
-    authDomain: 'qr-maker-cf84a.firebaseapp.com',
-    databaseURL: 'https://qr-maker-cf84a-default-rtdb.firebaseio.com',
-    storageBucket: 'qr-maker-cf84a.firebasestorage.app',
-    measurementId: 'G-8RECEMC61V',
+    apiKey: 'AIzaSyD6629aMsg-GPimXFqkNPGDnCK0Np-RaOA',
+    appId: '1:894416249276:web:35fa07f639df21e740cbb9',
+    messagingSenderId: '894416249276',
+    projectId: 'prortfolio-e0868',
+    authDomain: 'prortfolio-e0868.firebaseapp.com',
+    storageBucket: 'prortfolio-e0868.firebasestorage.app',
+    measurementId: 'G-LVQLVGBB01',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBedvmLj7UW0bI83CixXq38A38wxFX5grA',
-    appId: '1:237047753852:android:1da5dbadd4934bffb16df9',
-    messagingSenderId: '237047753852',
-    projectId: 'qr-maker-cf84a',
-    storageBucket: 'qr-maker-cf84a.firebasestorage.app',
+    apiKey: 'AIzaSyD6629aMsg-GPimXFqkNPGDnCK0Np-RaOA',
+    appId: '1:894416249276:web:35fa07f639df21e740cbb9',
+    messagingSenderId: '894416249276',
+    projectId: 'prortfolio-e0868',
+    storageBucket: 'prortfolio-e0868.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBedvmLj7UW0bI83CixXq38A38wxFX5grA',
-    appId: '1:237047753852:ios:1da5dbadd4934bffb16df9',
-    messagingSenderId: '237047753852',
-    projectId: 'qr-maker-cf84a',
-    storageBucket: 'qr-maker-cf84a.firebasestorage.app',
+    apiKey: 'AIzaSyD6629aMsg-GPimXFqkNPGDnCK0Np-RaOA',
+    appId: '1:894416249276:web:35fa07f639df21e740cbb9',
+    messagingSenderId: '894416249276',
+    projectId: 'prortfolio-e0868',
+    storageBucket: 'prortfolio-e0868.firebasestorage.app',
     iosBundleId: 'com.example.portfolio',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBedvmLj7UW0bI83CixXq38A38wxFX5grA',
-    appId: '1:237047753852:ios:1da5dbadd4934bffb16df9',
-    messagingSenderId: '237047753852',
-    projectId: 'qr-maker-cf84a',
-    storageBucket: 'qr-maker-cf84a.firebasestorage.app',
+    apiKey: 'AIzaSyD6629aMsg-GPimXFqkNPGDnCK0Np-RaOA',
+    appId: '1:894416249276:web:35fa07f639df21e740cbb9',
+    messagingSenderId: '894416249276',
+    projectId: 'prortfolio-e0868',
+    storageBucket: 'prortfolio-e0868.firebasestorage.app',
     iosBundleId: 'com.example.portfolio',
   );
 }
