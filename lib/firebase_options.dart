@@ -37,6 +37,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '894416249276',
     projectId: 'prortfolio-e0868',
     authDomain: 'prortfolio-e0868.firebaseapp.com',
+    databaseURL: 'https://prortfolio-e0868-default-rtdb.firebaseio.com',
     storageBucket: 'prortfolio-e0868.firebasestorage.app',
     measurementId: 'G-LVQLVGBB01',
   );
