@@ -200,8 +200,6 @@ class CmsStorageService extends ChangeNotifier {
           } catch (e) {
             debugPrint('Error parsing cloud config: $e');
           }
-        } else {
-          _syncConfigToFirestore();
         }
       }, onError: (err) => debugPrint('Cloud config stream error: $err'));
 
@@ -220,8 +218,6 @@ class CmsStorageService extends ChangeNotifier {
           } catch (e) {
             debugPrint('Error parsing cloud services: $e');
           }
-        } else {
-          _syncServicesToFirestore();
         }
       }, onError: (err) => debugPrint('Cloud services stream error: $err'));
 
@@ -240,8 +236,6 @@ class CmsStorageService extends ChangeNotifier {
           } catch (e) {
             debugPrint('Error parsing cloud projects: $e');
           }
-        } else {
-          _syncProjectsToFirestore();
         }
       }, onError: (err) => debugPrint('Cloud projects stream error: $err'));
 
@@ -260,8 +254,6 @@ class CmsStorageService extends ChangeNotifier {
           } catch (e) {
             debugPrint('Error parsing cloud whyWork: $e');
           }
-        } else {
-          _syncWhyWorkToFirestore();
         }
       }, onError: (err) => debugPrint('Cloud whyWork stream error: $err'));
     } catch (e) {
