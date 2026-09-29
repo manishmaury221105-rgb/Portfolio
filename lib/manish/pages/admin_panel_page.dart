@@ -26,7 +26,7 @@ class AdminPanelPage extends StatefulWidget {
 }
 
 class _AdminPanelPageState extends State<AdminPanelPage> {
-  int _selectedTabIndex = 0;
+  int _selectedTabIndex = -1;
   bool _isAuthenticated = true; // Pin auth check
   final TextEditingController _pinController = TextEditingController();
 
@@ -272,26 +272,30 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_rounded),
             onPressed: () {
-              if (_selectedTabIndex != 0) {
-                setState(() => _selectedTabIndex = 0);
+              if (_selectedTabIndex != -1) {
+                setState(() => _selectedTabIndex = -1);
               } else {
                 Navigator.of(context).pop();
               }
             },
-            tooltip: _selectedTabIndex != 0 ? 'Back to Overview' : 'Back to Website',
+            tooltip: _selectedTabIndex != -1 ? 'Back to Overview' : 'Back to Website',
           ),
           title: Row(
             children: [
               const SizedBox(width: 4),
               Icon(
-                _sidebarItems[_selectedTabIndex]['icon'] as IconData,
-                color: (_sidebarItems[_selectedTabIndex]['color'] as Color?) ?? AppColors.primary,
+                _selectedTabIndex == -1
+                    ? Icons.dashboard_customize_rounded
+                    : (_sidebarItems[_selectedTabIndex]['icon'] as IconData),
+                color: _selectedTabIndex == -1
+                    ? AppColors.primary
+                    : ((_sidebarItems[_selectedTabIndex]['color'] as Color?) ?? AppColors.primary),
                 size: 22,
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  _selectedTabIndex == 0
+                  _selectedTabIndex == -1
                       ? 'Admin Panel'
                       : (_sidebarItems[_selectedTabIndex]['title'] as String),
                   style: TextStyle(
@@ -468,13 +472,6 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
   // --- Sidebar Items ---
   final List<Map<String, dynamic>> _sidebarItems = [
     {
-      'title': 'Dashboard',
-      'shortTitle': 'Dashboard',
-      'icon': Icons.dashboard_rounded,
-      'color': const Color(0xFF00A3FF),
-      'gradient': const [Color(0xFF00A3FF), Color(0xFF0066FF)],
-    },
-    {
       'title': 'Theme & Colors',
       'shortTitle': 'Theme',
       'icon': Icons.palette_rounded,
@@ -612,23 +609,22 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
   Widget _buildSelectedTabContent(BuildContext context) {
     switch (_selectedTabIndex) {
       case 0:
-        return _buildDashboardOverview(context);
-      case 1:
         return _buildThemeColorsEditor(context);
-      case 2:
+      case 1:
         return _buildProfileHeroEditor(context);
-      case 3:
+      case 2:
         return _buildAboutEditor(context);
-      case 4:
+      case 3:
         return _buildServicesEditor(context);
-      case 5:
+      case 4:
         return _buildProjectsEditor(context);
-      case 6:
+      case 5:
         return _buildWhyWorkEditor(context);
-      case 7:
+      case 6:
         return _buildContactSocialsEditor(context);
-      case 8:
+      case 7:
         return _buildBackupRestoreEditor(context);
+      case -1:
       default:
         return _buildDashboardOverview(context);
     }
