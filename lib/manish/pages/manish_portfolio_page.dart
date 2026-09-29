@@ -385,7 +385,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
 
   // ==================== HOME PAGE PREVIEWS ====================
   Widget _buildHomeFeaturedServices(bool isDesktop) {
-    final services = _cmsService.services.take(3).toList();
+    final services = _cmsService.services.take(4).toList();
     if (services.isEmpty) return const SizedBox.shrink();
 
     return Container(
@@ -461,11 +461,11 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
               ),
               const SizedBox(height: 28),
 
-              // 3 Cards Layout
+              // 4 Cards Layout
               LayoutBuilder(
                 builder: (context, constraints) {
                   final cardWidth = constraints.maxWidth;
-                  final crossCount = cardWidth > 900 ? 3 : (cardWidth > 600 ? 2 : 1);
+                  final crossCount = cardWidth > 980 ? 4 : (cardWidth > 580 ? 2 : 1);
 
                   return GridView.builder(
                     shrinkWrap: true,
@@ -474,7 +474,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                       crossAxisCount: crossCount,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
-                      mainAxisExtent: isDesktop ? 360 : 340,
+                      mainAxisExtent: isDesktop ? (crossCount == 4 ? 370 : 340) : 340,
                     ),
                     itemCount: services.length,
                     itemBuilder: (context, index) {
@@ -650,7 +650,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   Widget _buildHomeFeaturedProjects(bool isDesktop) {
-    final projects = _cmsService.projects.take(3).toList();
+    final projects = _cmsService.projects.take(4).toList();
     if (projects.isEmpty) return const SizedBox.shrink();
 
     return Container(
@@ -727,10 +727,11 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
               ),
               const SizedBox(height: 28),
 
+              // 4 Cards Layout
               LayoutBuilder(
                 builder: (context, constraints) {
                   final cardWidth = constraints.maxWidth;
-                  final crossCount = cardWidth > 900 ? 3 : (cardWidth > 600 ? 2 : 1);
+                  final crossCount = cardWidth > 980 ? 4 : (cardWidth > 580 ? 2 : 1);
 
                   return GridView.builder(
                     shrinkWrap: true,
@@ -739,7 +740,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                       crossAxisCount: crossCount,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
-                      mainAxisExtent: 410,
+                      mainAxisExtent: crossCount == 4 ? 430 : 410,
                     ),
                     itemCount: projects.length,
                     itemBuilder: (context, index) {
