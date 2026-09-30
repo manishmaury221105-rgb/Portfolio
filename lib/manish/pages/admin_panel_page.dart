@@ -331,7 +331,7 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  isDesktop ? 'Realtime Firebase Active' : 'Live Sync',
+                  isDesktop ? 'Local Database (Active & Persistent)' : 'Local DB Active',
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
