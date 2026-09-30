@@ -220,13 +220,25 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
       isAdminPinRequired: _pinRequired,
     );
 
-    await widget.cmsService.updateConfig(updated);
+    widget.cmsService.updateConfig(updated);
     if (mounted) {
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('All website settings & colors saved live! 🚀'),
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
+              SizedBox(width: 10),
+              Text(
+                'Settings saved instantly! ⚡',
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+            ],
+          ),
           backgroundColor: AppColors.success,
           behavior: SnackBarBehavior.floating,
+          duration: const Duration(milliseconds: 1500),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       );
     }
@@ -311,50 +323,19 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
           backgroundColor: widget.isDark ? AppColors.darkSurface : Colors.white,
           elevation: 1,
           actions: [
-            Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: AppColors.success.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
+            ElevatedButton.icon(
+              onPressed: _saveAllConfig,
+              icon: const Icon(Icons.save_rounded, size: 16, color: Colors.white),
+              label: Text(
+                isDesktop ? 'Save Changes' : 'Save',
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                padding: EdgeInsets.symmetric(horizontal: isDesktop ? 16 : 10, vertical: 8),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 7,
-                  height: 7,
-                  decoration: const BoxDecoration(
-                    color: AppColors.success,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  isDesktop ? 'Local Database (Active & Persistent)' : 'Local DB Active',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.success,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 8),
-          ElevatedButton.icon(
-            onPressed: _saveAllConfig,
-            icon: const Icon(Icons.save_rounded, size: 16, color: Colors.white),
-            label: Text(
-              isDesktop ? 'Save Changes' : 'Save',
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              padding: EdgeInsets.symmetric(horizontal: isDesktop ? 16 : 10, vertical: 8),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-          ),
           const SizedBox(width: 6),
           IconButton(
             onPressed: () => Navigator.of(context).pop(),

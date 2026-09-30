@@ -8,17 +8,17 @@ import '../models/why_work_model.dart';
 import '../theme/app_colors.dart';
 import 'portfolio_data.dart';
 
-/// Fully Self-Contained Local Database & CMS Storage Service.
+/// Ultra-Fast Self-Contained Local Database & CMS Storage Service.
 /// Stores all portfolio data, services, projects, why work items, and configuration
-/// locally inside persistent device / browser storage (SharedPreferences / IndexedDB / LocalStorage)
-/// with zero external network latency, 100% offline support, instant state reactivity,
-/// and full JSON backup export & restore.
+/// locally inside persistent device / browser storage with 0ms in-memory reactivity,
+/// background disk sync, 100% offline support, and full JSON backup export & restore.
 class CmsStorageService extends ChangeNotifier {
   static const String _keyProfileConfig = 'manish_cms_profile_config_v3';
   static const String _keyServices = 'manish_cms_services_v3';
   static const String _keyProjects = 'manish_cms_projects_v3';
   static const String _keyWhyWork = 'manish_cms_why_work_v3';
 
+  SharedPreferences? _prefs;
   ProfileConfigModel _config = PortfolioData.defaultConfig;
   List<ServiceModel> _services = List.from(PortfolioData.defaultServices);
   List<ProjectModel> _projects = List.from(PortfolioData.defaultProjects);
@@ -44,6 +44,11 @@ class CmsStorageService extends ChangeNotifier {
   Future<void> loadData() {
     _loadFuture ??= _performLoadData();
     return _loadFuture!;
+  }
+
+  Future<SharedPreferences> _getPrefs() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs!;
   }
 
   List<ServiceModel> _mergeServicesWithDefaults(List<ServiceModel> input) {
@@ -74,7 +79,7 @@ class CmsStorageService extends ChangeNotifier {
 
   Future<void> _performLoadData() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = await _getPrefs();
 
       final configRaw = prefs.getString(_keyProfileConfig);
       if (configRaw != null && configRaw.isNotEmpty) {
@@ -130,111 +135,111 @@ class CmsStorageService extends ChangeNotifier {
     }
   }
 
-  // --- Profile & Site Config Updates ---
+  // --- Profile & Site Config Updates (Instant 0ms UI update + background persist) ---
   Future<void> updateConfig(ProfileConfigModel newConfig) async {
     _config = newConfig;
     AppColors.applyFromConfig(_config);
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
     notifyListeners();
+    final prefs = await _getPrefs();
+    await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
   }
 
-  // --- Services Full CRUD ---
+  // --- Services Full CRUD (Instant 0ms UI update + background persist) ---
   Future<void> addService(ServiceModel service) async {
     _services.add(service);
-    await _saveServices();
     notifyListeners();
+    await _saveServices();
   }
 
   Future<void> updateService(ServiceModel service) async {
     final index = _services.indexWhere((s) => s.id == service.id);
     if (index != -1) {
       _services[index] = service;
-      await _saveServices();
       notifyListeners();
+      await _saveServices();
     }
   }
 
   Future<void> deleteService(String id) async {
     _services.removeWhere((s) => s.id == id);
-    await _saveServices();
     notifyListeners();
+    await _saveServices();
   }
 
   Future<void> reorderServices(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) newIndex -= 1;
     final item = _services.removeAt(oldIndex);
     _services.insert(newIndex, item);
-    await _saveServices();
     notifyListeners();
+    await _saveServices();
   }
 
   Future<void> _saveServices() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await _getPrefs();
     final jsonStr = jsonEncode(_services.map((s) => s.toJson()).toList());
     await prefs.setString(_keyServices, jsonStr);
   }
 
-  // --- Projects Full CRUD ---
+  // --- Projects Full CRUD (Instant 0ms UI update + background persist) ---
   Future<void> addProject(ProjectModel project) async {
     _projects.insert(0, project);
-    await _saveProjects();
     notifyListeners();
+    await _saveProjects();
   }
 
   Future<void> updateProject(ProjectModel project) async {
     final index = _projects.indexWhere((p) => p.id == project.id);
     if (index != -1) {
       _projects[index] = project;
-      await _saveProjects();
       notifyListeners();
+      await _saveProjects();
     }
   }
 
   Future<void> deleteProject(String id) async {
     _projects.removeWhere((p) => p.id == id);
-    await _saveProjects();
     notifyListeners();
+    await _saveProjects();
   }
 
   Future<void> reorderProjects(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) newIndex -= 1;
     final item = _projects.removeAt(oldIndex);
     _projects.insert(newIndex, item);
-    await _saveProjects();
     notifyListeners();
+    await _saveProjects();
   }
 
   Future<void> _saveProjects() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await _getPrefs();
     final jsonStr = jsonEncode(_projects.map((p) => p.toJson()).toList());
     await prefs.setString(_keyProjects, jsonStr);
   }
 
-  // --- Why Work With Me Pillars Full CRUD ---
+  // --- Why Work With Me Pillars Full CRUD (Instant 0ms UI update + background persist) ---
   Future<void> addWhyWorkItem(WhyWorkModel item) async {
     _whyWorkList.add(item);
-    await _saveWhyWork();
     notifyListeners();
+    await _saveWhyWork();
   }
 
   Future<void> updateWhyWorkItem(WhyWorkModel item) async {
     final index = _whyWorkList.indexWhere((w) => w.id == item.id);
     if (index != -1) {
       _whyWorkList[index] = item;
-      await _saveWhyWork();
       notifyListeners();
+      await _saveWhyWork();
     }
   }
 
   Future<void> deleteWhyWorkItem(String id) async {
     _whyWorkList.removeWhere((w) => w.id == id);
-    await _saveWhyWork();
     notifyListeners();
+    await _saveWhyWork();
   }
 
   Future<void> _saveWhyWork() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await _getPrefs();
     final jsonStr = jsonEncode(_whyWorkList.map((w) => w.toJson()).toList());
     await prefs.setString(_keyWhyWork, jsonStr);
   }
@@ -272,7 +277,7 @@ class CmsStorageService extends ChangeNotifier {
         _whyWorkList = list.map((e) => WhyWorkModel.fromJson(Map<String, dynamic>.from(e as Map))).toList();
       }
 
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = await _getPrefs();
       await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
       await prefs.setString(_keyServices, jsonEncode(_services.map((s) => s.toJson()).toList()));
       await prefs.setString(_keyProjects, jsonEncode(_projects.map((p) => p.toJson()).toList()));
@@ -289,7 +294,7 @@ class CmsStorageService extends ChangeNotifier {
 
   // --- Factory Reset ---
   Future<void> resetToDefaults() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await _getPrefs();
     await prefs.remove(_keyProfileConfig);
     await prefs.remove(_keyServices);
     await prefs.remove(_keyProjects);
