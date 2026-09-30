@@ -281,7 +281,7 @@ class _ServiceCardState extends State<_ServiceCard> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        widget.service.shortDesc,
+                        widget.loc.getServiceShortDesc(widget.service),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

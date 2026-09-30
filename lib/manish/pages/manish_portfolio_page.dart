@@ -713,7 +713,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   const SizedBox(height: 10),
                   Expanded(
                     child: Text(
-                      service.shortDesc,
+                      loc.getServiceShortDesc(service),
                       style: TextStyle(
                         color: hasImage
                             ? Colors.white.withValues(alpha: 0.85)
@@ -939,7 +939,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      project.title,
+                      loc.getProjectTitle(project),
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -947,7 +947,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                     const SizedBox(height: 6),
                     Expanded(
                       child: Text(
-                        project.shortDesc,
+                        loc.getProjectShortDesc(project),
                         style: TextStyle(
                           color: _isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
                           fontSize: 12.5,

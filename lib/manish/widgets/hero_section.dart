@@ -70,13 +70,8 @@ class HeroSection extends StatelessWidget {
   }
 
   Widget _buildHeroContent(BuildContext context, bool isDesktop, AppLocalization loc) {
-    final displayTagline = language == AppLanguage.hindi
-        ? loc.heroTagline
-        : (config.tagline.isNotEmpty ? config.tagline : loc.heroTagline);
-
-    final displaySubtitle = language == AppLanguage.hindi
-        ? loc.heroSubtitle
-        : (config.heroSubtitle.isNotEmpty ? config.heroSubtitle : loc.heroSubtitle);
+    final displayTagline = loc.getHeroTagline(config.tagline);
+    final displaySubtitle = loc.getHeroSubtitle(config.heroSubtitle);
 
     return Column(
       crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,

@@ -128,7 +128,7 @@ class ServiceDetailDialog extends StatelessWidget {
                     children: [
                       // Detailed Description
                       Text(
-                        service.detailedDesc.isNotEmpty ? service.detailedDesc : service.shortDesc,
+                        loc.getServiceDetailedDesc(service),
                         style: AppTypography.bodyLarge(context, isDark: isDark).copyWith(
                           height: 1.6,
                         ),
@@ -178,7 +178,7 @@ class ServiceDetailDialog extends StatelessWidget {
                       ],
 
                       // Key Benefits
-                      if (service.benefits.isNotEmpty) ...[
+                      if (loc.getServiceBenefits(service).isNotEmpty) ...[
                         Text(
                           loc.keyBenefitsTitle,
                           style: TextStyle(
@@ -188,7 +188,7 @@ class ServiceDetailDialog extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        ...service.benefits.map((benefit) => Padding(
+                        ...loc.getServiceBenefits(service).map((benefit) => Padding(
                               padding: const EdgeInsets.only(bottom: 8),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,

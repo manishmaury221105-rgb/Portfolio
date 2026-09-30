@@ -362,7 +362,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.project.title,
+                        widget.loc.getProjectTitle(widget.project),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -373,7 +373,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        widget.project.shortDesc,
+                        widget.loc.getProjectShortDesc(widget.project),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

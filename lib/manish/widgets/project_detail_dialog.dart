@@ -116,7 +116,7 @@ class ProjectDetailDialog extends StatelessWidget {
                     children: [
                       // Title
                       Text(
-                        project.title,
+                        loc.getProjectTitle(project),
                         style: AppTypography.displayMedium(context, isDark: isDark).copyWith(fontSize: 22),
                       ),
                       const SizedBox(height: 12),
@@ -151,7 +151,7 @@ class ProjectDetailDialog extends StatelessWidget {
 
                       // Detailed Description
                       Text(
-                        project.detailedDesc.isNotEmpty ? project.detailedDesc : project.shortDesc,
+                        loc.getProjectDetailedDesc(project),
                         style: AppTypography.bodyLarge(context, isDark: isDark).copyWith(
                           height: 1.6,
                         ),
@@ -159,7 +159,7 @@ class ProjectDetailDialog extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // Key Features
-                      if (project.keyFeatures.isNotEmpty) ...[
+                      if (loc.getProjectKeyFeatures(project).isNotEmpty) ...[
                         Text(
                           loc.keyFeaturesTitle,
                           style: TextStyle(
@@ -169,7 +169,7 @@ class ProjectDetailDialog extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        ...project.keyFeatures.map((feat) => Padding(
+                        ...loc.getProjectKeyFeatures(project).map((feat) => Padding(
                               padding: const EdgeInsets.only(bottom: 8),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,

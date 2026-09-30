@@ -110,9 +110,7 @@ class AboutSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      config.aboutMission.isNotEmpty
-                          ? config.aboutMission
-                          : 'Continuous innovation, transparent communication, and relentless focus on measurable business growth for clients.',
+                      loc.getAboutMission(config.aboutMission),
                       style: AppTypography.bodyLarge(context, isDark: isDark).copyWith(
                         height: 1.6,
                       ),
@@ -195,7 +193,7 @@ class AboutSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          config.aboutBio.isNotEmpty ? config.aboutBio : config.heroSubtitle,
+          loc.getAboutBio(config.aboutBio, config.heroSubtitle),
           style: AppTypography.bodyLarge(context, isDark: isDark).copyWith(
             height: 1.65,
           ),

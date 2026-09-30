@@ -1,3 +1,4 @@
+import '../models/project_model.dart';
 import '../models/service_model.dart';
 import '../models/why_work_model.dart';
 
@@ -99,22 +100,42 @@ class AppLocalization {
   String get heroTagline {
     switch (language) {
       case AppLanguage.hindi:
-        return 'डिजिटल मार्केटिंग और फुल-स्टैक वेब/ऐप डेवलपर';
+        return 'बेस्ट डिजिटल मार्केटिंग एजेंसी | वेबसाइट और ऐप डेवलपमेंट';
       case AppLanguage.hinglish:
-        return 'Digital Marketing & Full-Stack Web/App Developer';
+        return 'Best Digital Marketing Agency In Varanasi | Website & App Development';
       case AppLanguage.english:
-        return 'Digital Marketing & Full-Stack Web/App Developer';
+        return 'Best Digital Marketing Agency | Full-Stack Web & App Development';
     }
   }
 
   String get heroSubtitle {
     switch (language) {
       case AppLanguage.hindi:
-        return 'वाराणसी और पूरे भारत के व्यवसायों को हाई-कन्वर्टिंग मेटा ऐड्स, गूगल एसईओ और आधुनिक वेब/ऐप सॉल्यूशंस से आगे बढ़ाना।';
+        return 'मैं डिजिटल मनीष, वाराणसी और पूरे भारत के व्यवसायों को हाई-कन्वर्टिंग मेटा व गूगल ऐड्स, टॉप-रैंकिंग एसईओ, आधुनिक वेबसाइट्स और मोबाइल ऐप्स के माध्यम से ऑनलाइन विकसित करने में सहायता करता हूँ।';
       case AppLanguage.hinglish:
-        return 'Varanasi aur All India me businesses ko superfast websites, targeted Meta ads aur Google ranking se scale karna.';
+        return 'Main Digital Manish, ek Best Digital Marketing Agency aur Full-Stack Web & App Development Agency hoon. High-converting Meta & Google Ads campaigns, result-driven SEO, professional websites, modern mobile applications aur smart digital solutions ke through businesses ko online grow karne mein help karta hoon.';
       case AppLanguage.english:
-        return 'Scaling businesses across India with high-converting Meta Ads, Google SEO, and modern Web/App solutions.';
+        return 'I am Digital Manish, a premier Digital Marketing Specialist and Full-Stack Web & Mobile App Developer. I help businesses scale online through high-converting Meta & Google Ads campaigns, result-driven SEO, modern responsive websites, custom mobile applications, and high-performance digital solutions.';
+    }
+  }
+
+  String getHeroTagline(String customTagline) {
+    if (language == AppLanguage.hindi) {
+      return heroTagline;
+    } else if (language == AppLanguage.english) {
+      return heroTagline;
+    } else {
+      return customTagline.isNotEmpty ? customTagline : heroTagline;
+    }
+  }
+
+  String getHeroSubtitle(String customSubtitle) {
+    if (language == AppLanguage.hindi) {
+      return heroSubtitle;
+    } else if (language == AppLanguage.english) {
+      return heroSubtitle;
+    } else {
+      return customSubtitle.isNotEmpty ? customSubtitle : heroSubtitle;
     }
   }
 
@@ -337,7 +358,7 @@ class AppLocalization {
       case AppLanguage.hinglish:
         return 'Real business results aur ROI generate karne wale verified live projects.';
       case AppLanguage.english:
-        return 'Proven solutions driving measurable ROI, high conversion rates, and growth.';
+        return 'Proven solutions driving measurable ROI, high conversion rates, and business growth.';
     }
   }
 
@@ -452,6 +473,30 @@ class AppLocalization {
     }
   }
 
+  String getAboutBio(String customBio, String fallbackSubtitle) {
+    if (language == AppLanguage.hindi) {
+      return 'मैं मनीष मौर्य, वाराणसी (उत्तर प्रदेश) में स्थित एक समर्पित डिजिटल मार्केटर और फुल-स्टैक वेब/ऐप डेवलपर हूँ। 3+ वर्षों के अनुभव के साथ, मैंने भारत भर के व्यवसायों को डिजिटल उपस्थिति बनाने, उच्च गुणवत्ता वाले लीड जनरेट करने और बिक्री बढ़ाने में सहायता की है।';
+    } else if (language == AppLanguage.english) {
+      return 'I am Manish Maurya, a passionate Digital Marketer and Full-Stack Web & Mobile App Developer based in Varanasi (UP), India. With 3+ years of experience, I specialize in crafting high-converting ad campaigns, modern web apps, and native mobile applications that accelerate business growth.';
+    } else {
+      if (customBio.isNotEmpty) return customBio;
+      if (fallbackSubtitle.isNotEmpty) return fallbackSubtitle;
+      return 'Main Manish Maurya, Varanasi me based ek passionate Digital Marketer aur Full-Stack Developer hoon. 3+ saal ke experience ke saath maine kayi local businesses aur startups ko online grow karne me madad ki hai.';
+    }
+  }
+
+  String getAboutMission(String customMission) {
+    if (language == AppLanguage.hindi) {
+      return 'निरंतर नवाचार, पारदर्शी संवाद और क्लाइंट्स के लिए ठोस व्यावसायिक वृद्धि मेरा मुख्य ध्येय है। हर प्रोजेक्ट में प्रीमियम गुणवत्ता और समयबद्ध डिलीवरी सुनिश्चित करना मेरी प्राथमिकता है।';
+    } else if (language == AppLanguage.english) {
+      return 'Continuous innovation, transparent communication, and a relentless focus on delivering measurable business growth for clients. Delivering scalable, high-quality digital solutions on time.';
+    } else {
+      return customMission.isNotEmpty
+          ? customMission
+          : 'Continuous innovation, transparent communication, and relentless focus on measurable business growth for clients.';
+    }
+  }
+
   String get aboutMissionTitle {
     switch (language) {
       case AppLanguage.hindi:
@@ -504,7 +549,7 @@ class AppLocalization {
       case AppLanguage.hinglish:
         return 'Naya project shuru karna ho ya free consultation chahiye, direct WhatsApp ya call karein.';
       case AppLanguage.english:
-        return 'Ready to launch a new project or scale marketing? Reach out directly via WhatsApp or Phone.';
+        return 'Ready to launch a new project or scale your marketing? Reach out directly via WhatsApp or Phone.';
     }
   }
 
@@ -699,13 +744,391 @@ class AppLocalization {
 
   // --- Dynamic Model Translators ---
   String getServiceTitle(ServiceModel service) {
-    switch (language) {
-      case AppLanguage.hindi:
-        return service.titleHindi.isNotEmpty ? service.titleHindi : service.titleEnglish;
-      case AppLanguage.english:
-        return service.titleEnglish.isNotEmpty ? service.titleEnglish : service.titleHindi;
-      case AppLanguage.hinglish:
-        return service.titleHindi.isNotEmpty ? service.titleHindi : service.titleEnglish;
+    if (language == AppLanguage.hindi) {
+      switch (service.id) {
+        case 'digital_marketing':
+          return 'डिजिटल मार्केटिंग';
+        case 'meta_ads':
+          return 'मेटा ऐड्स (FB & Insta)';
+        case 'seo':
+          return 'सर्च इंजन ऑप्टिमाइज़ेशन (SEO)';
+        case 'google_ads':
+          return 'गूगल ऐड्स (PPC & YouTube)';
+        case 'web_dev':
+          return 'वेबसाइट डेवलपमेंट';
+        case 'app_dev':
+          return 'मोबाइल ऐप डेवलपमेंट';
+        default:
+          return service.titleHindi.isNotEmpty ? service.titleHindi : service.titleEnglish;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (service.id) {
+        case 'digital_marketing':
+          return 'Digital Marketing & Social Growth';
+        case 'meta_ads':
+          return 'Meta Ads (Facebook & Instagram)';
+        case 'seo':
+          return 'SEO & Google Ranking';
+        case 'google_ads':
+          return 'Google Search & YouTube Ads';
+        case 'web_dev':
+          return 'Modern Web Development';
+        case 'app_dev':
+          return 'Android & iOS App Development';
+        default:
+          return service.titleEnglish.isNotEmpty ? service.titleEnglish : service.titleHindi;
+      }
+    } else {
+      return service.titleHindi.isNotEmpty ? service.titleHindi : service.titleEnglish;
+    }
+  }
+
+  String getServiceShortDesc(ServiceModel service) {
+    if (language == AppLanguage.hindi) {
+      switch (service.id) {
+        case 'digital_marketing':
+          return 'सोशल मीडिया ब्रांडिंग, लक्षित ऑडियंस और ऑनलाइन प्रचार से निरंतर बिज़नेस लीड्स प्राप्त करें।';
+        case 'meta_ads':
+          return 'फेसबुक और इंस्टाग्राम पर लक्षित विज्ञापन चलाकर कम से कम लागत में अधिक से अधिक ग्राहक लीड्स प्राप्त करें।';
+        case 'seo':
+          return 'गूगल के 1st पेज पर रैंक करें और नियमित मुफ्त ऑर्गेनिक ट्रैफिक और कॉल्स पाएं।';
+        case 'google_ads':
+          return 'जब ग्राहक गूगल पर आपकी सेवा खोजें, तो सबसे ऊपर आपका विज्ञापन दिखे और तुरंत कॉल्स आएं।';
+        case 'web_dev':
+          return 'मोबाइल, टैबलेट और कंप्यूटर पर सुपरफास्ट खुलने वाली आधुनिक, आकर्षक और एसईओ-फ्रेंडली वेबसाइट्स।';
+        case 'app_dev':
+          return 'एंड्रॉइड और आईओएस के लिए आधुनिक, स्मूथ और फीचर-युक्त मोबाइल ऐप्स एडमिन पैनल के साथ।';
+        default:
+          return service.shortDesc;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (service.id) {
+        case 'digital_marketing':
+          return 'Scale your brand with strategic social media marketing, audience targeting, and continuous qualified lead generation.';
+        case 'meta_ads':
+          return 'Run high-converting Facebook & Instagram ads to generate maximum qualified inquiries at the lowest cost.';
+        case 'seo':
+          return 'Rank on Google\'s 1st page to capture consistent organic buyer traffic, phone calls, and local leads.';
+        case 'google_ads':
+          return 'Capture ready-to-buy customers instantly with high-intent Google Search, Display, and YouTube PPC ads.';
+        case 'web_dev':
+          return 'Blazing fast, modern, and SEO-friendly responsive websites tailored for high conversions and user engagement.';
+        case 'app_dev':
+          return 'Feature-rich, smooth, and scalable mobile applications for Android & iOS with cloud admin dashboards.';
+        default:
+          return service.shortDesc;
+      }
+    } else {
+      return service.shortDesc;
+    }
+  }
+
+  String getServiceDetailedDesc(ServiceModel service) {
+    if (language == AppLanguage.hindi) {
+      switch (service.id) {
+        case 'digital_marketing':
+          return 'संपूर्ण डिजिटल मार्केटिंग रणनीति जिसमें सोशल मीडिया प्रबंधन, ब्रांड विजिबिलिटी कैंपेन, ग्राहक जुड़ाव और लक्षित लीड जनरेशन शामिल है ताकि आपका ब्रांड टॉप पर रहे।';
+        case 'meta_ads':
+          return 'मेटा ऐड्स मैनेजर के माध्यम से उन्नत ऑडियंस डेमोग्राफिक, इंटरेस्ट टारगेटिंग और कस्टम री-टारगेटिंग फ़नल जो सीधे आपके व्हाट्सएप या फोन पर इच्छुक ग्राहक लाते हैं।';
+        case 'seo':
+          return 'संपूर्ण एंड-टू-एंड एसईओ प्रक्रिया जिसमें ऑन-पेज एसईओ, टेक्निकल ऑडिट, गूगल बिजनेस प्रोफाइल (लोकल मैप एसईओ) और हाई-रैंकिंग कीवर्ड रिसर्च शामिल है।';
+        case 'google_ads':
+          return 'हाई-इंटेंट गूगल सर्च ऐड्स, डिस्प्ले बैनर्स और यूट्यूब वीडियो प्रमोशन जो तुरंत सेवा खरीदने वाले इच्छुक ग्राहकों को सीधे जोड़ते हैं।';
+        case 'web_dev':
+          return 'कस्टम आधुनिक व्यावसायिक वेबसाइट्स, ई-कॉमर्स स्टोर्स, पोर्टफोलियो साइट्स और लैंडिंग पेज जो तेज़ स्पीड और उच्च रूपांतरण के लिए निर्मित हैं।';
+        case 'app_dev':
+          return 'क्रॉस-प्लेटफॉर्म फ्लटर ऐप्स जो तेज़, सुरक्षित, हल्की और उपयोगकर्ताओं को 60fps स्मूथ अनुभव प्रदान करती हैं।';
+        default:
+          return service.detailedDesc.isNotEmpty ? service.detailedDesc : service.shortDesc;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (service.id) {
+        case 'digital_marketing':
+          return 'Comprehensive digital marketing and social media growth strategies designed to elevate your brand presence, attract high-intent customers, and maximize conversion rates.';
+        case 'meta_ads':
+          return 'Advanced Meta Ads Manager campaigns with detailed demographic targeting, lookalike audiences, and custom retargeting funnels that drive customers directly to your WhatsApp or CRM.';
+        case 'seo':
+          return 'Complete end-to-end SEO process including On-Page optimization, Technical audits, Google Business Profile (Local Map SEO), and high-intent keyword targeting.';
+        case 'google_ads':
+          return 'Target customers at the exact moment they search for your services with precision PPC search campaigns, display network ads, and YouTube video promotions.';
+        case 'web_dev':
+          return 'Custom modern business websites, e-commerce stores, portfolio platforms, and landing pages engineered for speed, sleek UI/UX, and search engine dominance.';
+        case 'app_dev':
+          return 'Cross-platform Flutter & cloud-backed mobile applications delivering fluid performance, modern UI/UX, push notifications, and seamless offline experience.';
+        default:
+          return service.detailedDesc.isNotEmpty ? service.detailedDesc : service.shortDesc;
+      }
+    } else {
+      return service.detailedDesc.isNotEmpty ? service.detailedDesc : service.shortDesc;
+    }
+  }
+
+  List<String> getServiceBenefits(ServiceModel service) {
+    if (language == AppLanguage.hindi) {
+      switch (service.id) {
+        case 'digital_marketing':
+          return [
+            'अधिक वास्तविक और इच्छुक ग्राहक पूछताछ',
+            'ब्रांड विश्वसनीयता और विश्वास में वृद्धि',
+            'स्थानीय और राष्ट्रीय स्तर पर लक्षित पहुंच',
+            'साप्ताहिक रिपोर्ट और पारदर्शी एनालिटिक्स',
+          ];
+        case 'meta_ads':
+          return [
+            'कम प्रति-लीड लागत (Low CPL)',
+            'व्हाट्सएप पर ग्राहकों से सीधी बातचीत',
+            'अधिकतम रिटर्न ऑन ऐड स्पेंड (ROAS)',
+            'पहले दिन से ही तुरंत पूछताछ',
+          ];
+        case 'seo':
+          return [
+            'बिना विज्ञापन खर्च के लगातार ऑर्गेनिक गूगल ट्रैफिक',
+            'लोकल मैप सर्च में शीर्ष स्थान',
+            'दीर्घकालिक टिकाऊ व्यावसायिक वृद्धि',
+            'सर्च इंजन पर उच्च विश्वसनीयता',
+          ];
+        case 'google_ads':
+          return [
+            'पहले दिन से तुरंत कॉल्स और पूछताछ',
+            'केवल वास्तविक क्लिक्स पर भुगतान (PPC)',
+            'खरीदने के इच्छुक ग्राहकों का ट्रैफिक',
+            'सटीक लोकेशन टारगेटिंग',
+          ];
+        case 'web_dev':
+          return [
+            'व्यवसाय के लिए 24/7 ऑनलाइन उपस्थिति',
+            'आधुनिक डिज़ाइन जो ग्राहकों को प्रभावित करे',
+            'सुरक्षित एसएसएल, तेज़ होस्टिंग और साफ़ कोड',
+            'गूगल पर अच्छी रैंकिंग के लिए एसईओ संरचना',
+          ];
+        case 'app_dev':
+          return [
+            'मोबाइल स्क्रीन पर ग्राहकों से सीधा जुड़ाव',
+            'ऑफर और अपडेट्स के लिए तुरंत पुश नोटिफिकेशन्स',
+            'स्मूथ यूजर इंटरफेस और उच्च सुरक्षा',
+            'स्केलेबल क्लाउड इंफ्रास्ट्रक्चर',
+          ];
+        default:
+          return service.benefits;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (service.id) {
+        case 'digital_marketing':
+          return [
+            'High volume of verified, genuine inquiries',
+            'Enhanced brand credibility and trust',
+            'Targeted local and nationwide reach',
+            'Transparent weekly performance reports',
+          ];
+        case 'meta_ads':
+          return [
+            'Optimized low cost-per-lead (CPL)',
+            'Direct instant customer conversations on WhatsApp',
+            'A/B testing for maximum Return on Ad Spend (ROAS)',
+            'Immediate customer engagement from Day 1',
+          ];
+        case 'seo':
+          return [
+            'Free organic Google traffic without ad spend',
+            'Dominance in local Google Map searches',
+            'Long-term sustainable business growth',
+            'High search visibility & brand authority',
+          ];
+        case 'google_ads':
+          return [
+            'Immediate high-intent inquiries from Day 1',
+            'Pay only when interested customers click (PPC)',
+            'High buyer-intent and ready-to-purchase leads',
+            'Precise local & national geo-targeting',
+          ];
+        case 'web_dev':
+          return [
+            '24/7 online storefront for your business',
+            'Modern aesthetics that build instant credibility',
+            'SSL secure, fast cloud hosting, clean architecture',
+            'SEO-optimized structure for high rankings',
+          ];
+        case 'app_dev':
+          return [
+            'Direct mobile presence on customers\' devices',
+            'Instant push notifications for offers and updates',
+            'Offline capability & smooth 60fps animations',
+            'Scalable, secure cloud infrastructure',
+          ];
+        default:
+          return service.benefits;
+      }
+    } else {
+      return service.benefits;
+    }
+  }
+
+  // --- Projects Dynamic Translators ---
+  String getProjectTitle(ProjectModel project) {
+    if (language == AppLanguage.hindi) {
+      switch (project.id) {
+        case 'p1':
+          return 'ई-कॉमर्स स्टोर एवं ऑर्डर मैनेजमेंट';
+        case 'p2':
+          return 'रियल एस्टेट मेटा ऐड्स एवं लीड फ़नल';
+        case 'p3':
+          return 'क्लिनिक एवं हॉस्पिटल अपॉइंटमेंट ऐप';
+        case 'p4':
+          return 'रेस्टोरेंट एवं कैफे लोकल एसईओ व गूगल मैप्स';
+        default:
+          return project.title;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (project.id) {
+        case 'p1':
+          return 'E-Commerce Store & Order Management';
+        case 'p2':
+          return 'Real Estate Meta Ads & Lead Funnel';
+        case 'p3':
+          return 'Clinic & Hospital Appointment Booking App';
+        case 'p4':
+          return 'Restaurant & Cafe Local SEO & Google Map Ranking';
+        default:
+          return project.title;
+      }
+    } else {
+      return project.title;
+    }
+  }
+
+  String getProjectShortDesc(ProjectModel project) {
+    if (language == AppLanguage.hindi) {
+      switch (project.id) {
+        case 'p1':
+          return 'शॉपिंग कार्ट, ऑनलाइन पेमेंट, लाइव ऑर्डर ट्रैकिंग और एडमिन डैशबोर्ड से युक्त आधुनिक वेब ऐप।';
+        case 'p2':
+          return 'लक्षित मेटा व गूगल विज्ञापन अभियान जिसने ₹28 CPL पर 450+ इच्छुक खरीदार लीड्स उत्पन्न कीं।';
+        case 'p3':
+          return 'मरीज़ों के अपॉइंटमेंट, डॉक्टर शेड्यूल और डिजिटल पर्ची के लिए क्रॉस-प्लेटफॉर्म मोबाइल ऐप।';
+        case 'p4':
+          return 'वाराणसी में रेस्टोरेंट को गूगल मैप पर #1 स्थान दिलाया, जिससे ग्राहकों की संख्या और कॉल्स में 3.2 गुना वृद्धि हुई।';
+        default:
+          return project.shortDesc;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (project.id) {
+        case 'p1':
+          return 'Modern shopping web app with cart, online payments, live order tracking and admin dashboard.';
+        case 'p2':
+          return 'Targeted Meta & Google Ads campaign generating 450+ high-intent home buyer leads at ₹28 CPL.';
+        case 'p3':
+          return 'Cross-platform Flutter mobile app for patient appointments, doctor schedules, and digital prescriptions.';
+        case 'p4':
+          return 'Ranked local restaurant #1 on Google Maps in Varanasi, driving 3.2x more dine-in customers and calls.';
+        default:
+          return project.shortDesc;
+      }
+    } else {
+      return project.shortDesc;
+    }
+  }
+
+  String getProjectDetailedDesc(ProjectModel project) {
+    if (language == AppLanguage.hindi) {
+      switch (project.id) {
+        case 'p1':
+          return 'रिस्पॉन्सिव यूआई, त्वरित उत्पाद खोज, श्रेणी फ़िल्टर, रेज़रपे चेकआउट और वास्तविक समय ऑर्डर स्थिति ट्रैकिंग के साथ निर्मित संपूर्ण डिजिटल स्टोर।';
+        case 'p2':
+          return 'उत्तर प्रदेश में रियल एस्टेट डेवलपर के लिए उच्च-प्रदर्शन लीड जनरेशन अभियान। कस्टम वीडियो क्रिएटिव्स, डायरेक्ट व्हाट्सएप लैंडिंग फ्लो और त्वरित लीड सूचनाएं।';
+        case 'p3':
+          return 'विशेषज्ञ डायरेक्टरी, स्लॉट-आधारित बुकिंग, पुश नोटिफिकेशन रिमाइंडर और सुरक्षित क्लाउड प्रिस्क्रिप्शन स्टोरेज के साथ निर्मित निर्बाध ऐप।';
+        case 'p4':
+          return 'गूगल बिजनेस प्रोफाइल नवीनीकरण, जियो-टैग्ड फोटो अपलोड, मेनू कीवर्ड ऑप्टिमाइज़ेशन और रिव्यू रणनीति सहित संपूर्ण स्थानीय अनुकूलन।';
+        default:
+          return project.detailedDesc.isNotEmpty ? project.detailedDesc : project.shortDesc;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (project.id) {
+        case 'p1':
+          return 'A complete digital store built with responsive UI, instant product search, category filters, Razorpay/Stripe checkout, and real-time order status tracking with WhatsApp notifications for business owners.';
+        case 'p2':
+          return 'Engineered a high-performing lead generation campaign for a real estate developer in UP. Created custom video creatives, direct WhatsApp landing flow, and instant CRM lead notifications.';
+        case 'p3':
+          return 'Built a seamless patient-doctor management app with specialist directory, slot-based booking, push notification reminders, and secure cloud prescription storage.';
+        case 'p4':
+          return 'Complete local optimization including Google Business Profile revamp, geo-tagged photo uploads, menu keyword optimization, review acquisition strategy, and local citations.';
+        default:
+          return project.detailedDesc.isNotEmpty ? project.detailedDesc : project.shortDesc;
+      }
+    } else {
+      return project.detailedDesc.isNotEmpty ? project.detailedDesc : project.shortDesc;
+    }
+  }
+
+  List<String> getProjectKeyFeatures(ProjectModel project) {
+    if (language == AppLanguage.hindi) {
+      switch (project.id) {
+        case 'p1':
+          return [
+            'त्वरित खोज और फ़िल्टर के साथ उत्पाद कैटलॉग',
+            'रेज़रपे / यूपीआई सुरक्षित ऑनलाइन चेकआउट',
+            'रियल-टाइम ऑर्डर मैनेजमेंट डैशबोर्ड',
+            'खरीदारी पर स्वचालित व्हाट्सएप सूचनाएं',
+          ];
+        case 'p2':
+          return [
+            '30 दिनों में 450+ सत्यापित खरीदार लीड्स',
+            'औसत प्रति-लीड लागत ₹28 तक अनुकूलित',
+            'तुरंत बातचीत के लिए डायरेक्ट व्हाट्सएप फ्लो',
+            'परीक्षण किए गए विज्ञापन कॉपी और क्रिएटिव्स',
+          ];
+        case 'p3':
+          return [
+            '3 क्लिक में आसान स्लॉट-आधारित अपॉइंटमेंट बुकिंग',
+            'मरीज़ों के लिए स्वचालित एसएमएस और रिमाइंडर',
+            'शेड्यूल और कतार प्रबंधित करने हेतु डॉक्टर डैशबोर्ड',
+            'एकीकृत डिजिटल प्रिस्क्रिप्शन निर्माण',
+          ];
+        case 'p4':
+          return [
+            '15+ मुख्य कीवर्ड्स पर गूगल लोकल 3-पैक में #1 रैंक',
+            'डायरेक्ट फोन कॉल्स और दिशा-निर्देश अनुरोधों में 320% वृद्धि',
+            '120+ प्रामाणिक 5-स्टार ग्राहक समीक्षाएं प्राप्त',
+            'गूगल मैप पर प्रति माह 15,000+ दृश्य',
+          ];
+        default:
+          return project.keyFeatures;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (project.id) {
+        case 'p1':
+          return [
+            'Product Catalog with instant search and filters',
+            'Razorpay / UPI integrated secure checkout',
+            'Real-time order management dashboard',
+            'Automated WhatsApp notifications on purchase',
+          ];
+        case 'p2':
+          return [
+            '450+ verified buyer leads generated in 30 days',
+            'Average Cost-Per-Lead (CPL) optimized to ₹28',
+            'Direct WhatsApp inquiry flow for instant sales calls',
+            'Comprehensive A/B tested ad copy & creative angles',
+          ];
+        case 'p3':
+          return [
+            'Easy slot-based appointment booking in 3 clicks',
+            'Automated SMS and Push reminders for patients',
+            'Doctor dashboard to manage schedules and queue',
+            'Integrated digital prescription generation',
+          ];
+        case 'p4':
+          return [
+            'Ranked #1 in Google Local 3-Pack for 15+ target keywords',
+            '320% increase in direct phone calls and direction requests',
+            '120+ authentic 5-star customer reviews generated',
+            'Consistent 15,000+ monthly Google Map impressions',
+          ];
+        default:
+          return project.keyFeatures;
+      }
+    } else {
+      return project.keyFeatures;
     }
   }
 
@@ -764,6 +1187,23 @@ class AppLocalization {
           return 'त्वरित संवाद एवं सहायता';
         case 'w6':
           return 'कस्टमाइज़्ड समाधान';
+        default:
+          return item.title;
+      }
+    } else if (language == AppLanguage.english) {
+      switch (item.id) {
+        case 'w1':
+          return 'User-Friendly Design';
+        case 'w2':
+          return 'Cutting-Edge Tech';
+        case 'w3':
+          return 'Responsive & Fast';
+        case 'w4':
+          return 'Business & ROI Focused';
+        case 'w5':
+          return 'Direct Support';
+        case 'w6':
+          return 'Tailored Solutions';
         default:
           return item.title;
       }
