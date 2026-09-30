@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/service_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../utils/app_localization.dart';
 import '../utils/url_helper.dart';
 import 'app_smart_image.dart';
 import 'service_detail_dialog.dart';
@@ -9,12 +10,14 @@ import 'service_detail_dialog.dart';
 class ServicesSection extends StatelessWidget {
   final bool isDark;
   final List<ServiceModel> services;
+  final AppLanguage language;
   final VoidCallback? onOpenAdmin;
 
   const ServicesSection({
     super.key,
     required this.isDark,
     required this.services,
+    this.language = AppLanguage.hinglish,
     this.onOpenAdmin,
   });
 
@@ -24,6 +27,7 @@ class ServicesSection extends StatelessWidget {
     final isDesktop = width > 950;
     final isTablet = width > 600 && width <= 950;
     final crossAxisCount = isDesktop ? 3 : (isTablet ? 2 : 1);
+    final loc = AppLocalization(language);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -43,7 +47,7 @@ class ServicesSection extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  'What I Do (Meri Sevaayein)',
+                  loc.servicesBadge,
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
@@ -54,13 +58,13 @@ class ServicesSection extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'My Specialized Services',
+                loc.servicesHeading,
                 textAlign: TextAlign.center,
                 style: AppTypography.displayMedium(context, isDark: isDark),
               ),
               const SizedBox(height: 8),
               Text(
-                'Har business ko modern technology aur results-oriented marketing se scale karne ke liye comprehensive solutions.',
+                loc.servicesSubtitle,
                 textAlign: TextAlign.center,
                 style: AppTypography.bodyLarge(context, isDark: isDark),
               ),
@@ -74,7 +78,7 @@ class ServicesSection extends StatelessWidget {
                         children: [
                           const Icon(Icons.miscellaneous_services_rounded, size: 48, color: Colors.grey),
                           const SizedBox(height: 12),
-                          Text('Abhi koi service add nahi ki gayi hai.', style: AppTypography.bodyLarge(context, isDark: isDark)),
+                          Text('No services added yet.', style: AppTypography.bodyLarge(context, isDark: isDark)),
                           if (onOpenAdmin != null) ...[
                             const SizedBox(height: 12),
                             ElevatedButton.icon(
@@ -100,7 +104,22 @@ class ServicesSection extends StatelessWidget {
                           itemCount: services.length,
                           itemBuilder: (context, i) {
                             final service = services[i];
-                            return _buildServiceCard(context, service);
+                            return _ServiceCard(
+                              service: service,
+                              isDark: isDark,
+                              language: language,
+                              loc: loc,
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => ServiceDetailDialog(
+                                    service: service,
+                                    isDark: isDark,
+                                    language: language,
+                                  ),
+                                );
+                              },
+                            );
                           },
                         );
                       },
@@ -111,199 +130,207 @@ class ServicesSection extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildServiceCard(BuildContext context, ServiceModel service) {
-    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
-    final hasImage = service.imageUrl.isNotEmpty;
+class _ServiceCard extends StatefulWidget {
+  final ServiceModel service;
+  final bool isDark;
+  final AppLanguage language;
+  final AppLocalization loc;
+  final VoidCallback onTap;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.darkCard : Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
+  const _ServiceCard({
+    required this.service,
+    required this.isDark,
+    required this.language,
+    required this.loc,
+    required this.onTap,
+  });
+
+  @override
+  State<_ServiceCard> createState() => _ServiceCardState();
+}
+
+class _ServiceCardState extends State<_ServiceCard> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final textPrimary = widget.isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+    final textSecondary = widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final serviceTitle = widget.loc.getServiceTitle(widget.service);
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+        decoration: BoxDecoration(
+          color: widget.isDark ? AppColors.darkCard : Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: _isHovered
+                ? widget.service.accentColor
+                : (widget.isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder),
+            width: _isHovered ? 1.5 : 1,
           ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Full background image covering entire box
-          if (hasImage) ...[
-            AppSmartImage(
-              imageUrl: service.imageUrl,
-              fit: BoxFit.cover,
-              errorWidget: Container(color: service.accentColor.withValues(alpha: 0.15)),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withValues(alpha: 0.25),
-                    Colors.black.withValues(alpha: 0.65),
-                    Colors.black.withValues(alpha: 0.95),
-                  ],
-                  stops: const [0.0, 0.4, 1.0],
-                ),
-              ),
+          boxShadow: [
+            BoxShadow(
+              color: _isHovered
+                  ? widget.service.accentColor.withValues(alpha: 0.18)
+                  : Colors.black.withValues(alpha: widget.isDark ? 0.2 : 0.04),
+              blurRadius: _isHovered ? 24 : 16,
+              offset: Offset(0, _isHovered ? 8 : 4),
             ),
           ],
-
-          // Card Foreground Content
-          Padding(
-            padding: const EdgeInsets.all(22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Icon & Action Header
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: hasImage ? service.accentColor.withValues(alpha: 0.95) : service.accentColor.withValues(alpha: 0.14),
-                        borderRadius: BorderRadius.circular(14),
-                        boxShadow: hasImage
-                            ? [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.4),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ]
-                            : null,
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: widget.onTap,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image Header (if present) or Colored Header
+              if (widget.service.imageUrl.isNotEmpty)
+                SizedBox(
+                  height: 140,
+                  width: double.infinity,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      AppSmartImage(
+                        imageUrl: widget.service.imageUrl,
+                        fit: BoxFit.cover,
                       ),
-                      child: Center(
-                        child: Icon(
-                          service.icon,
-                          color: hasImage ? Colors.white : service.accentColor,
-                          size: 26,
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              (widget.isDark ? AppColors.darkCard : Colors.white).withValues(alpha: 0.9),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: hasImage ? Colors.black.withValues(alpha: 0.4) : Colors.transparent,
-                        shape: BoxShape.circle,
+                      Positioned(
+                        top: 12,
+                        left: 12,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: widget.service.accentColor,
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Icon(widget.service.icon, color: Colors.white, size: 22),
+                        ),
                       ),
-                      child: IconButton(
-                        icon: const Icon(Icons.chat_bubble_outline_rounded, color: AppColors.whatsappGreen, size: 20),
-                        onPressed: () {
-                          UrlHelper.openWhatsApp(
-                            message: 'Namaste Manish ji! Mujhe "${service.titleHindi}" service ke bare me jankari chahiye.',
-                            context: context,
-                          );
-                        },
-                        tooltip: 'WhatsApp Inquiry',
-                      ),
+                    ],
+                  ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: widget.service.accentColor.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-
-                // Title
-                Text(
-                  service.titleHindi,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: hasImage ? Colors.white : textPrimary,
-                    shadows: hasImage ? const [Shadow(color: Colors.black, blurRadius: 8, offset: Offset(0, 2))] : null,
+                    child: Icon(widget.service.icon, color: widget.service.accentColor, size: 28),
                   ),
                 ),
-                const SizedBox(height: 3),
-                Text(
-                  service.titleEnglish,
-                  style: TextStyle(
-                    fontSize: 13.5,
-                    fontWeight: FontWeight.w600,
-                    color: hasImage ? Colors.white70 : service.accentColor,
-                    shadows: hasImage ? const [Shadow(color: Colors.black, blurRadius: 6, offset: Offset(0, 1))] : null,
-                  ),
-                ),
-                const SizedBox(height: 10),
 
-                // Short Description
-                Text(
-                  service.shortDesc,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: hasImage
-                      ? const TextStyle(fontSize: 14.5, color: Colors.white70, height: 1.45, shadows: [Shadow(color: Colors.black, blurRadius: 6, offset: Offset(0, 1))])
-                      : const TextStyle(fontSize: 14.5, height: 1.45, color: Colors.grey),
-                ),
-                const SizedBox(height: 12),
-
-                // Sub-offerings bullet preview
-                Expanded(
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: service.subOfferings.take(3).map((sub) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.check_circle_outline_rounded,
-                              color: hasImage ? Colors.white70 : service.accentColor,
-                              size: 16,
-                            ),
-                            const SizedBox(width: 7),
-                            Expanded(
-                              child: Text(
-                                sub,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 13.5,
-                                  color: hasImage ? Colors.white.withValues(alpha: 0.92) : (isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
-                                  shadows: hasImage ? const [Shadow(color: Colors.black, blurRadius: 6, offset: Offset(0, 1))] : null,
-                                ),
-                              ),
-                            ),
-                          ],
+                    children: [
+                      Text(
+                        serviceTitle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary,
                         ),
-                      );
-                    }).toList(),
-                  ),
-                ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        widget.service.titleEnglish.isNotEmpty
+                            ? widget.service.titleEnglish
+                            : widget.service.titleHindi,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
+                          color: widget.service.accentColor,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        widget.service.shortDesc,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: textSecondary,
+                          height: 1.45,
+                        ),
+                      ),
+                      const Spacer(),
 
-                // Learn More Button
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => ServiceDetailDialog(service: service, isDark: isDark),
-                      );
-                    },
-                    icon: const Icon(Icons.arrow_forward_rounded, size: 17),
-                    label: const Text('Learn More & Details', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: hasImage ? Colors.white : service.accentColor,
-                      backgroundColor: hasImage ? service.accentColor.withValues(alpha: 0.35) : null,
-                      side: BorderSide(color: hasImage ? Colors.white54 : service.accentColor.withValues(alpha: 0.5)),
-                      padding: const EdgeInsets.symmetric(vertical: 11),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    ),
+                      // Action Row
+                      Row(
+                        children: [
+                          Text(
+                            widget.loc.viewDetailsBtn,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: widget.service.accentColor,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(Icons.arrow_forward_rounded, size: 16, color: widget.service.accentColor),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              final msg = widget.language == AppLanguage.hindi
+                                  ? 'नमस्ते मनीष जी! मुझे "$serviceTitle" सेवा के बारे में जानकारी चाहिए।'
+                                  : (widget.language == AppLanguage.english
+                                      ? 'Hello Manish! I would like to inquire about your "$serviceTitle" service.'
+                                      : 'Namaste Manish ji! Mujhe "$serviceTitle" service ke bare me jankari chahiye.');
+                              UrlHelper.openWhatsApp(
+                                phone: '918090547071',
+                                message: msg,
+                                context: context,
+                              );
+                            },
+                            icon: const Icon(Icons.chat_bubble_rounded, size: 18, color: Color(0xFF25D366)),
+                            tooltip: widget.loc.inquireOnWhatsApp,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

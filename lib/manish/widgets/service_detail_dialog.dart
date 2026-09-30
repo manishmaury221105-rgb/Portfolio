@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import '../models/service_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../utils/app_localization.dart';
 import '../utils/url_helper.dart';
 import 'app_smart_image.dart';
 
 class ServiceDetailDialog extends StatelessWidget {
   final ServiceModel service;
   final bool isDark;
+  final AppLanguage language;
 
   const ServiceDetailDialog({
     super.key,
     required this.service,
     required this.isDark,
+    this.language = AppLanguage.hinglish,
   });
 
   @override
@@ -20,6 +23,8 @@ class ServiceDetailDialog extends StatelessWidget {
     final bg = isDark ? AppColors.darkSurface : AppColors.lightSurface;
     final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
     final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final loc = AppLocalization(language);
+    final serviceTitle = loc.getServiceTitle(service);
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -93,12 +98,12 @@ class ServiceDetailDialog extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              service.titleHindi,
+                              serviceTitle,
                               style: AppTypography.displayMedium(context, isDark: isDark).copyWith(fontSize: 22),
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              service.titleEnglish,
+                              service.titleEnglish.isNotEmpty ? service.titleEnglish : service.titleHindi,
                               style: TextStyle(
                                 color: service.accentColor,
                                 fontWeight: FontWeight.w600,
@@ -121,68 +126,90 @@ class ServiceDetailDialog extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Overview
+                      // Detailed Description
                       Text(
-                        'Service Overview',
-                        style: AppTypography.headlineSmall(context, isDark: isDark).copyWith(fontSize: 16),
+                        service.detailedDesc.isNotEmpty ? service.detailedDesc : service.shortDesc,
+                        style: AppTypography.bodyLarge(context, isDark: isDark).copyWith(
+                          height: 1.6,
+                        ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        service.detailedDesc,
-                        style: AppTypography.bodyLarge(context, isDark: isDark),
-                      ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 24),
 
-                      // What is included
-                      Text(
-                        '✨ What You Get (Shamil Suvidhayein):',
-                        style: AppTypography.headlineSmall(context, isDark: isDark).copyWith(fontSize: 16),
-                      ),
-                      const SizedBox(height: 10),
-                      ...service.subOfferings.map((sub) => Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(Icons.check_circle_rounded, color: service.accentColor, size: 18),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    sub,
-                                    style: AppTypography.bodyMedium(context, isDark: isDark).copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: textPrimary,
+                      // What is included / Sub-offerings
+                      if (service.subOfferings.isNotEmpty) ...[
+                        Text(
+                          loc.includedServicesTitle,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        ...service.subOfferings.map((item) => Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 4),
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                      color: service.accentColor.withValues(alpha: 0.2),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(Icons.check, size: 13, color: service.accentColor),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      item,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: textSecondary,
+                                        height: 1.4,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )),
-                      const SizedBox(height: 16),
+                                ],
+                              ),
+                            )),
+                        const SizedBox(height: 24),
+                      ],
 
                       // Key Benefits
-                      Text(
-                        '🚀 Business Benefits (Aapko Kya Fayda Hoga):',
-                        style: AppTypography.headlineSmall(context, isDark: isDark).copyWith(fontSize: 16),
-                      ),
-                      const SizedBox(height: 10),
-                      ...service.benefits.map((benefit) => Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Icon(Icons.arrow_forward_rounded, color: AppColors.success, size: 18),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    benefit,
-                                    style: AppTypography.bodyMedium(context, isDark: isDark),
+                      if (service.benefits.isNotEmpty) ...[
+                        Text(
+                          loc.keyBenefitsTitle,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        ...service.benefits.map((benefit) => Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.star_rounded, size: 18, color: service.accentColor),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      benefit,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: textSecondary,
+                                        height: 1.4,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )),
-                      const SizedBox(height: 24),
+                                ],
+                              ),
+                            )),
+                        const SizedBox(height: 28),
+                      ],
 
                       // Action Buttons
                       Row(
@@ -191,37 +218,28 @@ class ServiceDetailDialog extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 Navigator.of(context).pop();
+                                final message = language == AppLanguage.hindi
+                                    ? 'नमस्ते मनीष जी! मुझे "$serviceTitle" सेवा के बारे में जानकारी चाहिए।'
+                                    : (language == AppLanguage.english
+                                        ? 'Hello Manish! I am interested in discussing your "$serviceTitle" service.'
+                                        : 'Namaste Manish ji! Mujhe "$serviceTitle" service ke baare me discuss karna hai. Details provide karein.');
                                 UrlHelper.openWhatsApp(
-                                  message:
-                                      'Namaste Manish ji! Mujhe "${service.titleHindi}" service ke baare me discuss karna hai. Details provide karein.',
+                                  phone: '918090547071',
+                                  message: message,
                                   context: context,
                                 );
                               },
-                              icon: const Icon(Icons.chat_rounded, color: Colors.white),
-                              label: const Text(
-                                'WhatsApp Pe Enquire Karein',
-                                style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
+                              icon: const Icon(Icons.chat_bubble_rounded, size: 18, color: Colors.white),
+                              label: Text(
+                                loc.bookConsultationBtn,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
                               ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.whatsappGreen,
+                                backgroundColor: service.accentColor,
                                 padding: const EdgeInsets.symmetric(vertical: 14),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                elevation: 4,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          IconButton.filledTonal(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              UrlHelper.makePhoneCall(context: context);
-                            },
-                            icon: const Icon(Icons.phone_in_talk_rounded, color: AppColors.callBlue),
-                            style: IconButton.styleFrom(
-                              padding: const EdgeInsets.all(14),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                            ),
-                            tooltip: 'Direct Call (7380492118)',
                           ),
                         ],
                       ),

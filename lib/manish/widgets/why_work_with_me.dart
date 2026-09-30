@@ -3,6 +3,7 @@ import '../models/profile_config_model.dart';
 import '../models/why_work_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../utils/app_localization.dart';
 import '../utils/url_helper.dart';
 import 'app_smart_image.dart';
 
@@ -10,12 +11,14 @@ class WhyWorkWithMeSection extends StatelessWidget {
   final bool isDark;
   final List<WhyWorkModel> items;
   final ProfileConfigModel config;
+  final AppLanguage language;
 
   const WhyWorkWithMeSection({
     super.key,
     required this.isDark,
     required this.items,
     required this.config,
+    required this.language,
   });
 
   @override
@@ -25,6 +28,7 @@ class WhyWorkWithMeSection extends StatelessWidget {
     final isTablet = width > 600 && width <= 900;
     final crossAxisCount = isDesktop ? 3 : (isTablet ? 2 : 1);
     final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+    final loc = AppLocalization(language);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -47,7 +51,7 @@ class WhyWorkWithMeSection extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  'Key Value Proposition',
+                  loc.whyWorkBadge,
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
@@ -58,13 +62,13 @@ class WhyWorkWithMeSection extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Why Work With ${config.name}?',
+                loc.whyWorkHeading(config.name),
                 textAlign: TextAlign.center,
                 style: AppTypography.displayMedium(context, isDark: isDark),
               ),
               const SizedBox(height: 8),
               Text(
-                'Aapke business ke liye dedicated, transparent aur result-driven digital partnership.',
+                loc.whyWorkSubtitle,
                 textAlign: TextAlign.center,
                 style: AppTypography.bodyLarge(context, isDark: isDark),
               ),
@@ -86,6 +90,9 @@ class WhyWorkWithMeSection extends StatelessWidget {
                     itemBuilder: (context, i) {
                       final item = items[i];
                       final Color color = item.color;
+                      final itemTitle = loc.getWhyWorkTitle(item);
+                      final itemSubtitle = loc.getWhyWorkSubtitle(item);
+
                       return Container(
                         decoration: BoxDecoration(
                           color: isDark ? AppColors.darkCard : Colors.white,
@@ -159,7 +166,7 @@ class WhyWorkWithMeSection extends StatelessWidget {
                                         ),
                                         const Spacer(),
                                         Text(
-                                          item.title,
+                                          itemTitle,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
@@ -173,7 +180,7 @@ class WhyWorkWithMeSection extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          item.subtitleHindi,
+                                          itemSubtitle,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -207,7 +214,7 @@ class WhyWorkWithMeSection extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 12),
                                     Text(
-                                      item.title,
+                                      itemTitle,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -219,7 +226,7 @@ class WhyWorkWithMeSection extends StatelessWidget {
                                     const SizedBox(height: 4),
                                     Flexible(
                                       child: Text(
-                                        item.subtitleHindi,
+                                        itemSubtitle,
                                         style: const TextStyle(fontSize: 13, height: 1.35, color: Colors.grey),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
@@ -256,26 +263,26 @@ class WhyWorkWithMeSection extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.support_agent_rounded, size: 32, color: Colors.white),
-                              SizedBox(width: 12),
+                              const Icon(Icons.support_agent_rounded, size: 32, color: Colors.white),
+                              const SizedBox(width: 12),
                               Expanded(
                                 child: Text(
-                                  'Ready to grow your business online?',
-                                  style: TextStyle(
+                                  loc.ctaReadyTitle,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    fontSize: 15.5,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 6),
-                          const Text(
-                            'Free consultation ke liye aaj hi WhatsApp ya direct call par connect karein.',
-                            style: TextStyle(color: Colors.white70, fontSize: 12.5),
+                          Text(
+                            loc.ctaReadySubtitle,
+                            style: const TextStyle(color: Colors.white70, fontSize: 12.5),
                           ),
                           const SizedBox(height: 14),
                           ElevatedButton(
@@ -290,7 +297,10 @@ class WhyWorkWithMeSection extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             ),
-                            child: const Text('Chat on WhatsApp', style: TextStyle(fontWeight: FontWeight.bold)),
+                            child: Text(
+                              loc.heroCtaWhatsApp,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ],
                       );
@@ -299,22 +309,22 @@ class WhyWorkWithMeSection extends StatelessWidget {
                       children: [
                         const Icon(Icons.support_agent_rounded, size: 40, color: Colors.white),
                         const SizedBox(width: 16),
-                        const Expanded(
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Ready to grow your business online?',
-                                style: TextStyle(
+                                loc.ctaReadyTitle,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 17,
+                                  fontSize: 16.5,
                                 ),
                               ),
-                              SizedBox(height: 2),
+                              const SizedBox(height: 2),
                               Text(
-                                'Free consultation ke liye aaj hi WhatsApp ya direct call par connect karein.',
-                                style: TextStyle(color: Colors.white70, fontSize: 13),
+                                loc.ctaReadySubtitle,
+                                style: const TextStyle(color: Colors.white70, fontSize: 13),
                               ),
                             ],
                           ),
@@ -332,7 +342,10 @@ class WhyWorkWithMeSection extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           ),
-                          child: const Text('Chat on WhatsApp', style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text(
+                            loc.heroCtaWhatsApp,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     );

@@ -4,9 +4,9 @@ import '../data/portfolio_data.dart';
 import '../models/profile_config_model.dart';
 import '../models/project_model.dart';
 import '../models/service_model.dart';
-import '../pages/admin_panel_page.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../utils/app_localization.dart';
 import '../utils/url_helper.dart';
 import '../widgets/about_section.dart';
 import '../widgets/app_smart_image.dart';
@@ -20,6 +20,7 @@ import '../widgets/service_detail_dialog.dart';
 import '../widgets/services_section.dart';
 import '../widgets/whatsapp_icon.dart';
 import '../widgets/why_work_with_me.dart';
+import 'admin_panel_page.dart';
 
 class ManishPortfolioPage extends StatefulWidget {
   final bool initialDarkMode;
@@ -116,134 +117,41 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     final config = _cmsService.config;
     final width = MediaQuery.of(context).size.width;
     final isDesktop = width > 860;
+    final lang = _cmsService.language;
+    final loc = AppLocalization(lang);
 
     return Scaffold(
       backgroundColor: bg,
       body: SafeArea(
         child: Column(
           children: [
-            // Top Multi-Page Navigation Bar
+            // Top Multi-Page Navigation Bar with Language Switcher
             PortfolioNavBar(
               isDark: _isDark,
               activePage: _activePage,
               config: config,
+              currentLanguage: lang,
+              onLanguageChanged: (newLang) => _cmsService.setLanguage(newLang),
               onToggleTheme: () => setState(() => _isDark = !_isDark),
               onNavigate: _onNavigate,
             ),
 
-                // Main Page Content with smooth transition
-                Expanded(
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: (notification) {
-                      _checkScrollPosition();
-                      return false;
-                    },
-                    child: SingleChildScrollView(
-                      controller: _scrollController,
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 250),
-                        switchInCurve: Curves.easeOut,
-                        switchOutCurve: Curves.easeIn,
-                        child: KeyedSubtree(
-                          key: ValueKey<String>(_activePage),
-                          child: _buildCurrentPageContent(config, isDesktop),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Floating WhatsApp & Scroll To Top Buttons
-          floatingActionButton: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              if (_showScrollToTop) ...[
-                FloatingActionButton.small(
-                  heroTag: 'scroll_top',
-                  onPressed: () {
-                    _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
-                  },
-                  backgroundColor: _isDark ? AppColors.darkCard : Colors.white,
-                  foregroundColor: _isDark ? Colors.white : AppColors.lightTextPrimary,
-                  child: const Icon(Icons.keyboard_arrow_up_rounded),
-                ),
-                const SizedBox(height: 10),
-              ],
-              AnimatedSlide(
-                offset: _hideWhatsAppInFooter ? const Offset(0, 1.8) : Offset.zero,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                child: AnimatedScale(
-                  scale: _hideWhatsAppInFooter ? 0.0 : 1.0,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeInOut,
-                  child: AnimatedOpacity(
-                    opacity: _hideWhatsAppInFooter ? 0.0 : 1.0,
+            // Main Page Content with smooth transition
+            Expanded(
+              child: NotificationListener<ScrollNotification>(
+                onNotification: (notification) {
+                  _checkScrollPosition();
+                  return false;
+                },
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 250),
-                    child: IgnorePointer(
-                      ignoring: _hideWhatsAppInFooter,
-                      child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () => UrlHelper.openWhatsApp(
-                          phone: config.whatsappNumber,
-                          message: config.whatsappDefaultMessage,
-                          context: context,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                        child: Container(
-                          constraints: const BoxConstraints(maxWidth: 340),
-                          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF25D366), Color(0xFF128C7E)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFF25D366).withValues(alpha: 0.5),
-                                blurRadius: 18,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 5),
-                              ),
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: _isDark ? 0.4 : 0.15),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const WhatsAppIcon(
-                                size: 28,
-                                color: Colors.white,
-                              ),
-                              if (config.whatsappMotivationText.isNotEmpty) ...[
-                                const SizedBox(width: 10),
-                                Flexible(
-                                  child: Text(
-                                    config.whatsappMotivationText,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      letterSpacing: 0.2,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ],
-                          ),
-                        ),
-                      ),
+                    switchInCurve: Curves.easeOut,
+                    switchOutCurve: Curves.easeIn,
+                    child: KeyedSubtree(
+                      key: ValueKey<String>('${_activePage}_${lang.name}'),
+                      child: _buildCurrentPageContent(config, isDesktop, lang, loc),
                     ),
                   ),
                 ),
@@ -251,33 +159,141 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
             ),
           ],
         ),
-      );
+      ),
+
+      // Floating WhatsApp & Scroll To Top Buttons
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (_showScrollToTop) ...[
+            FloatingActionButton.small(
+              heroTag: 'scroll_top',
+              onPressed: () {
+                _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
+              },
+              backgroundColor: _isDark ? AppColors.darkCard : Colors.white,
+              foregroundColor: _isDark ? Colors.white : AppColors.lightTextPrimary,
+              child: const Icon(Icons.keyboard_arrow_up_rounded),
+            ),
+            const SizedBox(height: 10),
+          ],
+          AnimatedSlide(
+            offset: _hideWhatsAppInFooter ? const Offset(0, 1.8) : Offset.zero,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: AnimatedScale(
+              scale: _hideWhatsAppInFooter ? 0.0 : 1.0,
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeInOut,
+              child: AnimatedOpacity(
+                opacity: _hideWhatsAppInFooter ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 250),
+                child: IgnorePointer(
+                  ignoring: _hideWhatsAppInFooter,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () => UrlHelper.openWhatsApp(
+                        phone: config.whatsappNumber,
+                        message: config.whatsappDefaultMessage,
+                        context: context,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 340),
+                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF25D366), Color(0xFF128C7E)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF25D366).withValues(alpha: 0.5),
+                              blurRadius: 18,
+                              spreadRadius: 2,
+                              offset: const Offset(0, 5),
+                            ),
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: _isDark ? 0.4 : 0.15),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const WhatsAppIcon(
+                              size: 28,
+                              color: Colors.white,
+                            ),
+                            if (config.whatsappMotivationText.isNotEmpty) ...[
+                              const SizedBox(width: 10),
+                              Flexible(
+                                child: Text(
+                                  config.whatsappMotivationText,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    letterSpacing: 0.2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget _buildCurrentPageContent(ProfileConfigModel config, bool isDesktop) {
+  Widget _buildCurrentPageContent(
+    ProfileConfigModel config,
+    bool isDesktop,
+    AppLanguage lang,
+    AppLocalization loc,
+  ) {
     switch (_activePage) {
       case 'about':
-        return _buildAboutPage(config, isDesktop);
+        return _buildAboutPage(config, isDesktop, lang, loc);
       case 'services':
-        return _buildServicesPage(config, isDesktop);
+        return _buildServicesPage(config, isDesktop, lang, loc);
       case 'projects':
-        return _buildProjectsPage(config, isDesktop);
+        return _buildProjectsPage(config, isDesktop, lang, loc);
       case 'contact':
-        return _buildContactPage(config, isDesktop);
+        return _buildContactPage(config, isDesktop, lang, loc);
       case 'home':
       default:
-        return _buildHomePage(config, isDesktop);
+        return _buildHomePage(config, isDesktop, lang, loc);
     }
   }
 
   // ==================== 1. HOME PAGE ====================
-  Widget _buildHomePage(ProfileConfigModel config, bool isDesktop) {
+  Widget _buildHomePage(
+    ProfileConfigModel config,
+    bool isDesktop,
+    AppLanguage lang,
+    AppLocalization loc,
+  ) {
     return Column(
       children: [
         // Hero Section
         HeroSection(
           isDark: _isDark,
           config: config,
+          language: lang,
           onNavigate: _onNavigate,
         ),
 
@@ -286,21 +302,23 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           isDark: _isDark,
           items: _cmsService.whyWorkList,
           config: config,
+          language: lang,
         ),
 
         // Featured Services Preview
-        _buildHomeFeaturedServices(isDesktop),
+        _buildHomeFeaturedServices(isDesktop, lang, loc),
 
         // Featured Projects Preview
-        _buildHomeFeaturedProjects(isDesktop),
+        _buildHomeFeaturedProjects(isDesktop, lang, loc),
 
         // Quick Consultation CTA Banner
-        _buildHomeContactCta(config, isDesktop),
+        _buildHomeContactCta(config, isDesktop, loc),
 
         // Footer
         FooterSection(
           isDark: _isDark,
           config: config,
+          language: lang,
           onNavigate: _onNavigate,
           onOpenAdmin: _openAdminPanel,
         ),
@@ -309,13 +327,19 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   // ==================== 2. ABOUT PAGE ====================
-  Widget _buildAboutPage(ProfileConfigModel config, bool isDesktop) {
+  Widget _buildAboutPage(
+    ProfileConfigModel config,
+    bool isDesktop,
+    AppLanguage lang,
+    AppLocalization loc,
+  ) {
     return Column(
       children: [
         // Full About Section
         AboutSection(
           isDark: _isDark,
           config: config,
+          language: lang,
         ),
 
         // Why Work With Me Breakdown
@@ -323,13 +347,14 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           isDark: _isDark,
           items: _cmsService.whyWorkList,
           config: config,
+          language: lang,
         ),
 
         // Bottom CTA
         _buildPageBottomCta(
-          title: 'Ready to collaborate on your next project?',
-          subtitle: 'Let\'s turn your ideas into high-converting digital realities.',
-          buttonText: 'Contact Digital Manish',
+          title: loc.ctaReadyTitle,
+          subtitle: loc.ctaReadySubtitle,
+          buttonText: loc.ctaDiscussBtn,
           targetPage: 'contact',
         ),
 
@@ -337,6 +362,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
         FooterSection(
           isDark: _isDark,
           config: config,
+          language: lang,
           onNavigate: _onNavigate,
           onOpenAdmin: _openAdminPanel,
         ),
@@ -345,20 +371,27 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   // ==================== 3. SERVICES PAGE ====================
-  Widget _buildServicesPage(ProfileConfigModel config, bool isDesktop) {
+  Widget _buildServicesPage(
+    ProfileConfigModel config,
+    bool isDesktop,
+    AppLanguage lang,
+    AppLocalization loc,
+  ) {
     return Column(
       children: [
         // Full Services Section
         ServicesSection(
           isDark: _isDark,
           services: _cmsService.services,
+          language: lang,
+          onOpenAdmin: _openAdminPanel,
         ),
 
         // Custom Requirements CTA
         _buildPageBottomCta(
-          title: 'Need a Custom Marketing or Dev Strategy?',
-          subtitle: 'I craft custom end-to-end solutions tailored specifically for your business growth.',
-          buttonText: 'Discuss Your Requirements',
+          title: loc.ctaReadyTitle,
+          subtitle: loc.ctaReadySubtitle,
+          buttonText: loc.bookConsultationBtn,
           targetPage: 'contact',
         ),
 
@@ -366,6 +399,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
         FooterSection(
           isDark: _isDark,
           config: config,
+          language: lang,
           onNavigate: _onNavigate,
           onOpenAdmin: _openAdminPanel,
         ),
@@ -374,20 +408,27 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   // ==================== 4. PROJECTS PAGE ====================
-  Widget _buildProjectsPage(ProfileConfigModel config, bool isDesktop) {
+  Widget _buildProjectsPage(
+    ProfileConfigModel config,
+    bool isDesktop,
+    AppLanguage lang,
+    AppLocalization loc,
+  ) {
     return Column(
       children: [
         // Full Projects Section with Category Filters
         ProjectsSection(
           projects: _cmsService.projects,
           isDark: _isDark,
+          language: lang,
+          onOpenCms: _openAdminPanel,
         ),
 
         // Project Proposal CTA
         _buildPageBottomCta(
-          title: 'Have a project or website in mind?',
-          subtitle: 'Get top quality development with fast turnaround and modern tech stack.',
-          buttonText: 'Start Your Project Today',
+          title: loc.ctaReadyTitle,
+          subtitle: loc.ctaReadySubtitle,
+          buttonText: loc.liveDemoBtn,
           targetPage: 'contact',
         ),
 
@@ -395,6 +436,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
         FooterSection(
           isDark: _isDark,
           config: config,
+          language: lang,
           onNavigate: _onNavigate,
           onOpenAdmin: _openAdminPanel,
         ),
@@ -403,19 +445,26 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   // ==================== 5. CONTACT PAGE ====================
-  Widget _buildContactPage(ProfileConfigModel config, bool isDesktop) {
+  Widget _buildContactPage(
+    ProfileConfigModel config,
+    bool isDesktop,
+    AppLanguage lang,
+    AppLocalization loc,
+  ) {
     return Column(
       children: [
         // Full Contact Section
         ContactSection(
           isDark: _isDark,
           config: config,
+          language: lang,
         ),
 
         // Footer
         FooterSection(
           isDark: _isDark,
           config: config,
+          language: lang,
           onNavigate: _onNavigate,
           onOpenAdmin: _openAdminPanel,
         ),
@@ -424,7 +473,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   }
 
   // ==================== HOME PAGE PREVIEWS ====================
-  Widget _buildHomeFeaturedServices(bool isDesktop) {
+  Widget _buildHomeFeaturedServices(bool isDesktop, AppLanguage lang, AppLocalization loc) {
     final List<ServiceModel> allServices = List.from(_cmsService.services);
     if (allServices.length < 4) {
       for (final ds in PortfolioData.defaultServices) {
@@ -460,7 +509,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Text(
-                          'Services Overview',
+                          loc.servicesBadge,
                           style: TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -470,7 +519,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'What I Specialize In',
+                        loc.servicesHeading,
                         style: AppTypography.displayMedium(context, isDark: _isDark),
                       ),
                     ],
@@ -479,7 +528,10 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   final viewAllBtn = TextButton.icon(
                     onPressed: () => _onNavigate('services'),
                     icon: const Icon(Icons.arrow_forward_rounded, size: 16),
-                    label: const Text('View All Services', style: TextStyle(fontWeight: FontWeight.bold)),
+                    label: Text(
+                      loc.viewDetailsBtn,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.primary,
                       padding: EdgeInsets.zero,
@@ -528,7 +580,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                     itemCount: services.length,
                     itemBuilder: (context, index) {
                       final s = services[index];
-                      return _buildFeaturedServiceCard(s);
+                      return _buildFeaturedServiceCard(s, lang, loc);
                     },
                   );
                 },
@@ -540,15 +592,20 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     );
   }
 
-  Widget _buildFeaturedServiceCard(ServiceModel service) {
+  Widget _buildFeaturedServiceCard(ServiceModel service, AppLanguage lang, AppLocalization loc) {
     final textPrimary = _isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
     final hasImage = service.imageUrl.trim().isNotEmpty;
+    final serviceTitle = loc.getServiceTitle(service);
 
     return InkWell(
       onTap: () {
         showDialog(
           context: context,
-          builder: (_) => ServiceDetailDialog(service: service, isDark: _isDark),
+          builder: (_) => ServiceDetailDialog(
+            service: service,
+            isDark: _isDark,
+            language: lang,
+          ),
         );
       },
       borderRadius: BorderRadius.circular(20),
@@ -625,7 +682,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    service.titleHindi,
+                    serviceTitle,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -639,7 +696,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    service.titleEnglish,
+                    service.titleEnglish.isNotEmpty ? service.titleEnglish : service.titleHindi,
                     style: TextStyle(
                       color: hasImage
                           ? Colors.white70
@@ -674,7 +731,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   Row(
                     children: [
                       Text(
-                        'Know Details',
+                        loc.viewDetailsBtn,
                         style: TextStyle(
                           color: hasImage ? Colors.white : AppColors.primary,
                           fontWeight: FontWeight.bold,
@@ -698,7 +755,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     );
   }
 
-  Widget _buildHomeFeaturedProjects(bool isDesktop) {
+  Widget _buildHomeFeaturedProjects(bool isDesktop, AppLanguage lang, AppLocalization loc) {
     final List<ProjectModel> allProjects = List.from(_cmsService.projects);
     if (allProjects.length < 4) {
       for (final dp in PortfolioData.defaultProjects) {
@@ -735,7 +792,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Text(
-                          'Recent Works',
+                          loc.projectsBadge,
                           style: TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -745,7 +802,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Featured Case Studies',
+                        loc.projectsHeading,
                         style: AppTypography.displayMedium(context, isDark: _isDark),
                       ),
                     ],
@@ -754,7 +811,10 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   final viewAllBtn = TextButton.icon(
                     onPressed: () => _onNavigate('projects'),
                     icon: const Icon(Icons.arrow_forward_rounded, size: 16),
-                    label: const Text('View All Projects', style: TextStyle(fontWeight: FontWeight.bold)),
+                    label: Text(
+                      loc.filterAll,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.primary,
                       padding: EdgeInsets.zero,
@@ -803,7 +863,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                     itemCount: projects.length,
                     itemBuilder: (context, index) {
                       final p = projects[index];
-                      return _buildFeaturedProjectCard(p);
+                      return _buildFeaturedProjectCard(p, lang, loc);
                     },
                   );
                 },
@@ -815,12 +875,16 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     );
   }
 
-  Widget _buildFeaturedProjectCard(ProjectModel project) {
+  Widget _buildFeaturedProjectCard(ProjectModel project, AppLanguage lang, AppLocalization loc) {
     return InkWell(
       onTap: () {
         showDialog(
           context: context,
-          builder: (_) => ProjectDetailDialog(project: project, isDark: _isDark),
+          builder: (_) => ProjectDetailDialog(
+            project: project,
+            isDark: _isDark,
+            language: lang,
+          ),
         );
       },
       borderRadius: BorderRadius.circular(20),
@@ -847,9 +911,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                     fit: BoxFit.cover,
                     errorWidget: Container(
                       color: AppColors.primary.withValues(alpha: 0.15),
-                      child: Center(
-                        child: Icon(Icons.rocket_launch_rounded, size: 48, color: AppColors.primary),
-                      ),
+                      child: Icon(Icons.rocket_launch_rounded, size: 48, color: AppColors.primary),
                     ),
                   ),
                   Positioned(
@@ -933,7 +995,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     );
   }
 
-  Widget _buildHomeContactCta(ProfileConfigModel config, bool isDesktop) {
+  Widget _buildHomeContactCta(ProfileConfigModel config, bool isDesktop, AppLocalization loc) {
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: isDesktop ? 60 : 20,
@@ -973,18 +1035,18 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Let\'s Build Something Extraordinary',
-                              style: TextStyle(
+                            Text(
+                              loc.ctaReadyTitle,
+                              style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 22,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Ready to launch your project, run high-converting ad campaigns, or optimize your tech?',
-                              style: TextStyle(
+                            Text(
+                              loc.ctaReadySubtitle,
+                              style: const TextStyle(
                                 color: Colors.white70,
                                 fontSize: 14,
                               ),
@@ -996,7 +1058,8 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                       ElevatedButton.icon(
                         onPressed: () => _onNavigate('contact'),
                         icon: const Icon(Icons.arrow_forward_rounded, size: 18),
-                        label: const Text('Start Discussion', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                        label: Text(loc.ctaDiscussBtn,
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: AppColors.primary,
@@ -1008,20 +1071,20 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   )
                 : Column(
                     children: [
-                      const Text(
-                        'Let\'s Build Something Extraordinary',
+                      Text(
+                        loc.ctaReadyTitle,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Ready to launch your project or run high-converting ads?',
+                      Text(
+                        loc.ctaReadySubtitle,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 13,
                         ),
@@ -1030,7 +1093,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                       ElevatedButton.icon(
                         onPressed: () => _onNavigate('contact'),
                         icon: const Icon(Icons.arrow_forward_rounded, size: 18),
-                        label: const Text('Start Discussion', style: TextStyle(fontWeight: FontWeight.bold)),
+                        label: Text(loc.ctaDiscussBtn, style: const TextStyle(fontWeight: FontWeight.bold)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: AppColors.primary,

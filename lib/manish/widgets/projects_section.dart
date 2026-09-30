@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/project_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../utils/app_localization.dart';
 import '../utils/url_helper.dart';
 import 'app_smart_image.dart';
 import 'project_detail_dialog.dart';
@@ -9,12 +10,14 @@ import 'project_detail_dialog.dart';
 class ProjectsSection extends StatefulWidget {
   final List<ProjectModel> projects;
   final bool isDark;
+  final AppLanguage language;
   final VoidCallback? onOpenCms;
 
   const ProjectsSection({
     super.key,
     required this.projects,
     required this.isDark,
+    this.language = AppLanguage.hinglish,
     this.onOpenCms,
   });
 
@@ -23,15 +26,31 @@ class ProjectsSection extends StatefulWidget {
 }
 
 class _ProjectsSectionState extends State<ProjectsSection> {
-  String _selectedCategory = 'All';
+  String _selectedCategoryKey = 'All';
 
-  final List<String> _categories = [
-    'All',
-    'Website',
-    'App',
-    'Meta Ads',
-    'SEO',
+  final List<Map<String, String>> _categories = [
+    {'key': 'All', 'icon': '🎯'},
+    {'key': 'Website', 'icon': '💻'},
+    {'key': 'App', 'icon': '📱'},
+    {'key': 'Meta Ads', 'icon': '📢'},
+    {'key': 'SEO', 'icon': '🔍'},
   ];
+
+  String _getCategoryLabel(String key, AppLocalization loc) {
+    switch (key) {
+      case 'Website':
+        return loc.filterWebsites;
+      case 'App':
+        return loc.filterApps;
+      case 'Meta Ads':
+        return loc.filterMetaAds;
+      case 'SEO':
+        return loc.filterSeo;
+      case 'All':
+      default:
+        return loc.filterAll;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +58,13 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     final isDesktop = width > 950;
     final isTablet = width > 600 && width <= 950;
     final crossAxisCount = isDesktop ? 3 : (isTablet ? 2 : 1);
+    final loc = AppLocalization(widget.language);
 
-    final filteredProjects = _selectedCategory == 'All'
+    final filteredProjects = _selectedCategoryKey == 'All'
         ? widget.projects
-        : widget.projects.where((p) => p.category.toLowerCase() == _selectedCategory.toLowerCase()).toList();
+        : widget.projects
+            .where((p) => p.category.toLowerCase().contains(_selectedCategoryKey.toLowerCase()))
+            .toList();
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -65,7 +87,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      'Case Studies & Work Portfolio',
+                      loc.projectsBadge,
                       style: TextStyle(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -78,13 +100,13 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Featured Projects Showcase',
+                loc.projectsHeading,
                 textAlign: TextAlign.center,
                 style: AppTypography.displayMedium(context, isDark: widget.isDark),
               ),
               const SizedBox(height: 8),
               Text(
-                'Live digital campaigns, modern responsive websites aur dynamic cross-platform mobile apps.',
+                loc.projectsSubtitle,
                 textAlign: TextAlign.center,
                 style: AppTypography.bodyLarge(context, isDark: widget.isDark),
               ),
@@ -96,32 +118,56 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: _categories.map((cat) {
-                    final isSelected = _selectedCategory == cat;
+                    final isSelected = _selectedCategoryKey == cat['key'];
+                    final label = _getCategoryLabel(cat['key']!, loc);
+
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: ChoiceChip(
-                        label: Text(cat),
-                        selected: isSelected,
-                        onSelected: (selected) {
-                          if (selected) {
-                            setState(() => _selectedCategory = cat);
-                          }
-                        },
-                        selectedColor: AppColors.primary,
-                        labelStyle: TextStyle(
-                          color: isSelected
-                              ? Colors.white
-                              : (widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                      child: InkWell(
+                        onTap: () => setState(() => _selectedCategoryKey = cat['key']!),
+                        borderRadius: BorderRadius.circular(20),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? AppColors.primary
+                                : (widget.isDark ? AppColors.darkCard : const Color(0xFFF1F5F9)),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: isSelected
+                                  ? AppColors.primary
+                                  : (widget.isDark ? AppColors.darkCardBorder : const Color(0xFFE2E8F0)),
+                            ),
+                            boxShadow: isSelected
+                                ? [
+                                    BoxShadow(
+                                      color: AppColors.primary.withValues(alpha: 0.35),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ]
+                                : [],
+                          ),
+                          child: Text(
+                            label,
+                            style: TextStyle(
+                              color: isSelected
+                                  ? Colors.white
+                                  : (widget.isDark
+                                      ? AppColors.darkTextSecondary
+                                      : AppColors.lightTextSecondary),
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                          ),
                         ),
-                        backgroundColor: widget.isDark ? AppColors.darkCard : const Color(0xFFF1F5F9),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
                     );
                   }).toList(),
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 36),
 
               // Grid of Projects
               filteredProjects.isEmpty
@@ -129,328 +175,273 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       padding: const EdgeInsets.all(40),
                       child: Column(
                         children: [
-                          const Icon(Icons.folder_open_rounded, size: 48, color: Colors.grey),
+                          const Icon(Icons.rocket_launch_rounded, size: 48, color: Colors.grey),
                           const SizedBox(height: 12),
-                          Text(
-                            'Is category me abhi koi project nahi hai.',
-                            style: AppTypography.bodyLarge(context, isDark: widget.isDark),
-                          ),
-                          const SizedBox(height: 12),
-                          ElevatedButton.icon(
-                            onPressed: widget.onOpenCms,
-                            icon: const Icon(Icons.add_rounded),
-                            label: const Text('Add Project Now'),
-                          ),
+                          Text('No projects found in this category.',
+                              style: AppTypography.bodyLarge(context, isDark: widget.isDark)),
+                          if (widget.onOpenCms != null) ...[
+                            const SizedBox(height: 12),
+                            ElevatedButton.icon(
+                              onPressed: widget.onOpenCms,
+                              icon: const Icon(Icons.add_rounded),
+                              label: const Text('Add Project in Admin Panel'),
+                            ),
+                          ],
                         ],
                       ),
                     )
-                  : GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        mainAxisSpacing: 24,
-                        crossAxisSpacing: 24,
-                        mainAxisExtent: isDesktop ? 440 : (isTablet ? 430 : 410),
-                      ),
-                      itemCount: filteredProjects.length,
-                      itemBuilder: (context, i) {
-                        final project = filteredProjects[i];
-                        return _buildProjectCard(context, project);
+                  : LayoutBuilder(
+                      builder: (context, constraints) {
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            mainAxisExtent: isDesktop ? 420 : (isTablet ? 410 : 380),
+                          ),
+                          itemCount: filteredProjects.length,
+                          itemBuilder: (context, i) {
+                            final project = filteredProjects[i];
+                            return _ProjectCard(
+                              project: project,
+                              isDark: widget.isDark,
+                              language: widget.language,
+                              loc: loc,
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => ProjectDetailDialog(
+                                    project: project,
+                                    isDark: widget.isDark,
+                                    language: widget.language,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
                       },
                     ),
-
-              if (widget.onOpenCms != null) ...[
-                const SizedBox(height: 32),
-                // Add Project Floating / Banner CTA for easy addition
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  decoration: BoxDecoration(
-                    color: widget.isDark ? AppColors.darkCard : const Color(0xFFEEF2FF),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: widget.isDark ? AppColors.darkCardBorder : const Color(0xFFC7D2FE),
-                    ),
-                  ),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      if (constraints.maxWidth < 600) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.add_circle_outline_rounded, color: AppColors.primary, size: 22),
-                                const SizedBox(width: 10),
-                                const Expanded(
-                                  child: Text(
-                                    'Want to add or update your live client projects?',
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              'Use the integrated CMS editor to add new screenshots, links & metrics anytime.',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            ElevatedButton(
-                              onPressed: widget.onOpenCms,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                              ),
-                              child: const Text('+ Add Project in Admin'),
-                            ),
-                          ],
-                        );
-                      }
-                      return Row(
-                        children: [
-                          Icon(Icons.add_circle_outline_rounded, color: AppColors.primary, size: 24),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Want to add or update your live client projects?',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                                ),
-                                Text(
-                                  'Use the integrated CMS editor to add new screenshots, links & metrics anytime.',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          ElevatedButton(
-                            onPressed: widget.onOpenCms,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                            ),
-                            child: const Text('+ Add Project'),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildProjectCard(BuildContext context, ProjectModel project) {
+class _ProjectCard extends StatefulWidget {
+  final ProjectModel project;
+  final bool isDark;
+  final AppLanguage language;
+  final AppLocalization loc;
+  final VoidCallback onTap;
+
+  const _ProjectCard({
+    required this.project,
+    required this.isDark,
+    required this.language,
+    required this.loc,
+    required this.onTap,
+  });
+
+  @override
+  State<_ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends State<_ProjectCard> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
     final textPrimary = widget.isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+    final textSecondary = widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: widget.isDark ? AppColors.darkCard : Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: widget.isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: widget.isDark ? 0.25 : 0.05),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+        decoration: BoxDecoration(
+          color: widget.isDark ? AppColors.darkCard : Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: _isHovered
+                ? AppColors.primary
+                : (widget.isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder),
+            width: _isHovered ? 1.5 : 1,
           ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Thumbnail / Mockup Header
-          Stack(
+          boxShadow: [
+            BoxShadow(
+              color: _isHovered
+                  ? AppColors.primary.withValues(alpha: 0.18)
+                  : Colors.black.withValues(alpha: widget.isDark ? 0.2 : 0.04),
+              blurRadius: _isHovered ? 24 : 16,
+              offset: Offset(0, _isHovered ? 8 : 4),
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: widget.onTap,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              // Project Image / Banner
+              SizedBox(
                 height: 160,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.15),
-                ),
-                child: project.imageUrl.isNotEmpty
-                    ? AppSmartImage(
-                        imageUrl: project.imageUrl,
-                        fit: BoxFit.cover,
-                        errorWidget: _buildCardMockupPlaceholder(project),
-                      )
-                    : _buildCardMockupPlaceholder(project),
-              ),
-              Positioned(
-                top: 10,
-                left: 10,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.black87,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    project.category,
-                    style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              if (project.resultsMetric != null && project.resultsMetric!.isNotEmpty)
-                Positioned(
-                  bottom: 10,
-                  right: 10,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.success,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      project.resultsMetric!,
-                      style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-
-          // Card Body
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    project.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Expanded(
-                    child: Text(
-                      project.shortDesc,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.bodyMedium(context, isDark: widget.isDark),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Tech Stack Chips
-                  Wrap(
-                    spacing: 6,
-                    runSpacing: 4,
-                    children: project.techStack.take(3).map((tech) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    AppSmartImage(
+                      imageUrl: widget.project.imageUrl,
+                      fit: BoxFit.cover,
+                      errorWidget: Container(
                         decoration: BoxDecoration(
-                          color: widget.isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9),
-                          borderRadius: BorderRadius.circular(6),
+                          gradient: AppColors.primaryGradient,
+                        ),
+                        child: const Center(
+                          child: Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 36),
+                        ),
+                      ),
+                    ),
+                    // Category Badge
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white24),
                         ),
                         child: Text(
-                          tech,
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: widget.isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                          widget.project.category,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      );
-                    }).toList(),
-                  ),
-                  const SizedBox(height: 14),
+                      ),
+                    ),
+                    if (widget.project.resultsMetric != null && widget.project.resultsMetric!.isNotEmpty)
+                      Positioned(
+                        bottom: 10,
+                        right: 12,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.success,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            widget.project.resultsMetric!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
 
-                  // Buttons: Live Demo & Project Details
-                  Row(
+              // Content Area
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (project.liveDemoUrl != null && project.liveDemoUrl!.isNotEmpty) ...[
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () => UrlHelper.openLink(project.liveDemoUrl!, context: context),
-                            icon: const Icon(Icons.open_in_new_rounded, size: 14),
-                            label: const Text('Live Demo', style: TextStyle(fontSize: 12)),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
+                      Text(
+                        widget.project.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        widget.project.shortDesc,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: textSecondary,
+                          height: 1.4,
+                        ),
+                      ),
+                      const Spacer(),
+
+                      // Tech stack chips preview
+                      if (widget.project.techStack.isNotEmpty)
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: widget.project.techStack.take(3).map((tech) {
+                              return Container(
+                                margin: const EdgeInsets.only(right: 6),
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: widget.isDark
+                                      ? const Color(0xFF1E293B)
+                                      : const Color(0xFFF1F5F9),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Text(
+                                  tech,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: textSecondary,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
                           ),
                         ),
-                        const SizedBox(width: 8),
-                      ],
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ProjectDetailDialog(project: project, isDark: widget.isDark),
-                            );
-                          },
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            side: BorderSide(
-                              color: widget.isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder,
+
+                      const SizedBox(height: 12),
+
+                      // Action Row
+                      Row(
+                        children: [
+                          Text(
+                            widget.loc.viewDetailsBtn,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
                             ),
                           ),
-                          child: const Text('Details', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                        ),
+                          const SizedBox(width: 4),
+                          Icon(Icons.arrow_forward_rounded, size: 16, color: AppColors.primary),
+                          const Spacer(),
+                          if (widget.project.liveDemoUrl != null && widget.project.liveDemoUrl!.isNotEmpty)
+                            IconButton(
+                              onPressed: () =>
+                                  UrlHelper.openLink(widget.project.liveDemoUrl!, context: context),
+                              icon: Icon(Icons.open_in_new_rounded, size: 18, color: AppColors.primary),
+                              tooltip: widget.loc.liveDemoBtn,
+                            ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCardMockupPlaceholder(ProjectModel project) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: AppColors.primaryGradient,
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.laptop_chromebook_rounded, size: 40, color: Colors.white70),
-            const SizedBox(height: 6),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                project.title,
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-            ),
-          ],
         ),
       ),
     );

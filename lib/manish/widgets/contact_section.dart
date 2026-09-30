@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import '../models/profile_config_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../utils/app_localization.dart';
 import '../utils/url_helper.dart';
 
 class ContactSection extends StatefulWidget {
   final bool isDark;
   final ProfileConfigModel config;
+  final AppLanguage language;
 
   const ContactSection({
     super.key,
     required this.isDark,
     required this.config,
+    this.language = AppLanguage.hinglish,
   });
 
   @override
@@ -69,7 +72,7 @@ class _ContactSectionState extends State<ContactSection> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Opening WhatsApp with your message details...'),
+          content: Text('Opening WhatsApp with your inquiry details...'),
           backgroundColor: AppColors.whatsappGreen,
         ),
       );
@@ -81,7 +84,7 @@ class _ContactSectionState extends State<ContactSection> {
     final width = MediaQuery.of(context).size.width;
     final isDesktop = width > 900;
     final textPrimary = widget.isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
-    final config = widget.config;
+    final loc = AppLocalization(widget.language);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -101,7 +104,7 @@ class _ContactSectionState extends State<ContactSection> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  'Get in Touch / Sampark Karein',
+                  loc.contactBadge,
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
@@ -112,15 +115,13 @@ class _ContactSectionState extends State<ContactSection> {
               ),
               const SizedBox(height: 12),
               Text(
-                config.contactHeading.isNotEmpty ? config.contactHeading : 'Let’s Discuss Your Next Big Project',
+                loc.contactHeading,
                 textAlign: TextAlign.center,
                 style: AppTypography.displayMedium(context, isDark: widget.isDark),
               ),
               const SizedBox(height: 8),
               Text(
-                config.contactSubtitle.isNotEmpty
-                    ? config.contactSubtitle
-                    : 'Aapke business requirements ke mutabik customized proposal aur free guidance paayein.',
+                loc.contactSubtitle,
                 textAlign: TextAlign.center,
                 style: AppTypography.bodyLarge(context, isDark: widget.isDark),
               ),
@@ -130,16 +131,16 @@ class _ContactSectionState extends State<ContactSection> {
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(flex: 5, child: _buildContactInfoCard(context, textPrimary)),
+                        Expanded(flex: 5, child: _buildContactInfoCard(context, textPrimary, loc)),
                         const SizedBox(width: 32),
-                        Expanded(flex: 6, child: _buildContactForm(context, textPrimary)),
+                        Expanded(flex: 6, child: _buildContactForm(context, textPrimary, loc)),
                       ],
                     )
                   : Column(
                       children: [
-                        _buildContactInfoCard(context, textPrimary),
+                        _buildContactInfoCard(context, textPrimary, loc),
                         const SizedBox(height: 32),
-                        _buildContactForm(context, textPrimary),
+                        _buildContactForm(context, textPrimary, loc),
                       ],
                     ),
             ],
@@ -149,7 +150,7 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Widget _buildContactInfoCard(BuildContext context, Color textPrimary) {
+  Widget _buildContactInfoCard(BuildContext context, Color textPrimary, AppLocalization loc) {
     final config = widget.config;
 
     return Container(
@@ -185,9 +186,9 @@ class _ContactSectionState extends State<ContactSection> {
           // Phone
           _buildInfoTile(
             icon: Icons.phone_in_talk_rounded,
-            title: 'Phone Number',
+            title: loc.directCallTitle,
             value: config.phone,
-            actionLabel: 'Call Now',
+            actionLabel: 'Call',
             color: AppColors.callBlue,
             onTap: () => UrlHelper.makePhoneCall(phone: config.phone, context: context),
           ),
@@ -196,7 +197,7 @@ class _ContactSectionState extends State<ContactSection> {
           // WhatsApp
           _buildInfoTile(
             icon: Icons.chat_rounded,
-            title: 'WhatsApp Direct Chat',
+            title: loc.chatWhatsAppTitle,
             value: '+91 ${config.whatsappNumber}',
             actionLabel: 'Message',
             color: AppColors.whatsappGreen,
@@ -211,9 +212,9 @@ class _ContactSectionState extends State<ContactSection> {
           // Email
           _buildInfoTile(
             icon: Icons.mail_rounded,
-            title: 'Email Address',
+            title: loc.emailTitle,
             value: config.email,
-            actionLabel: 'Send Mail',
+            actionLabel: 'Mail',
             color: AppColors.mailRed,
             onTap: () => UrlHelper.sendEmail(email: config.email, context: context),
           ),
@@ -222,9 +223,9 @@ class _ContactSectionState extends State<ContactSection> {
           // Location
           _buildInfoTile(
             icon: Icons.location_on_rounded,
-            title: 'Office / Location',
+            title: loc.locationTitle,
             value: config.location,
-            actionLabel: 'View Map',
+            actionLabel: 'Map',
             color: AppColors.accent,
             onTap: () => UrlHelper.openMapLocation(
               query: config.mapsEmbedQuery.isNotEmpty ? config.mapsEmbedQuery : config.location,
@@ -420,7 +421,7 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Widget _buildContactForm(BuildContext context, Color textPrimary) {
+  Widget _buildContactForm(BuildContext context, Color textPrimary, AppLocalization loc) {
     return Container(
       padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
@@ -443,12 +444,12 @@ class _ContactSectionState extends State<ContactSection> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Send a Message',
+              loc.quickInquiryTitle,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textPrimary),
             ),
             const SizedBox(height: 4),
             Text(
-              'Form fill karein aur direct WhatsApp par instant proposal paayein.',
+              loc.contactSubtitle,
               style: AppTypography.bodyMedium(context, isDark: widget.isDark),
             ),
             const SizedBox(height: 20),
@@ -456,7 +457,7 @@ class _ContactSectionState extends State<ContactSection> {
             // Name
             _buildFormField(
               controller: _nameController,
-              label: 'Your Name (Aapka Naam) *',
+              label: loc.formNameLabel,
               hint: 'e.g. Rahul Sharma',
               icon: Icons.person_outline_rounded,
               validator: (v) => (v == null || v.trim().isEmpty) ? 'Please enter your name' : null,
@@ -466,7 +467,7 @@ class _ContactSectionState extends State<ContactSection> {
             // Phone
             _buildFormField(
               controller: _phoneController,
-              label: 'Phone Number (Mobile No) *',
+              label: loc.formPhoneLabel,
               hint: 'e.g. 9876543210',
               icon: Icons.phone_android_rounded,
               keyboardType: TextInputType.phone,
@@ -477,7 +478,7 @@ class _ContactSectionState extends State<ContactSection> {
             // Email
             _buildFormField(
               controller: _emailController,
-              label: 'Email Address (Optional)',
+              label: 'Email (Optional)',
               hint: 'e.g. rahul@example.com',
               icon: Icons.mail_outline_rounded,
               keyboardType: TextInputType.emailAddress,
@@ -486,7 +487,7 @@ class _ContactSectionState extends State<ContactSection> {
 
             // Service Dropdown
             Text(
-              'Select Service Required *',
+              loc.formServiceLabel,
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -525,7 +526,7 @@ class _ContactSectionState extends State<ContactSection> {
             // Message
             _buildFormField(
               controller: _messageController,
-              label: 'Project Details / Message *',
+              label: loc.formMessageLabel,
               hint: 'Describe your website, app, or marketing requirements...',
               icon: Icons.chat_bubble_outline_rounded,
               maxLines: 3,
@@ -539,9 +540,9 @@ class _ContactSectionState extends State<ContactSection> {
               child: ElevatedButton.icon(
                 onPressed: _submitForm,
                 icon: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
-                label: const Text(
-                  'Send via WhatsApp Chat',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
+                label: Text(
+                  loc.formSubmitBtn,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.whatsappGreen,

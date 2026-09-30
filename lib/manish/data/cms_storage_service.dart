@@ -6,6 +6,7 @@ import '../models/project_model.dart';
 import '../models/service_model.dart';
 import '../models/why_work_model.dart';
 import '../theme/app_colors.dart';
+import '../utils/app_localization.dart';
 import 'portfolio_data.dart';
 
 /// Ultra-Fast Self-Contained Local Database & CMS Storage Service.
@@ -17,12 +18,14 @@ class CmsStorageService extends ChangeNotifier {
   static const String _keyServices = 'manish_cms_services_v3';
   static const String _keyProjects = 'manish_cms_projects_v3';
   static const String _keyWhyWork = 'manish_cms_why_work_v3';
+  static const String _keyLanguage = 'manish_portfolio_lang_v3';
 
   SharedPreferences? _prefs;
   ProfileConfigModel _config = PortfolioData.defaultConfig;
   List<ServiceModel> _services = List.from(PortfolioData.defaultServices);
   List<ProjectModel> _projects = List.from(PortfolioData.defaultProjects);
   List<WhyWorkModel> _whyWorkList = List.from(PortfolioData.defaultWhyWorkList);
+  AppLanguage _language = AppLanguage.hinglish;
   bool _isLoaded = false;
   Future<void>? _loadFuture;
 
@@ -30,6 +33,8 @@ class CmsStorageService extends ChangeNotifier {
   List<ServiceModel> get services => _services;
   List<ProjectModel> get projects => _projects;
   List<WhyWorkModel> get whyWorkList => _whyWorkList;
+  AppLanguage get language => _language;
+  AppLocalization get loc => AppLocalization(_language);
   bool get isLoaded => _isLoaded;
   bool get isLocalDatabaseReady => _isLoaded;
 
@@ -81,6 +86,14 @@ class CmsStorageService extends ChangeNotifier {
     try {
       final prefs = await _getPrefs();
 
+      // Load language preference
+      final langRaw = prefs.getString(_keyLanguage);
+      if (langRaw != null && langRaw.isNotEmpty) {
+        _language = AppLanguage.fromString(langRaw);
+      } else {
+        _language = AppLanguage.hinglish;
+      }
+
       final configRaw = prefs.getString(_keyProfileConfig);
       if (configRaw != null && configRaw.isNotEmpty) {
         _config = ProfileConfigModel.fromJson(jsonDecode(configRaw));
@@ -129,10 +142,20 @@ class CmsStorageService extends ChangeNotifier {
       _services = List.from(PortfolioData.defaultServices);
       _projects = List.from(PortfolioData.defaultProjects);
       _whyWorkList = List.from(PortfolioData.defaultWhyWorkList);
+      _language = AppLanguage.hinglish;
       _isLoaded = true;
       AppColors.applyFromConfig(_config);
       notifyListeners();
     }
+  }
+
+  // --- Language Switcher (Instant 0ms update + Local Persistence) ---
+  Future<void> setLanguage(AppLanguage newLang) async {
+    if (_language == newLang) return;
+    _language = newLang;
+    notifyListeners();
+    final prefs = await _getPrefs();
+    await prefs.setString(_keyLanguage, newLang.name);
   }
 
   // --- Profile & Site Config Updates (Instant 0ms UI update + background persist) ---
@@ -250,6 +273,7 @@ class CmsStorageService extends ChangeNotifier {
       'version': '3.0',
       'timestamp': DateTime.now().toIso8601String(),
       'type': 'self_contained_local_database',
+      'language': _language.name,
       'config': _config.toJson(),
       'services': _services.map((s) => s.toJson()).toList(),
       'projects': _projects.map((p) => p.toJson()).toList(),
@@ -261,6 +285,9 @@ class CmsStorageService extends ChangeNotifier {
   Future<bool> importDataFromJson(String jsonString) async {
     try {
       final Map<String, dynamic> decoded = jsonDecode(jsonString);
+      if (decoded.containsKey('language')) {
+        _language = AppLanguage.fromString(decoded['language'] as String?);
+      }
       if (decoded.containsKey('config')) {
         _config = ProfileConfigModel.fromJson(decoded['config'] as Map<String, dynamic>);
       }
@@ -278,6 +305,7 @@ class CmsStorageService extends ChangeNotifier {
       }
 
       final prefs = await _getPrefs();
+      await prefs.setString(_keyLanguage, _language.name);
       await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
       await prefs.setString(_keyServices, jsonEncode(_services.map((s) => s.toJson()).toList()));
       await prefs.setString(_keyProjects, jsonEncode(_projects.map((p) => p.toJson()).toList()));
@@ -295,11 +323,13 @@ class CmsStorageService extends ChangeNotifier {
   // --- Factory Reset ---
   Future<void> resetToDefaults() async {
     final prefs = await _getPrefs();
+    await prefs.remove(_keyLanguage);
     await prefs.remove(_keyProfileConfig);
     await prefs.remove(_keyServices);
     await prefs.remove(_keyProjects);
     await prefs.remove(_keyWhyWork);
 
+    _language = AppLanguage.hinglish;
     _config = PortfolioData.defaultConfig;
     _services = List.from(PortfolioData.defaultServices);
     _projects = List.from(PortfolioData.defaultProjects);
