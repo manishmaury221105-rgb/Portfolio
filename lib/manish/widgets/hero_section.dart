@@ -3,7 +3,6 @@ import '../models/profile_config_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 import '../utils/app_localization.dart';
-import '../utils/url_helper.dart';
 import 'app_smart_image.dart';
 
 class HeroSection extends StatelessWidget {
@@ -76,73 +75,6 @@ class HeroSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
-        // Availability & Location Badge
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.location_on_rounded, color: AppColors.primary, size: 15),
-                  const SizedBox(width: 5),
-                  Text(
-                    config.locationShort.isNotEmpty ? config.locationShort : 'Varanasi & Pan India',
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppColors.success.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(
-                  color: AppColors.success.withValues(alpha: 0.3),
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 7,
-                    height: 7,
-                    decoration: const BoxDecoration(
-                      color: AppColors.success,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    loc.heroAvailableBadge,
-                    style: const TextStyle(
-                      color: AppColors.success,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 18),
-
         // Name
         Text(
           config.name,
@@ -172,50 +104,6 @@ class HeroSection extends StatelessWidget {
           style: AppTypography.bodyLarge(context, isDark: isDark).copyWith(
             height: 1.6,
           ),
-        ),
-        const SizedBox(height: 28),
-
-        // CTA Buttons
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
-          children: [
-            ElevatedButton.icon(
-              onPressed: () => UrlHelper.openWhatsApp(
-                phone: config.whatsappNumber,
-                message: config.whatsappDefaultMessage,
-                context: context,
-              ),
-              icon: const Icon(Icons.chat_bubble_rounded, size: 18, color: Colors.white),
-              label: Text(
-                loc.heroCtaWhatsApp,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF25D366),
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                elevation: 4,
-              ),
-            ),
-            OutlinedButton.icon(
-              onPressed: () => onNavigate?.call('services'),
-              icon: const Icon(Icons.miscellaneous_services_rounded, size: 18),
-              label: Text(
-                loc.heroCtaServices,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: isDark ? Colors.white : AppColors.lightTextPrimary,
-                side: BorderSide(
-                  color: isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder,
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-              ),
-            ),
-          ],
         ),
       ],
     );

@@ -3,6 +3,7 @@ import '../models/profile_config_model.dart';
 import '../theme/app_colors.dart';
 import '../utils/app_localization.dart';
 import 'brand_logo_badge.dart';
+import 'language_selector_pill.dart';
 
 class PortfolioNavBar extends StatelessWidget {
   final bool isDark;
@@ -37,8 +38,8 @@ class PortfolioNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final isDesktop = width > 900;
-    final isCompact = width < 500;
+    final isDesktop = width >= 1300;
+    final isCompact = width < 720;
     final loc = AppLocalization(currentLanguage);
     final pages = _getPages(loc);
 
@@ -69,32 +70,35 @@ class PortfolioNavBar extends StatelessWidget {
                       children: [
                         BrandLogoBadge(config: config, size: 40, borderRadius: 20),
                         const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              config.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.5,
-                                letterSpacing: -0.2,
-                                color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 160),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                config.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.5,
+                                  letterSpacing: -0.2,
+                                  color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                                ),
                               ),
-                            ),
-                            Text(
-                              config.locationShort.isNotEmpty ? config.locationShort : 'Flutter & Web Dev',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: AppColors.primaryLight,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                config.locationShort.isNotEmpty ? config.locationShort : 'Flutter & Web Dev',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: AppColors.primaryLight,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -104,7 +108,7 @@ class PortfolioNavBar extends StatelessWidget {
                   if (isDesktop) ...[
                     const Spacer(),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
                       decoration: BoxDecoration(
                         color: isDark ? AppColors.darkCard.withValues(alpha: 0.7) : const Color(0xFFF1F5F9),
                         borderRadius: BorderRadius.circular(30),
@@ -121,7 +125,7 @@ class PortfolioNavBar extends StatelessWidget {
                             borderRadius: BorderRadius.circular(24),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
                               decoration: BoxDecoration(
                                 color: isSelected ? AppColors.primary : Colors.transparent,
                                 borderRadius: BorderRadius.circular(24),
@@ -140,17 +144,17 @@ class PortfolioNavBar extends StatelessWidget {
                                 children: [
                                   Icon(
                                     page['icon'] as IconData,
-                                    size: 14.5,
+                                    size: 13.5,
                                     color: isSelected
                                         ? Colors.white
                                         : (isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
                                   ),
-                                  const SizedBox(width: 5),
+                                  const SizedBox(width: 4),
                                   Text(
                                     page['label'] as String,
                                     style: TextStyle(
                                       fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                                      fontSize: 13,
+                                      fontSize: 12.5,
                                       color: isSelected
                                           ? Colors.white
                                           : (isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary),
@@ -265,76 +269,11 @@ class PortfolioNavBar extends StatelessWidget {
   }
 
   Widget _buildLanguageSwitcher({required bool isCompact}) {
-    final languages = [
-      {'lang': AppLanguage.hindi, 'label': 'हिंदी', 'flag': '🇮🇳'},
-      {'lang': AppLanguage.hinglish, 'label': 'Hinglish', 'flag': '🇮🇳'},
-      {'lang': AppLanguage.english, 'label': 'English', 'flag': '🇬🇧'},
-    ];
-
-    return Container(
-      padding: const EdgeInsets.all(3),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.darkCard : const Color(0xFFF1F5F9),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: isDark ? AppColors.darkCardBorder : const Color(0xFFE2E8F0),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: languages.map((item) {
-          final lang = item['lang'] as AppLanguage;
-          final isSelected = currentLanguage == lang;
-          final label = isCompact
-              ? (lang == AppLanguage.hindi ? 'हिं' : (lang == AppLanguage.hinglish ? 'हिं-En' : 'En'))
-              : (item['label'] as String);
-
-          return InkWell(
-            onTap: () => onLanguageChanged(lang),
-            borderRadius: BorderRadius.circular(10),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
-              padding: EdgeInsets.symmetric(
-                horizontal: isCompact ? 7 : 9,
-                vertical: 5,
-              ),
-              decoration: BoxDecoration(
-                color: isSelected ? AppColors.primary : Colors.transparent,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: isSelected
-                    ? [
-                        BoxShadow(
-                          color: AppColors.primary.withValues(alpha: 0.35),
-                          blurRadius: 6,
-                          offset: const Offset(0, 1),
-                        ),
-                      ]
-                    : [],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    item['flag'] as String,
-                    style: const TextStyle(fontSize: 11),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: isCompact ? 11 : 12,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                      color: isSelected
-                          ? Colors.white
-                          : (isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }).toList(),
-      ),
+    return LanguageSelectorPill(
+      currentLanguage: currentLanguage,
+      onLanguageChanged: onLanguageChanged,
+      isDark: isDark,
+      isCompact: isCompact,
     );
   }
 }

@@ -189,7 +189,7 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
       location: _locationCtrl.text.trim(),
       locationShort: _locationShortCtrl.text.trim(),
       avatarUrl: _avatarUrlCtrl.text.trim(),
-      logoText: _logoTextCtrl.text.trim().isEmpty ? 'MM' : _logoTextCtrl.text.trim(),
+      logoText: _logoTextCtrl.text.trim().isEmpty ? 'DM' : _logoTextCtrl.text.trim(),
       logoImageUrl: _logoImageUrlCtrl.text.trim(),
       themePreset: _selectedThemePreset,
       primaryColorHex: _primaryColorCtrl.text.trim().isEmpty ? '#6366F1' : _primaryColorCtrl.text.trim(),
@@ -220,7 +220,7 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
       isAdminPinRequired: _pinRequired,
     );
 
-    widget.cmsService.updateConfig(updated);
+    await widget.cmsService.updateConfig(updated);
     if (mounted) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -229,15 +229,17 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
             children: [
               Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
               SizedBox(width: 10),
-              Text(
-                'Settings saved instantly! ⚡',
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              Expanded(
+                child: Text(
+                  'Data permanently saved! ⚡ Lifetime Safe ✅',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                ),
               ),
             ],
           ),
           backgroundColor: AppColors.success,
           behavior: SnackBarBehavior.floating,
-          duration: const Duration(milliseconds: 1500),
+          duration: const Duration(milliseconds: 2500),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       );
@@ -323,6 +325,21 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
           backgroundColor: widget.isDark ? AppColors.darkSurface : Colors.white,
           elevation: 1,
           actions: [
+            IconButton(
+              onPressed: () {
+                widget.cmsService.downloadBackupFile();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Backup JSON file downloaded to device! 💾'),
+                    backgroundColor: AppColors.success,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+              icon: Icon(Icons.download_rounded, color: AppColors.primary),
+              tooltip: 'Download Full JSON Backup File',
+            ),
+            const SizedBox(width: 4),
             ElevatedButton.icon(
               onPressed: _saveAllConfig,
               icon: const Icon(Icons.save_rounded, size: 16, color: Colors.white),
@@ -336,14 +353,14 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
-          const SizedBox(width: 6),
-          IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.remove_red_eye_rounded, color: AppColors.success),
-            tooltip: 'View Live Portfolio',
-          ),
-          const SizedBox(width: 8),
-        ],
+            const SizedBox(width: 6),
+            IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.remove_red_eye_rounded, color: AppColors.success),
+              tooltip: 'View Live Portfolio',
+            ),
+            const SizedBox(width: 8),
+          ],
       ),
       body: isDesktop
           ? Row(
@@ -2278,14 +2295,54 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
                   children: [
                     Icon(Icons.download_rounded, color: AppColors.success),
                     SizedBox(width: 10),
-                    Text('Export Full Website Data (JSON)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text('Export & Save Backup (.json)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Text('Ye pura JSON backup copy karke apne paas save rakh sakte hain:', style: TextStyle(fontSize: 12, color: Colors.grey)),
-                const SizedBox(height: 12),
+                const Text('Ek click me apna pura portfolio database JSON file me download karein ya copy karein:', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                const SizedBox(height: 14),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 10,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        widget.cmsService.downloadBackupFile();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Backup JSON file device me download ho gayi! 💾'),
+                            backgroundColor: AppColors.success,
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.file_download_rounded, size: 18),
+                      label: const Text('📥 Download Backup File (.json)'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.success,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      ),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: jsonBackup));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Complete JSON backup copied to clipboard! 📋')),
+                        );
+                      },
+                      icon: const Icon(Icons.copy_rounded, size: 16),
+                      label: const Text('Copy JSON Text'),
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: AppColors.success),
+                        foregroundColor: AppColors.success,
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 14),
                 Container(
-                  height: 140,
+                  height: 110,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: widget.isDark ? Colors.black38 : const Color(0xFFF1F5F9),
@@ -2294,18 +2351,6 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
                   child: SingleChildScrollView(
                     child: SelectableText(jsonBackup, style: const TextStyle(fontSize: 11, fontFamily: 'monospace')),
                   ),
-                ),
-                const SizedBox(height: 12),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: jsonBackup));
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Complete JSON backup copied to clipboard! 📋')),
-                    );
-                  },
-                  icon: const Icon(Icons.copy_rounded, size: 16),
-                  label: const Text('Copy JSON Backup'),
-                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.success, foregroundColor: Colors.white),
                 ),
               ],
             ),
@@ -2327,22 +2372,50 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
                   children: [
                     Icon(Icons.upload_rounded, color: AppColors.primary),
                     const SizedBox(width: 10),
-                    const Text('Restore / Import JSON Data', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    const Text('Restore / Import JSON Backup', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Text('Saved JSON backup yahan paste karke "Restore Now" click karein:', style: TextStyle(fontSize: 12, color: Colors.grey)),
-                const SizedBox(height: 12),
+                const Text('Apne device se saved backup JSON file select karein ya text paste karke restore karein:', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                const SizedBox(height: 14),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    final ok = await widget.cmsService.pickAndRestoreBackupFile();
+                    if (ok && context.mounted) {
+                      _initControllers(widget.cmsService.config);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Backup file se pura portfolio restore ho gaya! 🎉'),
+                          backgroundColor: AppColors.success,
+                        ),
+                      );
+                    } else if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Koi file select nahi hui ya invalid JSON format.')),
+                      );
+                    }
+                  },
+                  icon: const Icon(Icons.folder_open_rounded, size: 18),
+                  label: const Text('📁 Upload & Restore .json File'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text('Ya JSON text paste karein:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
                 TextField(
                   controller: jsonImportCtrl,
-                  maxLines: 4,
+                  maxLines: 3,
                   decoration: InputDecoration(
                     hintText: 'Paste backup JSON string here...',
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
                 const SizedBox(height: 12),
-                ElevatedButton.icon(
+                OutlinedButton.icon(
                   onPressed: () async {
                     if (jsonImportCtrl.text.trim().isEmpty) return;
                     final ok = await widget.cmsService.importDataFromJson(jsonImportCtrl.text.trim());
@@ -2358,8 +2431,12 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
                     }
                   },
                   icon: const Icon(Icons.restore_page_rounded, size: 16),
-                  label: const Text('Restore Now'),
-                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+                  label: const Text('Restore from Pasted Text'),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: AppColors.primary),
+                    foregroundColor: AppColors.primary,
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  ),
                 ),
               ],
             ),

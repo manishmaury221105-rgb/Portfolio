@@ -168,26 +168,8 @@ class ProfileConfigModel {
       };
 
   factory ProfileConfigModel.fromJson(Map<String, dynamic> json) {
-    String nameVal = json['name'] as String? ?? 'Digital Manish';
-    if (nameVal == 'Manish Maurya') nameVal = 'Digital Manish';
-
-    String aboutHead = json['aboutHeading'] as String? ?? 'About Digital Manish';
-    if (aboutHead == 'About Manish Maurya') aboutHead = 'About Digital Manish';
-
-    String whyHead = json['whyWorkHeading'] as String? ?? 'Why Work With Digital Manish?';
-    if (whyHead == 'Why Work With Manish Maurya?') whyHead = 'Why Work With Digital Manish?';
-
-    String copyText = json['copyrightText'] as String? ?? 'Digital Manish. All rights reserved.';
-    if (copyText == 'Manish Maurya. All rights reserved.') copyText = 'Digital Manish. All rights reserved.';
-
-    String heroSub = json['heroSubtitle'] as String? ?? '';
-    heroSub = heroSub.replaceAll('Manish Maurya', 'Digital Manish');
-
-    String bio = json['aboutBio'] as String? ?? '';
-    bio = bio.replaceAll('Manish Maurya', 'Digital Manish');
-
     return ProfileConfigModel(
-      name: nameVal,
+      name: json['name'] as String? ?? 'Digital Manish',
       tagline: json['tagline'] as String? ?? 'Digital Marketing | Website & App Development',
       phone: json['phone'] as String? ?? '7380492118',
       whatsappNumber: json['whatsappNumber'] as String? ?? '7380492118',
@@ -205,18 +187,18 @@ class ProfileConfigModel {
       accentColorHex: json['accentColorHex'] as String? ?? '#EC4899',
       isDarkModeDefault: json['isDarkModeDefault'] as bool? ?? true,
       heroTitle: json['heroTitle'] as String? ?? 'Aapke Business Ko Online Le Jane Ka Complete Solution',
-      heroSubtitle: heroSub,
+      heroSubtitle: json['heroSubtitle'] as String? ?? '',
       heroBadge1: json['heroBadge1'] as String? ?? 'Available for Projects',
       heroBadge2: json['heroBadge2'] as String? ?? 'ROI Focused',
-      aboutHeading: aboutHead,
+      aboutHeading: json['aboutHeading'] as String? ?? 'About Digital Manish',
       aboutSubtitle: json['aboutSubtitle'] as String? ?? 'Digital Marketer & Full-Stack Developer',
-      aboutBio: bio,
+      aboutBio: json['aboutBio'] as String? ?? '',
       aboutMission: json['aboutMission'] as String? ?? '',
       servicesHeading: json['servicesHeading'] as String? ?? 'My Specialized Services',
       servicesSubtitle: json['servicesSubtitle'] as String? ?? '',
       projectsHeading: json['projectsHeading'] as String? ?? 'Featured Projects Showcase',
       projectsSubtitle: json['projectsSubtitle'] as String? ?? '',
-      whyWorkHeading: whyHead,
+      whyWorkHeading: json['whyWorkHeading'] as String? ?? 'Why Work With Digital Manish?',
       whyWorkSubtitle: json['whyWorkSubtitle'] as String? ?? '',
       consultationTitle: json['consultationTitle'] as String? ?? 'Ready to grow your business online?',
       consultationSubtitle: json['consultationSubtitle'] as String? ?? '',
@@ -231,7 +213,7 @@ class ProfileConfigModel {
       linkedinUrl: json['linkedinUrl'] as String? ?? 'https://linkedin.com',
       githubUrl: json['githubUrl'] as String? ?? 'https://github.com',
       footerAbout: json['footerAbout'] as String? ?? '',
-      copyrightText: copyText,
+      copyrightText: json['copyrightText'] as String? ?? 'Digital Manish. All rights reserved.',
       adminPasscode: json['adminPasscode'] as String? ?? '1234',
       isAdminPinRequired: json['isAdminPinRequired'] as bool? ?? false,
     );

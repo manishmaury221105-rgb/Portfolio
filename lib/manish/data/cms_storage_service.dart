@@ -7,18 +7,32 @@ import '../models/service_model.dart';
 import '../models/why_work_model.dart';
 import '../theme/app_colors.dart';
 import '../utils/app_localization.dart';
+import '../utils/file_download_helper.dart';
+import '../utils/web_storage_helper.dart';
 import 'portfolio_data.dart';
 
-/// Ultra-Fast Self-Contained Local Database & CMS Storage Service.
-/// Stores all portfolio data, services, projects, why work items, and configuration
-/// locally inside persistent device / browser storage with 0ms in-memory reactivity,
-/// background disk sync, 100% offline support, and full JSON backup export & restore.
+/// Ultra-Robust Permanent CMS Storage & Database Service.
+/// Features:
+/// 1. Instant 0ms in-memory reactivity for UI
+/// 2. Multi-layer local persistence (SharedPreferences + Web LocalStorage Redundancy)
+/// 3. Persistent Browser Storage request (prevents browser from clearing site data)
+/// 4. Master Snapshot Auto-Sync to prevent data loss or partial write corruption
+/// 5. 1-Click JSON Backup Download and Device JSON File Import
+/// 6. Safe error-tolerant JSON parsing that preserves all user-customized entries
 class CmsStorageService extends ChangeNotifier {
-  static const String _keyProfileConfig = 'manish_cms_profile_config_v3';
-  static const String _keyServices = 'manish_cms_services_v3';
-  static const String _keyProjects = 'manish_cms_projects_v3';
-  static const String _keyWhyWork = 'manish_cms_why_work_v3';
-  static const String _keyLanguage = 'manish_portfolio_lang_v3';
+  static const String _keyProfileConfig = 'manish_cms_profile_config_v4';
+  static const String _keyServices = 'manish_cms_services_v4';
+  static const String _keyProjects = 'manish_cms_projects_v4';
+  static const String _keyWhyWork = 'manish_cms_why_work_v4';
+  static const String _keyLanguage = 'manish_portfolio_lang_v4';
+  static const String _keyMasterBackup = 'manish_cms_master_backup_v4';
+
+  // Legacy fallback keys to seamlessly migrate any v3 data
+  static const String _legacyProfileConfig = 'manish_cms_profile_config_v3';
+  static const String _legacyServices = 'manish_cms_services_v3';
+  static const String _legacyProjects = 'manish_cms_projects_v3';
+  static const String _legacyWhyWork = 'manish_cms_why_work_v3';
+  static const String _legacyLanguage = 'manish_portfolio_lang_v3';
 
   SharedPreferences? _prefs;
   ProfileConfigModel _config = PortfolioData.defaultConfig;
@@ -28,6 +42,7 @@ class CmsStorageService extends ChangeNotifier {
   AppLanguage _language = AppLanguage.hinglish;
   bool _isLoaded = false;
   Future<void>? _loadFuture;
+  DateTime? _lastSavedTime;
 
   ProfileConfigModel get config => _config;
   List<ServiceModel> get services => _services;
@@ -37,6 +52,7 @@ class CmsStorageService extends ChangeNotifier {
   AppLocalization get loc => AppLocalization(_language);
   bool get isLoaded => _isLoaded;
   bool get isLocalDatabaseReady => _isLoaded;
+  DateTime? get lastSavedTime => _lastSavedTime;
 
   // Compatibility flags
   bool get isRealtimeConnected => true;
@@ -56,118 +72,159 @@ class CmsStorageService extends ChangeNotifier {
     return _prefs!;
   }
 
-  List<ServiceModel> _mergeServicesWithDefaults(List<ServiceModel> input) {
-    final list = List<ServiceModel>.from(input);
-    if (list.length < 4) {
-      for (final ds in PortfolioData.defaultServices) {
-        if (!list.any((s) => s.id == ds.id)) {
-          list.add(ds);
-        }
-        if (list.length >= 4) break;
-      }
-    }
-    return list;
-  }
-
-  List<ProjectModel> _mergeProjectsWithDefaults(List<ProjectModel> input) {
-    final list = List<ProjectModel>.from(input);
-    if (list.length < 4) {
-      for (final dp in PortfolioData.defaultProjects) {
-        if (!list.any((p) => p.id == dp.id)) {
-          list.add(dp);
-        }
-        if (list.length >= 4) break;
-      }
-    }
-    return list;
-  }
-
   Future<void> _performLoadData() async {
     try {
+      // 1. Request lifetime persistent storage on browser
+      await WebStorageHelper.requestPersistentStorage();
+
       final prefs = await _getPrefs();
 
-      // Load language preference
-      final langRaw = prefs.getString(_keyLanguage);
+      // 2. Try loading Language
+      final langRaw = prefs.getString(_keyLanguage) ??
+          prefs.getString(_legacyLanguage) ??
+          WebStorageHelper.readRaw(_keyLanguage);
       if (langRaw != null && langRaw.isNotEmpty) {
         _language = AppLanguage.fromString(langRaw);
       } else {
         _language = AppLanguage.hinglish;
       }
 
-      final configRaw = prefs.getString(_keyProfileConfig);
+      // 3. Try loading Profile Configuration
+      final configRaw = prefs.getString(_keyProfileConfig) ??
+          prefs.getString(_legacyProfileConfig) ??
+          WebStorageHelper.readRaw(_keyProfileConfig);
       if (configRaw != null && configRaw.isNotEmpty) {
-        _config = ProfileConfigModel.fromJson(jsonDecode(configRaw));
-      } else {
-        _config = PortfolioData.defaultConfig;
+        try {
+          _config = ProfileConfigModel.fromJson(jsonDecode(configRaw));
+        } catch (e) {
+          debugPrint('Error parsing saved profile config: $e');
+        }
       }
 
-      final servicesRaw = prefs.getString(_keyServices);
+      // 4. Try loading Services
+      final servicesRaw = prefs.getString(_keyServices) ??
+          prefs.getString(_legacyServices) ??
+          WebStorageHelper.readRaw(_keyServices);
       if (servicesRaw != null && servicesRaw.isNotEmpty) {
-        final List<dynamic> decoded = jsonDecode(servicesRaw);
-        final loaded = decoded
-            .map((e) => ServiceModel.fromJson(e as Map<String, dynamic>))
-            .toList();
-        _services = _mergeServicesWithDefaults(loaded);
-      } else {
-        _services = List.from(PortfolioData.defaultServices);
+        try {
+          final List<dynamic> decoded = jsonDecode(servicesRaw);
+          final loaded = decoded
+              .map((e) => ServiceModel.fromJson(Map<String, dynamic>.from(e as Map)))
+              .toList();
+          if (loaded.isNotEmpty) {
+            _services = loaded;
+          }
+        } catch (e) {
+          debugPrint('Error parsing saved services: $e');
+        }
       }
 
-      final projectsRaw = prefs.getString(_keyProjects);
+      // 5. Try loading Projects
+      final projectsRaw = prefs.getString(_keyProjects) ??
+          prefs.getString(_legacyProjects) ??
+          WebStorageHelper.readRaw(_keyProjects);
       if (projectsRaw != null && projectsRaw.isNotEmpty) {
-        final List<dynamic> decoded = jsonDecode(projectsRaw);
-        final loaded = decoded
-            .map((e) => ProjectModel.fromJson(e as Map<String, dynamic>))
-            .toList();
-        _projects = _mergeProjectsWithDefaults(loaded);
-      } else {
-        _projects = List.from(PortfolioData.defaultProjects);
+        try {
+          final List<dynamic> decoded = jsonDecode(projectsRaw);
+          final loaded = decoded
+              .map((e) => ProjectModel.fromJson(Map<String, dynamic>.from(e as Map)))
+              .toList();
+          if (loaded.isNotEmpty) {
+            _projects = loaded;
+          }
+        } catch (e) {
+          debugPrint('Error parsing saved projects: $e');
+        }
       }
 
-      final whyWorkRaw = prefs.getString(_keyWhyWork);
+      // 6. Try loading Why Work Pillars
+      final whyWorkRaw = prefs.getString(_keyWhyWork) ??
+          prefs.getString(_legacyWhyWork) ??
+          WebStorageHelper.readRaw(_keyWhyWork);
       if (whyWorkRaw != null && whyWorkRaw.isNotEmpty) {
-        final List<dynamic> decoded = jsonDecode(whyWorkRaw);
-        _whyWorkList = decoded
-            .map((e) => WhyWorkModel.fromJson(e as Map<String, dynamic>))
-            .toList();
-      } else {
-        _whyWorkList = List.from(PortfolioData.defaultWhyWorkList);
+        try {
+          final List<dynamic> decoded = jsonDecode(whyWorkRaw);
+          final loaded = decoded
+              .map((e) => WhyWorkModel.fromJson(Map<String, dynamic>.from(e as Map)))
+              .toList();
+          if (loaded.isNotEmpty) {
+            _whyWorkList = loaded;
+          }
+        } catch (e) {
+          debugPrint('Error parsing saved why work items: $e');
+        }
+      }
+
+      // 7. Check Master Backup Snapshot fallback if any core data was missing
+      if (configRaw == null && servicesRaw == null && projectsRaw == null) {
+        final masterRaw = prefs.getString(_keyMasterBackup) ??
+            WebStorageHelper.readRaw(_keyMasterBackup);
+        if (masterRaw != null && masterRaw.isNotEmpty) {
+          try {
+            await importDataFromJson(masterRaw);
+          } catch (e) {
+            debugPrint('Master backup parse error: $e');
+          }
+        }
       }
 
       _isLoaded = true;
       AppColors.applyFromConfig(_config);
       notifyListeners();
     } catch (e) {
-      debugPrint('Error loading local CMS database: $e');
-      _config = PortfolioData.defaultConfig;
-      _services = List.from(PortfolioData.defaultServices);
-      _projects = List.from(PortfolioData.defaultProjects);
-      _whyWorkList = List.from(PortfolioData.defaultWhyWorkList);
-      _language = AppLanguage.hinglish;
+      debugPrint('Error in _performLoadData: $e');
       _isLoaded = true;
       AppColors.applyFromConfig(_config);
       notifyListeners();
     }
   }
 
-  // --- Language Switcher (Instant 0ms update + Local Persistence) ---
+  // --- Synchronize & Persist Master Snapshot across all storage tiers ---
+  Future<void> _syncMasterSnapshot() async {
+    _lastSavedTime = DateTime.now();
+    try {
+      final snapshot = exportAllDataAsJson();
+      final prefs = await _getPrefs();
+      await prefs.setString(_keyMasterBackup, snapshot);
+      WebStorageHelper.saveRaw(_keyMasterBackup, snapshot);
+    } catch (e) {
+      debugPrint('Error syncing master backup snapshot: $e');
+    }
+  }
+
+  // --- Language Switcher ---
   Future<void> setLanguage(AppLanguage newLang) async {
     if (_language == newLang) return;
     _language = newLang;
     notifyListeners();
-    final prefs = await _getPrefs();
-    await prefs.setString(_keyLanguage, newLang.name);
+    try {
+      final prefs = await _getPrefs();
+      await prefs.setString(_keyLanguage, newLang.name);
+      WebStorageHelper.saveRaw(_keyLanguage, newLang.name);
+      await _syncMasterSnapshot();
+    } catch (e) {
+      debugPrint('Error persisting language: $e');
+    }
   }
 
-  // --- Profile & Site Config Updates (Instant 0ms UI update + background persist) ---
+  // --- Profile & Site Config Updates ---
   Future<void> updateConfig(ProfileConfigModel newConfig) async {
     _config = newConfig;
     AppColors.applyFromConfig(_config);
     notifyListeners();
-    final prefs = await _getPrefs();
-    await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
+
+    try {
+      final prefs = await _getPrefs();
+      final jsonStr = jsonEncode(_config.toJson());
+      await prefs.setString(_keyProfileConfig, jsonStr);
+      WebStorageHelper.saveRaw(_keyProfileConfig, jsonStr);
+      await _syncMasterSnapshot();
+    } catch (e) {
+      debugPrint('Error persisting profile config: $e');
+    }
   }
 
-  // --- Services Full CRUD (Instant 0ms UI update + background persist) ---
+  // --- Services Full CRUD ---
   Future<void> addService(ServiceModel service) async {
     _services.add(service);
     notifyListeners();
@@ -198,12 +255,18 @@ class CmsStorageService extends ChangeNotifier {
   }
 
   Future<void> _saveServices() async {
-    final prefs = await _getPrefs();
-    final jsonStr = jsonEncode(_services.map((s) => s.toJson()).toList());
-    await prefs.setString(_keyServices, jsonStr);
+    try {
+      final prefs = await _getPrefs();
+      final jsonStr = jsonEncode(_services.map((s) => s.toJson()).toList());
+      await prefs.setString(_keyServices, jsonStr);
+      WebStorageHelper.saveRaw(_keyServices, jsonStr);
+      await _syncMasterSnapshot();
+    } catch (e) {
+      debugPrint('Error persisting services: $e');
+    }
   }
 
-  // --- Projects Full CRUD (Instant 0ms UI update + background persist) ---
+  // --- Projects Full CRUD ---
   Future<void> addProject(ProjectModel project) async {
     _projects.insert(0, project);
     notifyListeners();
@@ -234,12 +297,18 @@ class CmsStorageService extends ChangeNotifier {
   }
 
   Future<void> _saveProjects() async {
-    final prefs = await _getPrefs();
-    final jsonStr = jsonEncode(_projects.map((p) => p.toJson()).toList());
-    await prefs.setString(_keyProjects, jsonStr);
+    try {
+      final prefs = await _getPrefs();
+      final jsonStr = jsonEncode(_projects.map((p) => p.toJson()).toList());
+      await prefs.setString(_keyProjects, jsonStr);
+      WebStorageHelper.saveRaw(_keyProjects, jsonStr);
+      await _syncMasterSnapshot();
+    } catch (e) {
+      debugPrint('Error persisting projects: $e');
+    }
   }
 
-  // --- Why Work With Me Pillars Full CRUD (Instant 0ms UI update + background persist) ---
+  // --- Why Work With Me Pillars Full CRUD ---
   Future<void> addWhyWorkItem(WhyWorkModel item) async {
     _whyWorkList.add(item);
     notifyListeners();
@@ -262,17 +331,23 @@ class CmsStorageService extends ChangeNotifier {
   }
 
   Future<void> _saveWhyWork() async {
-    final prefs = await _getPrefs();
-    final jsonStr = jsonEncode(_whyWorkList.map((w) => w.toJson()).toList());
-    await prefs.setString(_keyWhyWork, jsonStr);
+    try {
+      final prefs = await _getPrefs();
+      final jsonStr = jsonEncode(_whyWorkList.map((w) => w.toJson()).toList());
+      await prefs.setString(_keyWhyWork, jsonStr);
+      WebStorageHelper.saveRaw(_keyWhyWork, jsonStr);
+      await _syncMasterSnapshot();
+    } catch (e) {
+      debugPrint('Error persisting why work list: $e');
+    }
   }
 
   // --- Backup Export & Import ---
   String exportAllDataAsJson() {
     final Map<String, dynamic> fullBackup = {
-      'version': '3.0',
+      'version': '4.0',
       'timestamp': DateTime.now().toIso8601String(),
-      'type': 'self_contained_local_database',
+      'type': 'permanent_cms_database',
       'language': _language.name,
       'config': _config.toJson(),
       'services': _services.map((s) => s.toJson()).toList(),
@@ -282,6 +357,21 @@ class CmsStorageService extends ChangeNotifier {
     return const JsonEncoder.withIndent('  ').convert(fullBackup);
   }
 
+  /// Trigger instant browser download of complete portfolio backup JSON file
+  void downloadBackupFile() {
+    final filename = 'digital_manish_portfolio_backup_${DateTime.now().year}_${DateTime.now().month}_${DateTime.now().day}.json';
+    FileDownloadHelper.downloadJsonFile(filename, exportAllDataAsJson());
+  }
+
+  /// Open file picker to choose and restore backup JSON file from device
+  Future<bool> pickAndRestoreBackupFile() async {
+    final jsonContent = await FileDownloadHelper.pickAndReadJsonFile();
+    if (jsonContent != null && jsonContent.trim().isNotEmpty) {
+      return await importDataFromJson(jsonContent.trim());
+    }
+    return false;
+  }
+
   Future<bool> importDataFromJson(String jsonString) async {
     try {
       final Map<String, dynamic> decoded = jsonDecode(jsonString);
@@ -289,7 +379,7 @@ class CmsStorageService extends ChangeNotifier {
         _language = AppLanguage.fromString(decoded['language'] as String?);
       }
       if (decoded.containsKey('config')) {
-        _config = ProfileConfigModel.fromJson(decoded['config'] as Map<String, dynamic>);
+        _config = ProfileConfigModel.fromJson(Map<String, dynamic>.from(decoded['config'] as Map));
       }
       if (decoded.containsKey('services')) {
         final List<dynamic> list = decoded['services'];
@@ -305,17 +395,30 @@ class CmsStorageService extends ChangeNotifier {
       }
 
       final prefs = await _getPrefs();
+      final cfgStr = jsonEncode(_config.toJson());
+      final srvStr = jsonEncode(_services.map((s) => s.toJson()).toList());
+      final prjStr = jsonEncode(_projects.map((p) => p.toJson()).toList());
+      final whyStr = jsonEncode(_whyWorkList.map((w) => w.toJson()).toList());
+
       await prefs.setString(_keyLanguage, _language.name);
-      await prefs.setString(_keyProfileConfig, jsonEncode(_config.toJson()));
-      await prefs.setString(_keyServices, jsonEncode(_services.map((s) => s.toJson()).toList()));
-      await prefs.setString(_keyProjects, jsonEncode(_projects.map((p) => p.toJson()).toList()));
-      await prefs.setString(_keyWhyWork, jsonEncode(_whyWorkList.map((w) => w.toJson()).toList()));
+      await prefs.setString(_keyProfileConfig, cfgStr);
+      await prefs.setString(_keyServices, srvStr);
+      await prefs.setString(_keyProjects, prjStr);
+      await prefs.setString(_keyWhyWork, whyStr);
+
+      WebStorageHelper.saveRaw(_keyLanguage, _language.name);
+      WebStorageHelper.saveRaw(_keyProfileConfig, cfgStr);
+      WebStorageHelper.saveRaw(_keyServices, srvStr);
+      WebStorageHelper.saveRaw(_keyProjects, prjStr);
+      WebStorageHelper.saveRaw(_keyWhyWork, whyStr);
+
+      await _syncMasterSnapshot();
 
       AppColors.applyFromConfig(_config);
       notifyListeners();
       return true;
     } catch (e) {
-      debugPrint('Error importing local database JSON: $e');
+      debugPrint('Error importing database JSON: $e');
       return false;
     }
   }
@@ -328,6 +431,14 @@ class CmsStorageService extends ChangeNotifier {
     await prefs.remove(_keyServices);
     await prefs.remove(_keyProjects);
     await prefs.remove(_keyWhyWork);
+    await prefs.remove(_keyMasterBackup);
+
+    WebStorageHelper.removeRaw(_keyLanguage);
+    WebStorageHelper.removeRaw(_keyProfileConfig);
+    WebStorageHelper.removeRaw(_keyServices);
+    WebStorageHelper.removeRaw(_keyProjects);
+    WebStorageHelper.removeRaw(_keyWhyWork);
+    WebStorageHelper.removeRaw(_keyMasterBackup);
 
     _language = AppLanguage.hinglish;
     _config = PortfolioData.defaultConfig;
