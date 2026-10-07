@@ -312,9 +312,9 @@ class _CmsAdminDialogState extends State<CmsAdminDialog> with SingleTickerProvid
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTextField('Phone Number', _phoneCtrl, 'e.g. 7380492118'),
+          _buildTextField('Phone Number', _phoneCtrl, 'e.g. 9214468818'),
           const SizedBox(height: 14),
-          _buildTextField('Email Address', _emailCtrl, 'e.g. manishmaurya.digital@gmail.com'),
+          _buildTextField('Email Address', _emailCtrl, 'e.g. manishdigital99@gmail.com'),
           const SizedBox(height: 14),
           _buildTextField('Location', _locCtrl, 'e.g. Harahua, Varanasi, Uttar Pradesh, India'),
           const SizedBox(height: 14),

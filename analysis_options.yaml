@@ -4,6 +4,8 @@ analyzer:
   exclude:
     - build/**
     - .dart_tool/**
+    - web/**
+    - macos/**
 
 linter:
   rules:

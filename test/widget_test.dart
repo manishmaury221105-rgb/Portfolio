@@ -59,7 +59,7 @@ void main() {
   });
 
   test('UrlHelper normalizes phone numbers properly', () async {
-    expect(UrlHelper.phoneNumber, '7380492118');
+    expect(UrlHelper.phoneNumber, '9214468818');
   });
 
   test('CmsStorageService persists data and handles JSON backup export/import', () async {

@@ -268,7 +268,7 @@ class ProjectDetailDialog extends StatelessWidget {
                                       ? 'Hello Manish! I saw your "${project.title}" project and would like to build something similar.'
                                       : 'Namaste Manish ji! Maine aapka "${project.title}" project dekha, mujhe similar solution develop karwana hai.');
                               UrlHelper.openWhatsApp(
-                                phone: '918090547071',
+                                phone: UrlHelper.phoneNumber,
                                 message: msg,
                                 context: context,
                               );

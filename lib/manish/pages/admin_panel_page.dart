@@ -1465,17 +1465,25 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
               if (c.maxWidth < 480) {
                 return Column(
                   children: [
-                    _buildInputBox('Phone Number', _phoneCtrl, 'e.g. 7380492118'),
+                    _buildInputBox('Phone Number', _phoneCtrl, 'e.g. 9214468818'),
                     const SizedBox(height: 12),
-                    _buildInputBox('WhatsApp Number', _whatsappCtrl, 'e.g. 7380492118'),
+                    _buildInputBox('WhatsApp Number', _whatsappCtrl, 'e.g. 9214468818'),
+                    const SizedBox(height: 12),
+                    _buildInputBox('Email Address', _emailCtrl, 'e.g. manishdigital99@gmail.com'),
                   ],
                 );
               }
-              return Row(
+              return Column(
                 children: [
-                  Expanded(child: _buildInputBox('Phone Number', _phoneCtrl, 'e.g. 7380492118')),
-                  const SizedBox(width: 12),
-                  Expanded(child: _buildInputBox('WhatsApp Number', _whatsappCtrl, 'e.g. 7380492118')),
+                  Row(
+                    children: [
+                      Expanded(child: _buildInputBox('Phone Number', _phoneCtrl, 'e.g. 9214468818')),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildInputBox('WhatsApp Number', _whatsappCtrl, 'e.g. 9214468818')),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  _buildInputBox('Email Address', _emailCtrl, 'e.g. manishdigital99@gmail.com'),
                 ],
               );
             },

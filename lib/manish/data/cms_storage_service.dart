@@ -20,19 +20,19 @@ import 'portfolio_data.dart';
 /// 5. 1-Click JSON Backup Download and Device JSON File Import
 /// 6. Safe error-tolerant JSON parsing that preserves all user-customized entries
 class CmsStorageService extends ChangeNotifier {
-  static const String _keyProfileConfig = 'manish_cms_profile_config_v4';
-  static const String _keyServices = 'manish_cms_services_v4';
-  static const String _keyProjects = 'manish_cms_projects_v4';
-  static const String _keyWhyWork = 'manish_cms_why_work_v4';
-  static const String _keyLanguage = 'manish_portfolio_lang_v4';
-  static const String _keyMasterBackup = 'manish_cms_master_backup_v4';
+  static const String _keyProfileConfig = 'manish_cms_profile_config_v5';
+  static const String _keyServices = 'manish_cms_services_v5';
+  static const String _keyProjects = 'manish_cms_projects_v5';
+  static const String _keyWhyWork = 'manish_cms_why_work_v5';
+  static const String _keyLanguage = 'manish_portfolio_lang_v5';
+  static const String _keyMasterBackup = 'manish_cms_master_backup_v5';
 
-  // Legacy fallback keys to seamlessly migrate any v3 data
-  static const String _legacyProfileConfig = 'manish_cms_profile_config_v3';
-  static const String _legacyServices = 'manish_cms_services_v3';
-  static const String _legacyProjects = 'manish_cms_projects_v3';
-  static const String _legacyWhyWork = 'manish_cms_why_work_v3';
-  static const String _legacyLanguage = 'manish_portfolio_lang_v3';
+  // Legacy fallback keys
+  static const String _legacyProfileConfig = 'manish_cms_profile_config_v4';
+  static const String _legacyServices = 'manish_cms_services_v4';
+  static const String _legacyProjects = 'manish_cms_projects_v4';
+  static const String _legacyWhyWork = 'manish_cms_why_work_v4';
+  static const String _legacyLanguage = 'manish_portfolio_lang_v4';
 
   SharedPreferences? _prefs;
   ProfileConfigModel _config = PortfolioData.defaultConfig;
@@ -91,7 +91,6 @@ class CmsStorageService extends ChangeNotifier {
 
       // 3. Try loading Profile Configuration
       final configRaw = prefs.getString(_keyProfileConfig) ??
-          prefs.getString(_legacyProfileConfig) ??
           WebStorageHelper.readRaw(_keyProfileConfig);
       if (configRaw != null && configRaw.isNotEmpty) {
         try {

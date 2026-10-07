@@ -314,7 +314,7 @@ class _ServiceCardState extends State<_ServiceCard> {
                                       ? 'Hello Manish! I would like to inquire about your "$serviceTitle" service.'
                                       : 'Namaste Manish ji! Mujhe "$serviceTitle" service ke bare me jankari chahiye.');
                               UrlHelper.openWhatsApp(
-                                phone: '918090547071',
+                                phone: UrlHelper.phoneNumber,
                                 message: msg,
                                 context: context,
                               );

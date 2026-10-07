@@ -224,7 +224,7 @@ class ServiceDetailDialog extends StatelessWidget {
                                         ? 'Hello Manish! I am interested in discussing your "$serviceTitle" service.'
                                         : 'Namaste Manish ji! Mujhe "$serviceTitle" service ke baare me discuss karna hai. Details provide karein.');
                                 UrlHelper.openWhatsApp(
-                                  phone: '918090547071',
+                                  phone: UrlHelper.phoneNumber,
                                   message: message,
                                   context: context,
                                 );
