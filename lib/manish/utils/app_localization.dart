@@ -14,8 +14,8 @@ enum AppLanguage {
 
   static AppLanguage fromString(String? val) {
     if (val == 'hindi') return AppLanguage.hindi;
-    if (val == 'english') return AppLanguage.english;
-    return AppLanguage.hinglish;
+    if (val == 'hinglish') return AppLanguage.hinglish;
+    return AppLanguage.english;
   }
 }
 

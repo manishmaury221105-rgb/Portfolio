@@ -23,7 +23,7 @@ class UrlHelper {
     return digits;
   }
 
-  /// Launch WhatsApp chat directly with a pre-filled greeting message in Hinglish/Hindi
+  /// Launch WhatsApp chat directly with a pre-filled greeting message in English
   static Future<bool> openWhatsApp({
     String? phone,
     String? message,
@@ -31,7 +31,7 @@ class UrlHelper {
   }) async {
     final targetPhone = (phone != null && phone.trim().isNotEmpty) ? phone : phoneNumber;
     final text = message ??
-        'Namaste Manish ji! Maine aapka portfolio website dekha aur mujhe aapke Digital Marketing / Web & App Development services ke bare me baat karni hai.';
+        'Hello Manish! I visited your portfolio website and would like to discuss your Digital Marketing / Web & App Development services.';
 
     final cleanDigits = _normalizePhone(targetPhone);
     final finalWhatsAppPhone = cleanDigits.length == 10 ? '91$cleanDigits' : cleanDigits;
@@ -43,7 +43,7 @@ class UrlHelper {
       } else {
         if (context != null && context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('WhatsApp open nahi ho paya. Please call directly.')),
+            const SnackBar(content: Text('Could not open WhatsApp. Please call directly.')),
           );
         }
         return false;
@@ -73,7 +73,7 @@ class UrlHelper {
       } else {
         if (context != null && context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Dialer open nahi ho saka: $phone')),
+            SnackBar(content: Text('Could not open dialer: $phone')),
           );
         }
         return false;
@@ -92,7 +92,7 @@ class UrlHelper {
   static Future<bool> sendEmail({
     String email = defaultEmail,
     String subject = 'Project Enquiry - Digital Manish Portfolio',
-    String body = 'Hello Manish,\n\nI want to discuss a project with you regarding...',
+    String body = 'Hello Manish,\n\nI would like to discuss a project with you regarding...',
     BuildContext? context,
   }) async {
     final uri = Uri.parse('mailto:$email?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}');
@@ -102,7 +102,7 @@ class UrlHelper {
       } else {
         if (context != null && context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Email app nahi mila: $email')),
+            SnackBar(content: Text('Could not find email app: $email')),
           );
         }
         return false;
@@ -146,7 +146,7 @@ class UrlHelper {
     } catch (e) {
       if (context != null && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Link open nahi ho payi: $url')),
+          SnackBar(content: Text('Could not open link: $url')),
         );
       }
     }
@@ -156,10 +156,10 @@ class UrlHelper {
   /// Share Portfolio Link / Vcard
   static Future<void> sharePortfolio({BuildContext? context}) async {
     const text = '''
-✨ Digital Manish - Digital Marketing | Website & App Development
-📍 Varanasi, Uttar Pradesh
+✨ Digital Manish - Digital Marketing | Web & App Development
+📍 Varanasi, Uttar Pradesh, India
 📞 +91 9214468818
-🌐 Check out my portfolio and contact for modern business websites, mobile apps, Meta ads & SEO!
+🌐 Visit my portfolio to connect for high-converting marketing campaigns, websites, mobile apps & SEO!
 ''';
     final box = context != null ? (context.findRenderObject() as RenderBox?) : null;
     final origin = box != null ? (box.localToGlobal(Offset.zero) & box.size) : null;

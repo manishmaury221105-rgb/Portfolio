@@ -56,7 +56,7 @@ class _ContactSectionState extends State<ContactSection> {
       final message = _messageController.text.trim();
 
       final fullMessage = '''
-*Namaste ${widget.config.name} ji, New Project Enquiry:*
+*Hello ${widget.config.name}, New Project Enquiry:*
 👤 *Name:* $name
 📞 *Phone:* $phone
 📧 *Email:* ${email.isEmpty ? 'Not provided' : email}

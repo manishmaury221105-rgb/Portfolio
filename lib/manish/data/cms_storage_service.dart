@@ -20,25 +20,24 @@ import 'portfolio_data.dart';
 /// 5. 1-Click JSON Backup Download and Device JSON File Import
 /// 6. Safe error-tolerant JSON parsing that preserves all user-customized entries
 class CmsStorageService extends ChangeNotifier {
-  static const String _keyProfileConfig = 'manish_cms_profile_config_v6';
-  static const String _keyServices = 'manish_cms_services_v6';
-  static const String _keyProjects = 'manish_cms_projects_v6';
-  static const String _keyWhyWork = 'manish_cms_why_work_v6';
-  static const String _keyLanguage = 'manish_portfolio_lang_v6';
-  static const String _keyMasterBackup = 'manish_cms_master_backup_v6';
+  static const String _keyProfileConfig = 'manish_cms_profile_config_v7';
+  static const String _keyServices = 'manish_cms_services_v7';
+  static const String _keyProjects = 'manish_cms_projects_v7';
+  static const String _keyWhyWork = 'manish_cms_why_work_v7';
+  static const String _keyLanguage = 'manish_portfolio_lang_v7';
+  static const String _keyMasterBackup = 'manish_cms_master_backup_v7';
 
   // Legacy fallback keys
-  static const String _legacyServices = 'manish_cms_services_v5';
-  static const String _legacyProjects = 'manish_cms_projects_v5';
-  static const String _legacyWhyWork = 'manish_cms_why_work_v5';
-  static const String _legacyLanguage = 'manish_portfolio_lang_v5';
+  static const String _legacyServices = 'manish_cms_services_v6';
+  static const String _legacyProjects = 'manish_cms_projects_v6';
+  static const String _legacyWhyWork = 'manish_cms_why_work_v6';
 
   SharedPreferences? _prefs;
   ProfileConfigModel _config = PortfolioData.defaultConfig;
   List<ServiceModel> _services = List.from(PortfolioData.defaultServices);
   List<ProjectModel> _projects = List.from(PortfolioData.defaultProjects);
   List<WhyWorkModel> _whyWorkList = List.from(PortfolioData.defaultWhyWorkList);
-  AppLanguage _language = AppLanguage.hinglish;
+  AppLanguage _language = AppLanguage.english;
   bool _isLoaded = false;
   Future<void>? _loadFuture;
   DateTime? _lastSavedTime;
@@ -78,14 +77,13 @@ class CmsStorageService extends ChangeNotifier {
 
       final prefs = await _getPrefs();
 
-      // 2. Try loading Language
+      // 2. Try loading Language (defaults to English)
       final langRaw = prefs.getString(_keyLanguage) ??
-          prefs.getString(_legacyLanguage) ??
           WebStorageHelper.readRaw(_keyLanguage);
       if (langRaw != null && langRaw.isNotEmpty) {
         _language = AppLanguage.fromString(langRaw);
       } else {
-        _language = AppLanguage.hinglish;
+        _language = AppLanguage.english;
       }
 
       // 3. Try loading Profile Configuration
@@ -438,7 +436,7 @@ class CmsStorageService extends ChangeNotifier {
     WebStorageHelper.removeRaw(_keyWhyWork);
     WebStorageHelper.removeRaw(_keyMasterBackup);
 
-    _language = AppLanguage.hinglish;
+    _language = AppLanguage.english;
     _config = PortfolioData.defaultConfig;
     _services = List.from(PortfolioData.defaultServices);
     _projects = List.from(PortfolioData.defaultProjects);
