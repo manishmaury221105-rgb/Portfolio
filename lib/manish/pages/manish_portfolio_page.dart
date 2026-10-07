@@ -456,15 +456,15 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
   // ==================== HOME PAGE PREVIEWS ====================
   Widget _buildHomeFeaturedServices(bool isDesktop, AppLanguage lang, AppLocalization loc) {
     final List<ServiceModel> allServices = List.from(_cmsService.services);
-    if (allServices.length < 4) {
+    if (allServices.length < 6) {
       for (final ds in PortfolioData.defaultServices) {
         if (!allServices.any((s) => s.id == ds.id)) {
           allServices.add(ds);
         }
-        if (allServices.length >= 4) break;
+        if (allServices.length >= 6) break;
       }
     }
-    final services = allServices.take(4).toList();
+    final services = allServices.take(6).toList();
     if (services.isEmpty) return const SizedBox.shrink();
 
     return Container(
@@ -509,9 +509,9 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                   final viewAllBtn = TextButton.icon(
                     onPressed: () => _onNavigate('services'),
                     icon: const Icon(Icons.arrow_forward_rounded, size: 16),
-                    label: Text(
-                      loc.viewDetailsBtn,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    label: const Text(
+                      'View All Services',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.primary,
@@ -543,20 +543,20 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
               ),
               const SizedBox(height: 28),
 
-              // 4 Cards Layout
+              // 6 Cards Layout
               LayoutBuilder(
                 builder: (context, constraints) {
                   final cardWidth = constraints.maxWidth;
-                  final crossCount = cardWidth > 980 ? 4 : (cardWidth > 580 ? 2 : 1);
+                  final crossCount = cardWidth > 980 ? 3 : (cardWidth > 600 ? 2 : 1);
 
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossCount,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      mainAxisExtent: isDesktop ? (crossCount == 4 ? 370 : 340) : 340,
+                      mainAxisSpacing: 22,
+                      crossAxisSpacing: 22,
+                      mainAxisExtent: isDesktop ? 440 : (cardWidth > 600 ? 430 : 410),
                     ),
                     itemCount: services.length,
                     itemBuilder: (context, index) {
@@ -575,162 +575,166 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
 
   Widget _buildFeaturedServiceCard(ServiceModel service, AppLanguage lang, AppLocalization loc) {
     final textPrimary = _isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+    final textSecondary = _isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
     final hasImage = service.imageUrl.trim().isNotEmpty;
     final serviceTitle = loc.getServiceTitle(service);
 
-    return InkWell(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (_) => ServiceDetailDialog(
-            service: service,
-            isDark: _isDark,
-            language: lang,
-          ),
-        );
-      },
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: BoxDecoration(
-          color: _isDark ? AppColors.darkCard : AppColors.lightCard,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: _isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: _isDark ? 0.2 : 0.04),
-              blurRadius: 16,
-              offset: const Offset(0, 6),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: InkWell(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (_) => ServiceDetailDialog(
+              service: service,
+              isDark: _isDark,
+              language: lang,
             ),
-          ],
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // Background Image with dark gradient overlay if present
-            if (hasImage) ...[
-              AppSmartImage(
-                imageUrl: service.imageUrl,
-                fit: BoxFit.cover,
-                errorWidget: Container(color: service.accentColor.withValues(alpha: 0.15)),
+          );
+        },
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          decoration: BoxDecoration(
+            color: _isDark ? AppColors.darkCard : Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: _isDark ? AppColors.darkCardBorder : AppColors.lightCardBorder,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: _isDark ? 0.22 : 0.04),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withValues(alpha: 0.35),
-                      Colors.black.withValues(alpha: 0.70),
-                      Colors.black.withValues(alpha: 0.95),
+            ],
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (hasImage)
+                SizedBox(
+                  height: 150,
+                  width: double.infinity,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      AppSmartImage(
+                        imageUrl: service.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              (_isDark ? AppColors.darkCard : Colors.white).withValues(alpha: 0.85),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 12,
+                        left: 12,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: service.accentColor,
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.35),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Icon(service.icon, color: Colors.white, size: 20),
+                        ),
+                      ),
                     ],
-                    stops: const [0.0, 0.45, 1.0],
+                  ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: service.accentColor.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Icon(service.icon, color: service.accentColor, size: 28),
+                  ),
+                ),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        serviceTitle,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.5,
+                          color: textPrimary,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        service.titleEnglish.isNotEmpty ? service.titleEnglish : service.titleHindi,
+                        style: TextStyle(
+                          color: service.accentColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 8),
+                      Expanded(
+                        child: Text(
+                          loc.getServiceShortDesc(service),
+                          style: TextStyle(
+                            color: textSecondary,
+                            fontSize: 12.5,
+                            height: 1.45,
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Text(
+                            loc.viewDetailsBtn,
+                            style: TextStyle(
+                              color: service.accentColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 14,
+                            color: service.accentColor,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
-
-            // Content
-            Padding(
-              padding: const EdgeInsets.all(22),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: hasImage
-                          ? service.accentColor.withValues(alpha: 0.95)
-                          : service.accentColor.withValues(alpha: 0.14),
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: hasImage
-                          ? [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.4),
-                                blurRadius: 8,
-                                offset: const Offset(0, 3),
-                              ),
-                            ]
-                          : null,
-                    ),
-                    child: Icon(
-                      service.icon,
-                      color: hasImage ? Colors.white : service.accentColor,
-                      size: 26,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    serviceTitle,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: hasImage ? Colors.white : textPrimary,
-                      shadows: hasImage
-                          ? const [Shadow(color: Colors.black87, blurRadius: 8, offset: Offset(0, 2))]
-                          : null,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    service.titleEnglish.isNotEmpty ? service.titleEnglish : service.titleHindi,
-                    style: TextStyle(
-                      color: hasImage
-                          ? Colors.white70
-                          : (_isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      shadows: hasImage
-                          ? const [Shadow(color: Colors.black87, blurRadius: 6, offset: Offset(0, 1))]
-                          : null,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: Text(
-                      loc.getServiceShortDesc(service),
-                      style: TextStyle(
-                        color: hasImage
-                            ? Colors.white.withValues(alpha: 0.85)
-                            : (_isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
-                        fontSize: 13,
-                        height: 1.5,
-                        shadows: hasImage
-                            ? const [Shadow(color: Colors.black87, blurRadius: 6, offset: Offset(0, 1))]
-                            : null,
-                      ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        loc.viewDetailsBtn,
-                        style: TextStyle(
-                          color: hasImage ? Colors.white : AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Icon(
-                        Icons.arrow_forward_rounded,
-                        size: 14,
-                        color: hasImage ? Colors.white : AppColors.primary,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

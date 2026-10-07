@@ -87,9 +87,9 @@ class ServicesSection extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: crossAxisCount,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20,
-                            mainAxisExtent: isDesktop ? 430 : (isTablet ? 420 : 390),
+                            mainAxisSpacing: 24,
+                            crossAxisSpacing: 24,
+                            mainAxisExtent: isDesktop ? 450 : (isTablet ? 440 : 420),
                           ),
                           itemCount: services.length,
                           itemBuilder: (context, i) {
@@ -168,7 +168,7 @@ class _ServiceCardState extends State<_ServiceCard> {
           boxShadow: [
             BoxShadow(
               color: _isHovered
-                  ? widget.service.accentColor.withValues(alpha: 0.18)
+                  ? widget.service.accentColor.withValues(alpha: 0.22)
                   : Colors.black.withValues(alpha: widget.isDark ? 0.2 : 0.04),
               blurRadius: _isHovered ? 24 : 16,
               offset: Offset(0, _isHovered ? 8 : 4),
@@ -184,7 +184,7 @@ class _ServiceCardState extends State<_ServiceCard> {
               // Image Header (if present) or Colored Header
               if (widget.service.imageUrl.isNotEmpty)
                 SizedBox(
-                  height: 140,
+                  height: 160,
                   width: double.infinity,
                   child: Stack(
                     fit: StackFit.expand,
@@ -200,14 +200,14 @@ class _ServiceCardState extends State<_ServiceCard> {
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.transparent,
-                              (widget.isDark ? AppColors.darkCard : Colors.white).withValues(alpha: 0.9),
+                              (widget.isDark ? AppColors.darkCard : Colors.white).withValues(alpha: 0.85),
                             ],
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 12,
-                        left: 12,
+                        top: 14,
+                        left: 14,
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -215,7 +215,7 @@ class _ServiceCardState extends State<_ServiceCard> {
                             borderRadius: BorderRadius.circular(14),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.3),
+                                color: Colors.black.withValues(alpha: 0.35),
                                 blurRadius: 8,
                                 offset: const Offset(0, 3),
                               ),

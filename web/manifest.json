@@ -1,11 +1,11 @@
 {
-    "name": "Manish Maurya Portfolio",
-    "short_name": "Manish Portfolio",
+    "name": "Digital Manish Portfolio",
+    "short_name": "Digital Manish",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0A0F1D",
+    "background_color": "#0B0F19",
     "theme_color": "#6366F1",
-    "description": "Manish Maurya - Senior Flutter & Web Developer Portfolio",
+    "description": "Digital Manish - Digital Marketing & Development Portfolio",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

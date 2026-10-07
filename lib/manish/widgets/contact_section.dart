@@ -30,12 +30,15 @@ class _ContactSectionState extends State<ContactSection> {
   String _selectedService = 'Website Development';
 
   final List<String> _servicesList = [
+    'GMB Setup (Google Maps)',
+    'Meta Ads (Facebook & Insta)',
+    'Google Ads (PPC & YouTube)',
+    'Email Marketing & Automation',
+    'Chart Ads & Analytics',
+    'SEO & Google Ranking',
+    'Digital Marketing & Growth',
     'Website Development',
     'App Development (Flutter)',
-    'Meta Ads (FB & Insta)',
-    'SEO & Google Ranking',
-    'Google Ads (PPC)',
-    'Digital Marketing & Lead Gen',
     'Other / General Enquiry',
   ];
 

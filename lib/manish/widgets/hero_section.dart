@@ -3,6 +3,7 @@ import '../models/profile_config_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 import '../utils/app_localization.dart';
+import '../utils/url_helper.dart';
 import 'app_smart_image.dart';
 
 class HeroSection extends StatelessWidget {
@@ -105,11 +106,98 @@ class HeroSection extends StatelessWidget {
             height: 1.6,
           ),
         ),
+        const SizedBox(height: 28),
+
+        // CTA Buttons Row
+        Wrap(
+          spacing: 16,
+          runSpacing: 14,
+          alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () => onNavigate?.call('services'),
+              icon: const Icon(Icons.rocket_launch_rounded, size: 18, color: Colors.white),
+              label: const Text(
+                'Explore All Services',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.5, color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                elevation: 4,
+                shadowColor: AppColors.primary.withValues(alpha: 0.4),
+              ),
+            ),
+            OutlinedButton.icon(
+              onPressed: () {
+                UrlHelper.openWhatsApp(
+                  phone: UrlHelper.phoneNumber,
+                  message: 'Hello Manish! I visited your portfolio and would like to discuss a project for my business.',
+                  context: context,
+                );
+              },
+              icon: const Icon(Icons.chat_bubble_rounded, size: 18, color: Color(0xFF25D366)),
+              label: Text(
+                'Chat on WhatsApp',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14.5,
+                  color: isDark ? Colors.white : Colors.black87,
+                ),
+              ),
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+                side: BorderSide(
+                  color: const Color(0xFF25D366).withValues(alpha: 0.7),
+                  width: 1.5,
+                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+
+        // Trust Badges Pill Row
+        Wrap(
+          spacing: 12,
+          runSpacing: 10,
+          alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
+          children: [
+            _buildTrustBadge('⭐️ 5.0 Star Client Rating', AppColors.accent),
+            _buildTrustBadge('📍 Varanasi & Pan-India', AppColors.success),
+            _buildTrustBadge('🚀 100% ROI Focused', AppColors.primary),
+          ],
+        ),
       ],
     );
   }
 
+  Widget _buildTrustBadge(String text, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: color,
+        ),
+      ),
+    );
+  }
+
   Widget _buildHeroProfileCard(BuildContext context, bool isDesktop) {
+    final avatarPath = config.avatarUrl.isNotEmpty
+        ? config.avatarUrl
+        : 'assets/images/digital_manish_logo_circle.png';
+
     return Center(
       child: Stack(
         clipBehavior: Clip.none,
@@ -147,29 +235,20 @@ class HeroSection extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(5),
             child: ClipOval(
-              child: config.avatarUrl.isNotEmpty
-                  ? AppSmartImage(
-                      imageUrl: config.avatarUrl,
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.cover,
-                      errorWidget: Container(
-                        color: isDark ? AppColors.darkSurface : Colors.white,
-                        child: Icon(
-                          Icons.person_outline_rounded,
-                          size: 80,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                    )
-                  : Container(
-                      color: isDark ? AppColors.darkSurface : Colors.white,
-                      child: Icon(
-                        Icons.person_outline_rounded,
-                        size: 80,
-                        color: AppColors.primary,
-                      ),
-                    ),
+              child: AppSmartImage(
+                imageUrl: avatarPath,
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+                errorWidget: Container(
+                  color: isDark ? AppColors.darkSurface : Colors.white,
+                  child: Icon(
+                    Icons.person_outline_rounded,
+                    size: 80,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
             ),
           ),
         ],

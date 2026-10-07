@@ -1,12 +1,12 @@
 {
-  "name": "manish-portfolio",
+  "name": "digital-manish-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Portfolio website of Manish Maurya built with Flutter Web",
+  "description": "Portfolio website of Digital Manish built with Flutter Web",
   "scripts": {
     "build": "bash build.sh",
     "vercel-build": "bash build.sh"
   },
-  "keywords": ["flutter", "portfolio", "web"],
-  "author": "Manish Maurya"
+  "keywords": ["flutter", "portfolio", "web", "digital-marketing"],
+  "author": "Digital Manish"
 }

@@ -19,7 +19,7 @@ enum AppLanguage {
   }
 }
 
-/// Central Localization & Translation Engine for Manish Maurya Portfolio.
+/// Central Localization & Translation Engine for Digital Manish Portfolio.
 /// Supports 3 languages: Hindi (हिंदी), Hinglish (Roman Hindi), and English.
 class AppLocalization {
   final AppLanguage language;
@@ -465,23 +465,23 @@ class AppLocalization {
   String get aboutHeading {
     switch (language) {
       case AppLanguage.hindi:
-        return 'नमस्ते! मैं मनीष मौर्य हूँ';
+        return 'नमस्ते! मैं मनीष हूँ';
       case AppLanguage.hinglish:
-        return 'Namaste! I am Manish Maurya';
+        return 'Namaste! I am Digital Manish';
       case AppLanguage.english:
-        return 'Hello! I am Manish Maurya';
+        return 'Hello! I am Digital Manish';
     }
   }
 
   String getAboutBio(String customBio, String fallbackSubtitle) {
     if (language == AppLanguage.hindi) {
-      return 'मैं मनीष मौर्य, वाराणसी (उत्तर प्रदेश) में स्थित एक समर्पित डिजिटल मार्केटर और फुल-स्टैक वेब/ऐप डेवलपर हूँ। 3+ वर्षों के अनुभव के साथ, मैंने भारत भर के व्यवसायों को डिजिटल उपस्थिति बनाने, उच्च गुणवत्ता वाले लीड जनरेट करने और बिक्री बढ़ाने में सहायता की है।';
+      return 'मैं मनीष, वाराणसी (उत्तर प्रदेश) में स्थित एक समर्पित डिजिटल मार्केटर और फुल-स्टैक वेब/ऐप डेवलपर हूँ। 3+ वर्षों के अनुभव के साथ, मैंने भारत भर के व्यवसायों को डिजिटल उपस्थिति बनाने, उच्च गुणवत्ता वाले लीड जनरेट करने और बिक्री बढ़ाने में सहायता की है।';
     } else if (language == AppLanguage.english) {
-      return 'I am Manish Maurya, a passionate Digital Marketer and Full-Stack Web & Mobile App Developer based in Varanasi (UP), India. With 3+ years of experience, I specialize in crafting high-converting ad campaigns, modern web apps, and native mobile applications that accelerate business growth.';
+      return 'I am Digital Manish, a passionate Digital Marketer and Full-Stack Web & Mobile App Developer based in Varanasi (UP), India. With 3+ years of experience, I specialize in crafting high-converting ad campaigns, modern web apps, and native mobile applications that accelerate business growth.';
     } else {
       if (customBio.isNotEmpty) return customBio;
       if (fallbackSubtitle.isNotEmpty) return fallbackSubtitle;
-      return 'Main Manish Maurya, Varanasi me based ek passionate Digital Marketer aur Full-Stack Developer hoon. 3+ saal ke experience ke saath maine kayi local businesses aur startups ko online grow karne me madad ki hai.';
+      return 'Main Digital Manish, Varanasi me based ek passionate Digital Marketer aur Full-Stack Developer hoon. 3+ saal ke experience ke saath maine kayi local businesses aur startups ko online grow karne me madad ki hai.';
     }
   }
 
@@ -967,27 +967,35 @@ class AppLocalization {
   String getProjectTitle(ProjectModel project) {
     if (language == AppLanguage.hindi) {
       switch (project.id) {
+        case 'p_school':
+          return 'स्कूल मैनेजमेंट एवं छात्र पोर्टल';
+        case 'p_ecommerce':
+          return 'फुल-स्टैक ई-कॉमर्स एवं ऑर्डर स्टोर';
+        case 'p_meta_ads':
+          return 'लोकल बिज़नेस लीड जनरेशन इंजन';
+        case 'p_seo_gmb':
+          return 'लोकल एसईओ एवं गूगल मैप पैक रैंकिंग';
         case 'p1':
           return 'ई-कॉमर्स स्टोर एवं ऑर्डर मैनेजमेंट';
         case 'p2':
           return 'रियल एस्टेट मेटा ऐड्स एवं लीड फ़नल';
-        case 'p3':
-          return 'क्लिनिक एवं हॉस्पिटल अपॉइंटमेंट ऐप';
-        case 'p4':
-          return 'रेस्टोरेंट एवं कैफे लोकल एसईओ व गूगल मैप्स';
         default:
           return project.title;
       }
     } else if (language == AppLanguage.english) {
       switch (project.id) {
+        case 'p_school':
+          return 'School Management & Academia Portal';
+        case 'p_ecommerce':
+          return 'Full-Stack E-Commerce & Order Store';
+        case 'p_meta_ads':
+          return 'Local Business Lead Generation Engine';
+        case 'p_seo_gmb':
+          return 'Local SEO & Google Map Pack Domination';
         case 'p1':
           return 'E-Commerce Store & Order Management';
         case 'p2':
           return 'Real Estate Meta Ads & Lead Funnel';
-        case 'p3':
-          return 'Clinic & Hospital Appointment Booking App';
-        case 'p4':
-          return 'Restaurant & Cafe Local SEO & Google Map Ranking';
         default:
           return project.title;
       }
@@ -999,27 +1007,35 @@ class AppLocalization {
   String getProjectShortDesc(ProjectModel project) {
     if (language == AppLanguage.hindi) {
       switch (project.id) {
+        case 'p_school':
+          return 'छात्र प्रवेश, हाज़िरी, फीस भुगतान, परीक्षा परिणाम और टाइमटेबल हेतु संपूर्ण आधुनिक वेब ऐप।';
+        case 'p_ecommerce':
+          return 'उत्पाद कैटलॉग, त्वरित कार्ट, सुरक्षित चेकआउट एवं तेज स्पीड से लैस आधुनिक ऑनलाइन शॉपिंग स्टोर।';
+        case 'p_meta_ads':
+          return 'लक्षित मेटा व गूगल विज्ञापन अभियान जिसने वास्तविक इच्छुक ग्राहकों की उच्च-गुणवत्ता लीड्स दीं।';
+        case 'p_seo_gmb':
+          return 'गूगल बिजनेस प्रोफाइल और लोकल कीवर्ड्स अनुकूलन, जिससे कॉल्स और मैप विज़िट्स में 3 गुना वृद्धि हुई।';
         case 'p1':
           return 'शॉपिंग कार्ट, ऑनलाइन पेमेंट, लाइव ऑर्डर ट्रैकिंग और एडमिन डैशबोर्ड से युक्त आधुनिक वेब ऐप।';
         case 'p2':
           return 'लक्षित मेटा व गूगल विज्ञापन अभियान जिसने ₹28 CPL पर 450+ इच्छुक खरीदार लीड्स उत्पन्न कीं।';
-        case 'p3':
-          return 'मरीज़ों के अपॉइंटमेंट, डॉक्टर शेड्यूल और डिजिटल पर्ची के लिए क्रॉस-प्लेटफॉर्म मोबाइल ऐप।';
-        case 'p4':
-          return 'वाराणसी में रेस्टोरेंट को गूगल मैप पर #1 स्थान दिलाया, जिससे ग्राहकों की संख्या और कॉल्स में 3.2 गुना वृद्धि हुई।';
         default:
           return project.shortDesc;
       }
     } else if (language == AppLanguage.english) {
       switch (project.id) {
+        case 'p_school':
+          return 'Complete modern school management web app for student admissions, attendance, fees, exams, and teacher schedules.';
+        case 'p_ecommerce':
+          return 'Ultra-fast online shopping store with dynamic product catalog, persistent cart, and instant order checkout.';
+        case 'p_meta_ads':
+          return 'Targeted Meta ads and automated WhatsApp funnel generating high-intent client inquiries.';
+        case 'p_seo_gmb':
+          return 'Optimized Google Business Profile and local keywords to rank in top 3 Google search results.';
         case 'p1':
           return 'Modern shopping web app with cart, online payments, live order tracking and admin dashboard.';
         case 'p2':
-          return 'Targeted Meta & Google Ads campaign generating 450+ high-intent home buyer leads at ₹28 CPL.';
-        case 'p3':
-          return 'Cross-platform Flutter mobile app for patient appointments, doctor schedules, and digital prescriptions.';
-        case 'p4':
-          return 'Ranked local restaurant #1 on Google Maps in Varanasi, driving 3.2x more dine-in customers and calls.';
+          return 'Targeted Meta & Google Ads campaign generating 450+ high-intent buyer leads at ₹28 CPL.';
         default:
           return project.shortDesc;
       }
@@ -1031,27 +1047,35 @@ class AppLocalization {
   String getProjectDetailedDesc(ProjectModel project) {
     if (language == AppLanguage.hindi) {
       switch (project.id) {
+        case 'p_school':
+          return 'छात्रों के डिजिटल प्रोफाइल, उपस्थिति विश्लेषण, स्वचालित फीस चालान, परीक्षा रिपोर्ट कार्ड और शिक्षक-अभिभावक डैशबोर्ड से युक्त आधुनिक शैक्षणिक प्रबंधन प्लेटफ़ॉर्म।';
+        case 'p_ecommerce':
+          return 'तेज़ उत्पाद खोज, मोबाइल-अनुकूल यूआई, कई पेमेंट गेटवे, तुरंत ऑर्डर रसीद और वास्तविक समय स्टॉक प्रबंधन के साथ उच्च-रूपांतरण ई-कॉमर्स एप्लिकेशन।';
+        case 'p_meta_ads':
+          return 'लक्षित जनसांख्यिकी के लिए आकर्षक वीडियो और कैरोसेल विज्ञापन डिज़ाइन किए। स्वचालित व्हाट्सएप चैट द्वारा 60 सेकंड के भीतर लीड्स को कनेक्ट किया।';
+        case 'p_seo_gmb':
+          return 'ऑन-पेज कीवर्ड अनुकूलन, तकनीकी वेबसाइट गति, गूगल मैप साइटेशन्स, लोकल स्कीमा मार्कअप और वास्तविक ग्राहक समीक्षा रणनीति का सफल कार्यान्वयन।';
         case 'p1':
           return 'रिस्पॉन्सिव यूआई, त्वरित उत्पाद खोज, श्रेणी फ़िल्टर, रेज़रपे चेकआउट और वास्तविक समय ऑर्डर स्थिति ट्रैकिंग के साथ निर्मित संपूर्ण डिजिटल स्टोर।';
         case 'p2':
-          return 'उत्तर प्रदेश में रियल एस्टेट डेवलपर के लिए उच्च-प्रदर्शन लीड जनरेशन अभियान। कस्टम वीडियो क्रिएटिव्स, डायरेक्ट व्हाट्सएप लैंडिंग फ्लो और त्वरित लीड सूचनाएं।';
-        case 'p3':
-          return 'विशेषज्ञ डायरेक्टरी, स्लॉट-आधारित बुकिंग, पुश नोटिफिकेशन रिमाइंडर और सुरक्षित क्लाउड प्रिस्क्रिप्शन स्टोरेज के साथ निर्मित निर्बाध ऐप।';
-        case 'p4':
-          return 'गूगल बिजनेस प्रोफाइल नवीनीकरण, जियो-टैग्ड फोटो अपलोड, मेनू कीवर्ड ऑप्टिमाइज़ेशन और रिव्यू रणनीति सहित संपूर्ण स्थानीय अनुकूलन।';
+          return 'उच्च-प्रदर्शन लीड जनरेशन अभियान। कस्टम वीडियो क्रिएटिव्स, डायरेक्ट व्हाट्सएप लैंडिंग फ्लो और त्वरित लीड सूचनाएं।';
         default:
           return project.detailedDesc.isNotEmpty ? project.detailedDesc : project.shortDesc;
       }
     } else if (language == AppLanguage.english) {
       switch (project.id) {
+        case 'p_school':
+          return 'An end-to-end educational management platform featuring interactive student profile records, real-time attendance analytics, automated fee management, exam grade reports, course scheduling, and teacher-parent communication dashboards.';
+        case 'p_ecommerce':
+          return 'High-conversion online shopping application featuring lightning-fast product filtering, responsive mobile-first UI, secure multi-gateway checkout, order confirmation, and real-time inventory management.';
+        case 'p_meta_ads':
+          return 'Designed high-converting video and carousel ads targeting regional demographics. Integrated automated WhatsApp chat responses that qualify leads instantly within 60 seconds.';
+        case 'p_seo_gmb':
+          return 'Conducted full on-page keyword optimization, technical site speed tuning, Google Map citations, local schema markup, and authentic review acquisition strategy.';
         case 'p1':
           return 'A complete digital store built with responsive UI, instant product search, category filters, Razorpay/Stripe checkout, and real-time order status tracking with WhatsApp notifications for business owners.';
         case 'p2':
-          return 'Engineered a high-performing lead generation campaign for a real estate developer in UP. Created custom video creatives, direct WhatsApp landing flow, and instant CRM lead notifications.';
-        case 'p3':
-          return 'Built a seamless patient-doctor management app with specialist directory, slot-based booking, push notification reminders, and secure cloud prescription storage.';
-        case 'p4':
-          return 'Complete local optimization including Google Business Profile revamp, geo-tagged photo uploads, menu keyword optimization, review acquisition strategy, and local citations.';
+          return 'Engineered a high-performing lead generation campaign. Created custom video creatives, direct WhatsApp landing flow, and instant CRM lead notifications.';
         default:
           return project.detailedDesc.isNotEmpty ? project.detailedDesc : project.shortDesc;
       }
@@ -1063,6 +1087,34 @@ class AppLocalization {
   List<String> getProjectKeyFeatures(ProjectModel project) {
     if (language == AppLanguage.hindi) {
       switch (project.id) {
+        case 'p_school':
+          return [
+            'छात्र प्रवेश और डिजिटल रिकॉर्ड प्रबंधन',
+            'रियल-टाइम हाज़िरी और परीक्षा ग्रेड एनालिटिक्स',
+            'स्वचालित फीस संग्रह और रसीद निर्माण',
+            'शिक्षक समय सारिणी और कक्षा डैशबोर्ड',
+          ];
+        case 'p_ecommerce':
+          return [
+            'त्वरित उत्पाद खोज और श्रेणी फ़िल्टर',
+            'स्थिर शॉपिंग कार्ट और सुरक्षित चेकआउट',
+            'ऑर्डर पुष्टि और भुगतान गेटवे',
+            '98+ उच्च गति और परफ़ॉर्मेंस स्कोर',
+          ];
+        case 'p_meta_ads':
+          return [
+            'लक्षित शहरों और क्षेत्रों के लिए जियो-टारगेटेड विज्ञापन',
+            'डायरेक्ट व्हाट्सएप क्लिक-टू-चैट फ़नल',
+            'स्वचालित त्वरित प्रतिक्रिया प्रणाली',
+            'लगातार कम प्रति-लीड लागत रणनीति',
+          ];
+        case 'p_seo_gmb':
+          return [
+            'स्थानीय उच्च-मूल्य कीवर्ड्स पर #1 रैंक',
+            '100% सत्यापित और अनुकूलित गूगल बिज़नेस प्रोफ़ाइल',
+            'डायरेक्ट फोन कॉल क्लिक्स में 300% वृद्धि',
+            'स्वच्छ मेटाडेटा और JSON-LD स्कीमा',
+          ];
         case 'p1':
           return [
             'त्वरित खोज और फ़िल्टर के साथ उत्पाद कैटलॉग',
@@ -1077,25 +1129,39 @@ class AppLocalization {
             'तुरंत बातचीत के लिए डायरेक्ट व्हाट्सएप फ्लो',
             'परीक्षण किए गए विज्ञापन कॉपी और क्रिएटिव्स',
           ];
-        case 'p3':
-          return [
-            '3 क्लिक में आसान स्लॉट-आधारित अपॉइंटमेंट बुकिंग',
-            'मरीज़ों के लिए स्वचालित एसएमएस और रिमाइंडर',
-            'शेड्यूल और कतार प्रबंधित करने हेतु डॉक्टर डैशबोर्ड',
-            'एकीकृत डिजिटल प्रिस्क्रिप्शन निर्माण',
-          ];
-        case 'p4':
-          return [
-            '15+ मुख्य कीवर्ड्स पर गूगल लोकल 3-पैक में #1 रैंक',
-            'डायरेक्ट फोन कॉल्स और दिशा-निर्देश अनुरोधों में 320% वृद्धि',
-            '120+ प्रामाणिक 5-स्टार ग्राहक समीक्षाएं प्राप्त',
-            'गूगल मैप पर प्रति माह 15,000+ दृश्य',
-          ];
         default:
           return project.keyFeatures;
       }
     } else if (language == AppLanguage.english) {
       switch (project.id) {
+        case 'p_school':
+          return [
+            'Student admissions & digital records management',
+            'Real-time attendance & exam grade analytics',
+            'Automated fee collection & receipt generation',
+            'Teacher schedules & class analytics dashboard',
+          ];
+        case 'p_ecommerce':
+          return [
+            'Instant product search & category filters',
+            'Persistent cart & frictionless checkout funnel',
+            'Responsive UI with order payment confirmation',
+            'High-speed page load score 98+',
+          ];
+        case 'p_meta_ads':
+          return [
+            'Geo-targeted radius ads for target cities',
+            'Direct WhatsApp click-to-chat funnel',
+            'Automated instant message response',
+            'Continuous CPL reduction strategy',
+          ];
+        case 'p_seo_gmb':
+          return [
+            'Ranked #1 for local high-intent keyword searches',
+            'Google Business Profile 100% verified & optimized',
+            '300% boost in direct phone call clicks',
+            'Clean metadata and JSON-LD schema',
+          ];
         case 'p1':
           return [
             'Product Catalog with instant search and filters',
@@ -1109,20 +1175,6 @@ class AppLocalization {
             'Average Cost-Per-Lead (CPL) optimized to ₹28',
             'Direct WhatsApp inquiry flow for instant sales calls',
             'Comprehensive A/B tested ad copy & creative angles',
-          ];
-        case 'p3':
-          return [
-            'Easy slot-based appointment booking in 3 clicks',
-            'Automated SMS and Push reminders for patients',
-            'Doctor dashboard to manage schedules and queue',
-            'Integrated digital prescription generation',
-          ];
-        case 'p4':
-          return [
-            'Ranked #1 in Google Local 3-Pack for 15+ target keywords',
-            '320% increase in direct phone calls and direction requests',
-            '120+ authentic 5-star customer reviews generated',
-            'Consistent 15,000+ monthly Google Map impressions',
           ];
         default:
           return project.keyFeatures;

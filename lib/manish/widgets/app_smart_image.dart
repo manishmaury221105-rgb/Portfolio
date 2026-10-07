@@ -22,9 +22,25 @@ class AppSmartImage extends StatelessWidget {
     this.borderRadius,
   });
 
+  int? _calcCacheWidth() {
+    if (width != null && width!.isFinite && width! > 0) {
+      return (width! * 2).clamp(100, 1200).toInt();
+    }
+    return 800;
+  }
+
+  int? _calcCacheHeight() {
+    if (height != null && height!.isFinite && height! > 0) {
+      return (height! * 2).clamp(100, 1200).toInt();
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final cleanUrl = imageUrl.trim();
+    final cacheW = _calcCacheWidth();
+    final cacheH = _calcCacheHeight();
 
     Widget content;
 
@@ -40,13 +56,13 @@ class AppSmartImage extends StatelessWidget {
           width: width,
           height: height,
           fit: fit,
-          errorBuilder: (context, error, stackTrace) {
-            debugPrint('AppSmartImage data:image error: $error');
-            return errorWidget ?? _defaultError();
-          },
+          cacheWidth: cacheW,
+          cacheHeight: cacheH,
+          gaplessPlayback: true,
+          filterQuality: FilterQuality.medium,
+          errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
         );
       } catch (e) {
-        debugPrint('AppSmartImage data:image parse error: $e');
         content = errorWidget ?? _defaultError();
       }
     } else if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://') || cleanUrl.startsWith('blob:')) {
@@ -55,10 +71,11 @@ class AppSmartImage extends StatelessWidget {
         width: width,
         height: height,
         fit: fit,
-        errorBuilder: (context, error, stackTrace) {
-          debugPrint('AppSmartImage network error: $error for $cleanUrl');
-          return errorWidget ?? _defaultError();
-        },
+        cacheWidth: cacheW,
+        cacheHeight: cacheH,
+        gaplessPlayback: true,
+        filterQuality: FilterQuality.medium,
+        errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
       );
     } else if (cleanUrl.startsWith('assets/')) {
       content = Image.asset(
@@ -66,6 +83,10 @@ class AppSmartImage extends StatelessWidget {
         width: width,
         height: height,
         fit: fit,
+        cacheWidth: cacheW,
+        cacheHeight: cacheH,
+        gaplessPlayback: true,
+        filterQuality: FilterQuality.medium,
         errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
       );
     } else {
@@ -77,15 +98,22 @@ class AppSmartImage extends StatelessWidget {
           width: width,
           height: height,
           fit: fit,
+          cacheWidth: cacheW,
+          cacheHeight: cacheH,
+          gaplessPlayback: true,
+          filterQuality: FilterQuality.medium,
           errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
         );
       } catch (e) {
-        // Fallback to Image.network
         content = Image.network(
           cleanUrl,
           width: width,
           height: height,
           fit: fit,
+          cacheWidth: cacheW,
+          cacheHeight: cacheH,
+          gaplessPlayback: true,
+          filterQuality: FilterQuality.medium,
           errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
         );
       }

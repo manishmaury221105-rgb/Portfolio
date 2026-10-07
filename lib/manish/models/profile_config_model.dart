@@ -71,7 +71,7 @@ class ProfileConfigModel {
     this.email = 'manishdigital99@gmail.com',
     this.location = 'Varanasi, Uttar Pradesh, India',
     this.locationShort = 'Varanasi (UP)',
-    this.avatarUrl = '',
+    this.avatarUrl = 'assets/images/digital_manish_logo_circle.png',
     this.logoText = 'DM',
     this.logoImageUrl = 'assets/images/digital_manish_logo.png',
     this.themePreset = 'indigo_purple',

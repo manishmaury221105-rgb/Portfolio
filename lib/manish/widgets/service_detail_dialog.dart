@@ -53,16 +53,34 @@ class ServiceDetailDialog extends StatelessWidget {
               children: [
                 // Image Banner (if available)
                 if (service.imageUrl.isNotEmpty)
-                  Container(
-                    height: 180,
+                  SizedBox(
+                    height: 220,
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: AppSmartImage(
-                      imageUrl: service.imageUrl,
-                      fit: BoxFit.cover,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                          child: AppSmartImage(
+                            imageUrl: service.imageUrl,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                bg.withValues(alpha: 0.8),
+                              ],
+                              stops: const [0.6, 1.0],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 

@@ -157,15 +157,12 @@ class AboutSection extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(4),
           child: ClipOval(
-            child: config.avatarUrl.isNotEmpty
-                ? AppSmartImage(
-                    imageUrl: config.avatarUrl,
-                    fit: BoxFit.cover,
-                  )
-                : Container(
-                    color: isDark ? AppColors.darkSurface : Colors.white,
-                    child: Icon(Icons.person_outline_rounded, size: 64, color: AppColors.primary),
-                  ),
+            child: AppSmartImage(
+              imageUrl: config.avatarUrl.isNotEmpty
+                  ? config.avatarUrl
+                  : 'assets/images/digital_manish_logo_circle.png',
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         const SizedBox(height: 14),
@@ -273,12 +270,12 @@ class AboutSection extends StatelessWidget {
 
   Widget _buildSkillsGrid(bool isDesktop) {
     final skills = [
-      {'title': 'Digital Marketing', 'techs': 'Facebook Ads, Instagram Sponsored, Meta Pixel, Funnels'},
-      {'title': 'Search Engine Optimization', 'techs': 'On-Page SEO, Google Search Console, GBP Local Map'},
-      {'title': 'Web Development', 'techs': 'Flutter Web, Next.js, React, HTML5/CSS3, JavaScript'},
-      {'title': 'Mobile App Development', 'techs': 'Flutter, Dart, Android & iOS Apps, State Management'},
-      {'title': 'Backend & Cloud', 'techs': 'Node.js, REST APIs, JSON Local DB, Vercel Deployment'},
-      {'title': 'Tools & Analytics', 'techs': 'Google Analytics 4, Meta Ads Manager, Canva Pro, Git'},
+      {'title': 'GMB Setup & Local SEO', 'techs': 'Google Business Profile, Google 3-Pack Maps, Citations, 5-Star Reviews'},
+      {'title': 'Meta & Social Ads', 'techs': 'Facebook Ads, Instagram Sponsored Reels, Meta Pixel, Retargeting Funnels'},
+      {'title': 'Google Ads & PPC', 'techs': 'Google Search PPC, YouTube Video Ads, Display Network, Direct Call Ads'},
+      {'title': 'Email Marketing & CRM', 'techs': 'Drip Sequences, Automated Lead Nurturing, High Deliverability, Newsletters'},
+      {'title': 'Performance Chart Ads', 'techs': 'Google Analytics 4, ROI Dashboards, Conversion Funnels, A/B Split Testing'},
+      {'title': 'Web & App Development', 'techs': 'Flutter Web & Mobile, Next.js, React, Responsive UI/UX, Cloud Architecture'},
     ];
 
     return Wrap(

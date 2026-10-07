@@ -1,43 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Manish Maurya - Senior Flutter & Full-Stack Developer Portfolio. Building high-performance mobile, web apps, and enterprise solutions.">
-  <meta name="keywords" content="Manish Maurya, Flutter Developer, Mobile App Developer, Full Stack Developer, Web Development, UI/UX">
-  <meta name="author" content="Manish Maurya">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>Digital Manish | Digital Marketing Expert, Meta & Google Ads, GMB & SEO Specialist | Varanasi</title>
+  <meta name="title" content="Digital Manish | Digital Marketing Expert, Meta & Google Ads, GMB & SEO Specialist | Varanasi">
+  <meta name="description" content="Digital Manish is a premier Digital Marketing Expert, Meta & Google Ads Specialist, GMB Setup Consultant, SEO Strategist, and Full-Stack Web & Mobile App Developer based in Varanasi, UP, India. Scale your business leads, sales & Google ranking today.">
+  <meta name="keywords" content="Digital Manish, Digital Marketing Varanasi, Meta Ads Expert Varanasi, Facebook Ads Specialist, Instagram Ads, Google Ads PPC Consultant, Google My Business Setup, GMB 3-Pack Ranking, SEO Specialist Varanasi, Email Marketing Automation, Performance Chart Ads, Website Development Varanasi, Flutter App Developer India, Lead Generation Expert, Performance Marketing">
+  <meta name="author" content="Digital Manish">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
   <meta name="google-site-verification" content="glZbzyTTYedNnvcq4IH5LH5JJp_eCNtvAdwrWgFuwTU" />
-  <meta name="theme-color" content="#0A0F1D">
+  <meta name="theme-color" content="#0B0F19">
+
+  <!-- Performance: Preconnect & DNS-Prefetch for Google Fonts & CDN Assets -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+  <!-- Geo & Local SEO Meta Tags -->
+  <meta name="geo.region" content="IN-UP">
+  <meta name="geo.placename" content="Varanasi">
+  <meta name="geo.position" content="25.3176;82.9739">
+  <meta name="ICBM" content="25.3176, 82.9739">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Digital Manish Portfolio">
+  <meta property="og:title" content="Digital Manish | Digital Marketing, Meta & Google Ads, SEO & Web Development">
+  <meta property="og:description" content="Scale your business with high-converting Meta Ads, Google Ads PPC, Local GMB Map Pack Dominance, SEO, and fast modern Websites & Apps. Contact: +91 9214468818.">
+  <meta property="og:image" content="assets/images/services/service_digital_marketing.jpg">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Digital Manish | Digital Marketing & Growth Specialist">
+  <meta name="twitter:description" content="ROI-driven Meta Ads, Google Ads, GMB Map Pack Domination, SEO, Email Marketing & Web Development in Varanasi, India.">
+  <meta name="twitter:image" content="assets/images/services/service_digital_marketing.jpg">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Manish Maurya">
+  <meta name="apple-mobile-web-app-title" content="Digital Manish">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>Manish Maurya | Flutter & Web Developer Portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Lightweight Inline Splash CSS -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0B0F19;
+      color: #F8FAFC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    #loading-splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #131A2E 0%, #0B0F19 100%);
+      z-index: 9999;
+      transition: opacity 0.4s ease-out;
+    }
+    .spinner {
+      width: 46px;
+      height: 46px;
+      border: 3.5px solid rgba(99, 102, 241, 0.2);
+      border-top-color: #6366F1;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .brand-title {
+      margin-top: 18px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6, #EC4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+  <!-- Schema.org JSON-LD Structured Data for Local Business & Professional Services -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Digital Manish",
+    "alternateName": "Digital Manish",
+    "description": "Premier Digital Marketing Expert, Meta & Google Ads Specialist, GMB Setup Consultant, SEO Strategist, and Full-Stack Web & App Developer in Varanasi, Uttar Pradesh, India.",
+    "telephone": "+919214468818",
+    "email": "manishdigital99@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Varanasi",
+      "addressRegion": "Uttar Pradesh",
+      "addressCountry": "India"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 25.3176,
+      "longitude": 82.9739
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+      ],
+      "opens": "09:00",
+      "closes": "21:00"
+    },
+    "priceRange": "₹₹",
+    "areaServed": ["Varanasi", "Uttar Pradesh", "India", "Global"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Digital Marketing & Technology Services",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Google My Business (GMB) Setup & 3-Pack Ranking"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Meta Ads (Facebook & Instagram Advertising)"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Google Ads (PPC, Search, Display & YouTube Ads)"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Email Marketing & Drip Automation"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Performance Chart & Conversion Ads"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Search Engine Optimization (SEO & Google Ranking)"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Digital Marketing & Brand Growth"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Modern Responsive Website Development"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Android & iOS Mobile Application Development"}}
+      ]
+    }
+  }
+  </script>
 </head>
 <body>
+  <!-- Instant Lightweight Loading Splash Screen -->
+  <div id="loading-splash">
+    <div class="spinner"></div>
+    <div class="brand-title">DIGITAL MANISH</div>
+  </div>
+
   <script>
     // Automatically purge old service workers to ensure live updates across all domains
     if ('serviceWorker' in navigator) {
@@ -47,6 +165,17 @@
         }
       });
     }
+
+    // Hide splash screen once Flutter has loaded
+    window.addEventListener('flutter-first-frame', function() {
+      var splash = document.getElementById('loading-splash');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(function() {
+          splash.remove();
+        }, 400);
+      }
+    });
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
