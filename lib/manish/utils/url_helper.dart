@@ -11,7 +11,7 @@ class UrlHelper {
   static const String githubProfile = 'https://github.com';
   static const String linkedinProfile = 'https://linkedin.com';
   static const String instagramProfile = 'https://www.instagram.com/digitalmanish.online/';
-  static const String facebookProfile = 'https://www.facebook.com/digimanish';
+  static const String facebookProfile = 'https://www.facebook.com/share/1HR3JDm7oZ/';
   static const String youtubeProfile = 'https://www.youtube.com/@DigitalManish-s8i';
 
   /// Helper to extract clean 10-digit Indian phone number or standard international digits

@@ -109,7 +109,7 @@ class ProfileConfigModel {
     this.mapsEmbedQuery = 'Varanasi, Uttar Pradesh, India',
     this.youtubeUrl = 'https://www.youtube.com/@DigitalManish-s8i',
     this.instagramUrl = 'https://www.instagram.com/digitalmanish.online/',
-    this.facebookUrl = 'https://www.facebook.com/digimanish',
+    this.facebookUrl = 'https://www.facebook.com/share/1HR3JDm7oZ/',
     this.linkedinUrl = 'https://linkedin.com',
     this.githubUrl = 'https://github.com',
     this.footerAbout =
