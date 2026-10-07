@@ -69,8 +69,8 @@ class ProfileConfigModel {
     this.phone = '9214468818',
     this.whatsappNumber = '9214468818',
     this.email = 'manishdigital99@gmail.com',
-    this.location = 'Harahua, Varanasi, Uttar Pradesh, India',
-    this.locationShort = 'Harahua, Varanasi (UP)',
+    this.location = 'Varanasi, Uttar Pradesh, India',
+    this.locationShort = 'Varanasi (UP)',
     this.avatarUrl = '',
     this.logoText = 'DM',
     this.logoImageUrl = 'assets/images/digital_manish_logo.png',
@@ -87,7 +87,7 @@ class ProfileConfigModel {
     this.aboutHeading = 'About Digital Manish',
     this.aboutSubtitle = 'Digital Marketer & Full-Stack Developer',
     this.aboutBio =
-        'Namaste! Main Digital Manish hoon, Harahua, Varanasi (UP) se. Mera goal local businesses aur digital entrepreneurs ko powerful online presence provide karna hai. Main ROI-driven Digital Marketing, Google & Meta Ads, targeted SEO strategies, aur scalable Website/App Development me specialize karta hoon. Har project ko time par aur highest quality ke sath deliver karna meri pehli priority hai.',
+        'Namaste! Main Digital Manish hoon, Varanasi (UP) se. Mera goal local businesses aur digital entrepreneurs ko powerful online presence provide karna hai. Main ROI-driven Digital Marketing, Google & Meta Ads, targeted SEO strategies, aur scalable Website/App Development me specialize karta hoon. Har project ko time par aur highest quality ke sath deliver karna meri pehli priority hai.',
     this.aboutMission = 'Har business ke liye customized digital blueprint aur continuous growth execution.',
     this.servicesHeading = 'My Specialized Services',
     this.servicesSubtitle =
@@ -106,7 +106,7 @@ class ProfileConfigModel {
     this.whatsappDefaultMessage =
         'Namaste Manish ji! Maine aapka portfolio website dekha aur mujhe aapke services ke baare me baat karni hai.',
     this.whatsappMotivationText = '🚀 Business grow karna hai? Abhi WhatsApp par baat karein!',
-    this.mapsEmbedQuery = 'Harahua, Varanasi, Uttar Pradesh, India',
+    this.mapsEmbedQuery = 'Varanasi, Uttar Pradesh, India',
     this.youtubeUrl = 'https://youtube.com',
     this.instagramUrl = 'https://instagram.com',
     this.facebookUrl = 'https://facebook.com',
@@ -174,8 +174,8 @@ class ProfileConfigModel {
       phone: json['phone'] as String? ?? '9214468818',
       whatsappNumber: json['whatsappNumber'] as String? ?? '9214468818',
       email: json['email'] as String? ?? 'manishdigital99@gmail.com',
-      location: json['location'] as String? ?? 'Harahua, Varanasi, Uttar Pradesh, India',
-      locationShort: json['locationShort'] as String? ?? 'Harahua, Varanasi (UP)',
+      location: json['location'] as String? ?? 'Varanasi, Uttar Pradesh, India',
+      locationShort: json['locationShort'] as String? ?? 'Varanasi (UP)',
       avatarUrl: json['avatarUrl'] as String? ?? '',
       logoText: json['logoText'] as String? ?? 'DM',
       logoImageUrl: (json['logoImageUrl'] as String?)?.isNotEmpty == true
@@ -206,7 +206,7 @@ class ProfileConfigModel {
       contactSubtitle: json['contactSubtitle'] as String? ?? '',
       whatsappDefaultMessage: json['whatsappDefaultMessage'] as String? ?? '',
       whatsappMotivationText: json['whatsappMotivationText'] as String? ?? '🚀 Business grow karna hai? Abhi WhatsApp par baat karein!',
-      mapsEmbedQuery: json['mapsEmbedQuery'] as String? ?? 'Harahua, Varanasi, Uttar Pradesh, India',
+      mapsEmbedQuery: json['mapsEmbedQuery'] as String? ?? 'Varanasi, Uttar Pradesh, India',
       youtubeUrl: json['youtubeUrl'] as String? ?? 'https://youtube.com',
       instagramUrl: json['instagramUrl'] as String? ?? 'https://instagram.com',
       facebookUrl: json['facebookUrl'] as String? ?? 'https://facebook.com',

@@ -11,14 +11,12 @@ class ServicesSection extends StatelessWidget {
   final bool isDark;
   final List<ServiceModel> services;
   final AppLanguage language;
-  final VoidCallback? onOpenAdmin;
 
   const ServicesSection({
     super.key,
     required this.isDark,
     required this.services,
     this.language = AppLanguage.hinglish,
-    this.onOpenAdmin,
   });
 
   @override
@@ -79,14 +77,6 @@ class ServicesSection extends StatelessWidget {
                           const Icon(Icons.miscellaneous_services_rounded, size: 48, color: Colors.grey),
                           const SizedBox(height: 12),
                           Text('No services added yet.', style: AppTypography.bodyLarge(context, isDark: isDark)),
-                          if (onOpenAdmin != null) ...[
-                            const SizedBox(height: 12),
-                            ElevatedButton.icon(
-                              onPressed: onOpenAdmin,
-                              icon: const Icon(Icons.add_rounded),
-                              label: const Text('Add Service in Admin Panel'),
-                            ),
-                          ],
                         ],
                       ),
                     )

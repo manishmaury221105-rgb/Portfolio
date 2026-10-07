@@ -11,14 +11,12 @@ class ProjectsSection extends StatefulWidget {
   final List<ProjectModel> projects;
   final bool isDark;
   final AppLanguage language;
-  final VoidCallback? onOpenCms;
 
   const ProjectsSection({
     super.key,
     required this.projects,
     required this.isDark,
     this.language = AppLanguage.hinglish,
-    this.onOpenCms,
   });
 
   @override
@@ -179,14 +177,6 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                           const SizedBox(height: 12),
                           Text('No projects found in this category.',
                               style: AppTypography.bodyLarge(context, isDark: widget.isDark)),
-                          if (widget.onOpenCms != null) ...[
-                            const SizedBox(height: 12),
-                            ElevatedButton.icon(
-                              onPressed: widget.onOpenCms,
-                              icon: const Icon(Icons.add_rounded),
-                              label: const Text('Add Project in Admin Panel'),
-                            ),
-                          ],
                         ],
                       ),
                     )

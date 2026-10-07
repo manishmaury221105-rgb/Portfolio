@@ -11,7 +11,6 @@ class FooterSection extends StatelessWidget {
   final ProfileConfigModel config;
   final AppLanguage language;
   final Function(String key) onNavigate;
-  final VoidCallback? onOpenAdmin;
 
   const FooterSection({
     super.key,
@@ -19,7 +18,6 @@ class FooterSection extends StatelessWidget {
     required this.config,
     this.language = AppLanguage.hinglish,
     required this.onNavigate,
-    this.onOpenAdmin,
   });
 
   @override
@@ -89,46 +87,9 @@ class FooterSection extends StatelessWidget {
                 spacing: 16,
                 runSpacing: 12,
                 children: [
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 12,
-                    runSpacing: 6,
-                    children: [
-                      Text(
-                        '© ${DateTime.now().year} ${config.name}. ${config.copyrightText.isNotEmpty ? config.copyrightText : loc.footerCopyright}',
-                        style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 13),
-                      ),
-                      if (onOpenAdmin != null)
-                        InkWell(
-                          onTap: onOpenAdmin,
-                          borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.06),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: AppColors.primaryLight.withValues(alpha: 0.3),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.primaryLight),
-                                const SizedBox(width: 6),
-                                Text(
-                                  loc.footerAdminPanel,
-                                  style: TextStyle(
-                                    color: AppColors.primaryLight,
-                                    fontSize: 12.5,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                    ],
+                  Text(
+                    '© ${DateTime.now().year} ${config.name}. ${config.copyrightText.isNotEmpty ? config.copyrightText : loc.footerCopyright}',
+                    style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 13),
                   ),
                   Wrap(
                     spacing: 8,

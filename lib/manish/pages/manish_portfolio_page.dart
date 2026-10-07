@@ -20,7 +20,6 @@ import '../widgets/service_detail_dialog.dart';
 import '../widgets/services_section.dart';
 import '../widgets/whatsapp_icon.dart';
 import '../widgets/why_work_with_me.dart';
-import 'admin_panel_page.dart';
 
 class ManishPortfolioPage extends StatefulWidget {
   final bool initialDarkMode;
@@ -98,17 +97,6 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
         curve: Curves.easeOutCubic,
       );
     }
-  }
-
-  void _openAdminPanel() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => AdminPanelPage(
-          cmsService: _cmsService,
-          isDark: _isDark,
-        ),
-      ),
-    );
   }
 
   @override
@@ -320,7 +308,6 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           config: config,
           language: lang,
           onNavigate: _onNavigate,
-          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );
@@ -364,7 +351,6 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           config: config,
           language: lang,
           onNavigate: _onNavigate,
-          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );
@@ -384,7 +370,6 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           isDark: _isDark,
           services: _cmsService.services,
           language: lang,
-          onOpenAdmin: _openAdminPanel,
         ),
 
         // Custom Requirements CTA
@@ -401,7 +386,6 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           config: config,
           language: lang,
           onNavigate: _onNavigate,
-          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );
@@ -421,7 +405,6 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           projects: _cmsService.projects,
           isDark: _isDark,
           language: lang,
-          onOpenCms: _openAdminPanel,
         ),
 
         // Project Proposal CTA
@@ -438,7 +421,6 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           config: config,
           language: lang,
           onNavigate: _onNavigate,
-          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );
@@ -466,7 +448,6 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
           config: config,
           language: lang,
           onNavigate: _onNavigate,
-          onOpenAdmin: _openAdminPanel,
         ),
       ],
     );

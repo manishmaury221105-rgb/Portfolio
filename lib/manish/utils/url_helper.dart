@@ -7,7 +7,7 @@ class UrlHelper {
   static const String countryCode = '+91';
   static const String fullPhoneNumber = '+91 9214468818';
   static const String defaultEmail = 'manishdigital99@gmail.com';
-  static const String locationName = 'Harahua, Varanasi, Uttar Pradesh, India';
+  static const String locationName = 'Varanasi, Uttar Pradesh, India';
   static const String githubProfile = 'https://github.com';
   static const String linkedinProfile = 'https://linkedin.com';
 
@@ -112,7 +112,7 @@ class UrlHelper {
     }
   }
 
-  /// Open Google Maps for Harahua, Varanasi
+  /// Open Google Maps for Varanasi
   static Future<bool> openMapLocation({
     String query = locationName,
     BuildContext? context,
@@ -157,7 +157,7 @@ class UrlHelper {
   static Future<void> sharePortfolio({BuildContext? context}) async {
     const text = '''
 ✨ Digital Manish - Digital Marketing | Website & App Development
-📍 Harahua, Varanasi, Uttar Pradesh
+📍 Varanasi, Uttar Pradesh
 📞 +91 9214468818
 🌐 Check out my portfolio and contact for modern business websites, mobile apps, Meta ads & SEO!
 ''';
