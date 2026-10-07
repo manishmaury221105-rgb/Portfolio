@@ -100,22 +100,22 @@ class AppLocalization {
   String get heroTagline {
     switch (language) {
       case AppLanguage.hindi:
-        return 'बेस्ट डिजिटल मार्केटिंग एजेंसी | वेबसाइट और ऐप डेवलपमेंट';
+        return 'बेस्ट डिजिटल मार्केटिंग एजेंसी इन वाराणसी | वेबसाइट और ऐप डेवलपमेंट';
       case AppLanguage.hinglish:
-        return 'Best Digital Marketing Agency In Varanasi | Website & App Development';
+        return 'Best Digital Marketing Agency in Varanasi | Web & App Development';
       case AppLanguage.english:
-        return 'Best Digital Marketing Agency | Full-Stack Web & App Development';
+        return 'Best Digital Marketing Agency in Varanasi | Full-Stack Web & App Development';
     }
   }
 
   String get heroSubtitle {
     switch (language) {
       case AppLanguage.hindi:
-        return 'मैं डिजिटल मनीष, वाराणसी और पूरे भारत के व्यवसायों को हाई-कन्वर्टिंग मेटा व गूगल ऐड्स, टॉप-रैंकिंग एसईओ, आधुनिक वेबसाइट्स और मोबाइल ऐप्स के माध्यम से ऑनलाइन विकसित करने में सहायता करता हूँ।';
+        return 'मैं डिजिटल मनीष, वाराणसी की बेस्ट डिजिटल मार्केटिंग एजेंसी (Best Digital Marketing Agency in Varanasi) और फुल-स्टैक वेब व मोबाइल ऐप डेवलपर हूँ। मैं व्यवसायों को हाई-कन्वर्टिंग मेटा व गूगल ऐड्स, टॉप-रैंकिंग एसईओ, आधुनिक वेबसाइट्स और मोबाइल ऐप्स के माध्यम से ऑनलाइन तेजी से ग्रो करने में सहायता करता हूँ।';
       case AppLanguage.hinglish:
-        return 'Main Digital Manish, ek Best Digital Marketing Agency aur Full-Stack Web & App Development Agency hoon. High-converting Meta & Google Ads campaigns, result-driven SEO, professional websites, modern mobile applications aur smart digital solutions ke through businesses ko online grow karne mein help karta hoon.';
+        return 'Main Digital Manish, Best Digital Marketing Agency in Varanasi aur Full-Stack Web & App Developer hoon. High-converting Meta & Google Ads campaigns, result-driven SEO, modern websites aur mobile applications ke through businesses ko online scale karne me help karta hoon.';
       case AppLanguage.english:
-        return 'I am Digital Manish, a premier Digital Marketing Specialist and Full-Stack Web & Mobile App Developer. I help businesses scale online through high-converting Meta & Google Ads campaigns, result-driven SEO, modern responsive websites, custom mobile applications, and high-performance digital solutions.';
+        return 'I am Digital Manish, the Best Digital Marketing Agency in Varanasi and Full-Stack Web & Mobile App Developer. I help businesses scale online through high-converting Meta & Google Ads campaigns, result-driven SEO, modern responsive websites, custom mobile applications, and high-performance digital solutions.';
     }
   }
 
@@ -475,13 +475,13 @@ class AppLocalization {
 
   String getAboutBio(String customBio, String fallbackSubtitle) {
     if (language == AppLanguage.hindi) {
-      return 'मैं मनीष, वाराणसी (उत्तर प्रदेश) में स्थित एक समर्पित डिजिटल मार्केटर और फुल-स्टैक वेब/ऐप डेवलपर हूँ। 3+ वर्षों के अनुभव के साथ, मैंने भारत भर के व्यवसायों को डिजिटल उपस्थिति बनाने, उच्च गुणवत्ता वाले लीड जनरेट करने और बिक्री बढ़ाने में सहायता की है।';
+      return 'मैं डिजिटल मनीष, वाराणसी (उत्तर प्रदेश) की बेस्ट डिजिटल मार्केटिंग एजेंसी (Best Digital Marketing Agency in Varanasi) और फुल-स्टैक वेब/ऐप डेवलपर हूँ। 3+ वर्षों के अनुभव के साथ, मैंने भारत भर के व्यवसायों को डिजिटल उपस्थिति बनाने, उच्च गुणवत्ता वाले लीड जनरेट करने और बिक्री बढ़ाने में सहायता की है।';
     } else if (language == AppLanguage.english) {
-      return 'I am Digital Manish, a passionate Digital Marketer and Full-Stack Web & Mobile App Developer based in Varanasi (UP), India. With 3+ years of experience, I specialize in crafting high-converting ad campaigns, modern web apps, and native mobile applications that accelerate business growth.';
+      return 'I am Digital Manish, founder of the Best Digital Marketing Agency in Varanasi (UP), India, and Full-Stack Web & Mobile App Developer. With 3+ years of experience, I specialize in crafting high-converting ad campaigns, modern web apps, and native mobile applications that accelerate business growth.';
     } else {
       if (customBio.isNotEmpty) return customBio;
       if (fallbackSubtitle.isNotEmpty) return fallbackSubtitle;
-      return 'Main Digital Manish, Varanasi me based ek passionate Digital Marketer aur Full-Stack Developer hoon. 3+ saal ke experience ke saath maine kayi local businesses aur startups ko online grow karne me madad ki hai.';
+      return 'Main Digital Manish, Best Digital Marketing Agency in Varanasi me based ek passionate Digital Marketer aur Full-Stack Developer hoon. 3+ saal ke experience ke saath maine businesses aur startups ko online grow karne me madad ki hai.';
     }
   }
 

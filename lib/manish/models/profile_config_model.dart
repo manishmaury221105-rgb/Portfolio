@@ -65,7 +65,7 @@ class ProfileConfigModel {
 
   const ProfileConfigModel({
     this.name = 'Digital Manish',
-    this.tagline = 'Digital Marketing | Website & App Development',
+    this.tagline = 'Best Digital Marketing Agency in Varanasi | Web & App Development',
     this.phone = '9214468818',
     this.whatsappNumber = '9214468818',
     this.email = 'manishdigital99@gmail.com',
@@ -81,13 +81,13 @@ class ProfileConfigModel {
     this.isDarkModeDefault = true,
     this.heroTitle = 'Accelerate Your Business Growth With Modern Digital Solutions',
     this.heroSubtitle =
-        'I am Digital Manish, a passionate Digital Marketer and Full-Stack Web & App Developer. I help businesses scale rapidly through high-converting Meta & Google Ads campaigns, ultra-fast SEO websites, and modern mobile applications.',
+        'I am Digital Manish, the Best Digital Marketing Agency in Varanasi and Full-Stack Web & Mobile App Developer. I help businesses scale online through high-converting Meta & Google Ads campaigns, result-driven SEO, modern responsive websites, custom mobile applications, and high-performance digital solutions.',
     this.heroBadge1 = 'Available for Projects',
     this.heroBadge2 = 'ROI Focused',
     this.aboutHeading = 'About Digital Manish',
-    this.aboutSubtitle = 'Digital Marketer & Full-Stack Developer',
+    this.aboutSubtitle = 'Best Digital Marketing Agency in Varanasi',
     this.aboutBio =
-        'Hello! I am Digital Manish from Varanasi (UP), India. My mission is to empower businesses, local enterprises, and digital entrepreneurs with a commanding online presence. I specialize in ROI-driven Digital Marketing, Google & Meta Ads, targeted SEO strategies, and scalable Web & App Development. Delivering highest-grade quality on schedule is always my top priority.',
+        'Hello! I am Digital Manish from Varanasi (UP), India, leading the Best Digital Marketing Agency in Varanasi. My mission is to empower businesses, local enterprises, and digital entrepreneurs with a commanding online presence. I specialize in ROI-driven Digital Marketing, Google & Meta Ads, targeted SEO strategies, and scalable Web & App Development. Delivering highest-grade quality on schedule is always my top priority.',
     this.aboutMission = 'Delivering customized digital blueprints, ROI-driven growth campaigns, and scalable digital execution for every business.',
     this.servicesHeading = 'My Specialized Services',
     this.servicesSubtitle =
