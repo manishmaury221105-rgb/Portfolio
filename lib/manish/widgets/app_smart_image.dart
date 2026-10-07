@@ -24,14 +24,14 @@ class AppSmartImage extends StatelessWidget {
 
   int? _calcCacheWidth() {
     if (width != null && width!.isFinite && width! > 0) {
-      return (width! * 2).clamp(100, 1200).toInt();
+      return (width! * 1.5).clamp(80, 800).toInt();
     }
-    return 800;
+    return 600;
   }
 
   int? _calcCacheHeight() {
     if (height != null && height!.isFinite && height! > 0) {
-      return (height! * 2).clamp(100, 1200).toInt();
+      return (height! * 1.5).clamp(80, 800).toInt();
     }
     return null;
   }
@@ -59,7 +59,7 @@ class AppSmartImage extends StatelessWidget {
           cacheWidth: cacheW,
           cacheHeight: cacheH,
           gaplessPlayback: true,
-          filterQuality: FilterQuality.medium,
+          filterQuality: FilterQuality.low,
           errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
         );
       } catch (e) {
@@ -74,7 +74,7 @@ class AppSmartImage extends StatelessWidget {
         cacheWidth: cacheW,
         cacheHeight: cacheH,
         gaplessPlayback: true,
-        filterQuality: FilterQuality.medium,
+        filterQuality: FilterQuality.low,
         errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
       );
     } else if (cleanUrl.startsWith('assets/')) {
@@ -86,7 +86,7 @@ class AppSmartImage extends StatelessWidget {
         cacheWidth: cacheW,
         cacheHeight: cacheH,
         gaplessPlayback: true,
-        filterQuality: FilterQuality.medium,
+        filterQuality: FilterQuality.low,
         errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
       );
     } else {
@@ -101,7 +101,7 @@ class AppSmartImage extends StatelessWidget {
           cacheWidth: cacheW,
           cacheHeight: cacheH,
           gaplessPlayback: true,
-          filterQuality: FilterQuality.medium,
+          filterQuality: FilterQuality.low,
           errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
         );
       } catch (e) {
@@ -113,20 +113,20 @@ class AppSmartImage extends StatelessWidget {
           cacheWidth: cacheW,
           cacheHeight: cacheH,
           gaplessPlayback: true,
-          filterQuality: FilterQuality.medium,
+          filterQuality: FilterQuality.low,
           errorBuilder: (context, error, stackTrace) => errorWidget ?? _defaultError(),
         );
       }
     }
 
     if (borderRadius != null) {
-      return ClipRRect(
+      content = ClipRRect(
         borderRadius: borderRadius!,
         child: content,
       );
     }
 
-    return content;
+    return RepaintBoundary(child: content);
   }
 
   Widget _defaultPlaceholder() {

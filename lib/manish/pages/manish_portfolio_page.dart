@@ -75,6 +75,37 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     }
   }
 
+  bool _didPrecache = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_didPrecache) {
+      _didPrecache = true;
+      _precacheImages();
+    }
+  }
+
+  void _precacheImages() {
+    const imagesToPrecache = [
+      'assets/images/digital_manish_logo.png',
+      'assets/images/digital_manish_logo_circle.png',
+      'assets/images/services/service_gmb_setup.jpg',
+      'assets/images/services/service_meta_ads.jpg',
+      'assets/images/services/service_google_ads.jpg',
+      'assets/images/services/service_email_marketing.jpg',
+      'assets/images/services/service_chart_ads.jpg',
+      'assets/images/services/service_seo_ranking.jpg',
+      'assets/images/services/service_web_app_dev.jpg',
+      'assets/images/services/service_app_dev.jpg',
+      'assets/images/projects/project_school_management.jpg',
+      'assets/images/projects/project_ecommerce_platform.jpg',
+    ];
+    for (final img in imagesToPrecache) {
+      precacheImage(AssetImage(img), context);
+    }
+  }
+
   @override
   void dispose() {
     _cmsService.removeListener(_onCmsUpdate);
@@ -133,6 +164,7 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
                 },
                 child: SingleChildScrollView(
                   controller: _scrollController,
+                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 250),
                     switchInCurve: Curves.easeOut,
@@ -278,36 +310,48 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     return Column(
       children: [
         // Hero Section
-        HeroSection(
-          isDark: _isDark,
-          config: config,
-          language: lang,
-          onNavigate: _onNavigate,
+        RepaintBoundary(
+          child: HeroSection(
+            isDark: _isDark,
+            config: config,
+            language: lang,
+            onNavigate: _onNavigate,
+          ),
         ),
 
         // Why Work With Me Highlights
-        WhyWorkWithMeSection(
-          isDark: _isDark,
-          items: _cmsService.whyWorkList,
-          config: config,
-          language: lang,
+        RepaintBoundary(
+          child: WhyWorkWithMeSection(
+            isDark: _isDark,
+            items: _cmsService.whyWorkList,
+            config: config,
+            language: lang,
+          ),
         ),
 
         // Featured Services Preview
-        _buildHomeFeaturedServices(isDesktop, lang, loc),
+        RepaintBoundary(
+          child: _buildHomeFeaturedServices(isDesktop, lang, loc),
+        ),
 
         // Featured Projects Preview
-        _buildHomeFeaturedProjects(isDesktop, lang, loc),
+        RepaintBoundary(
+          child: _buildHomeFeaturedProjects(isDesktop, lang, loc),
+        ),
 
         // Quick Consultation CTA Banner
-        _buildHomeContactCta(config, isDesktop, loc),
+        RepaintBoundary(
+          child: _buildHomeContactCta(config, isDesktop, loc),
+        ),
 
         // Footer
-        FooterSection(
-          isDark: _isDark,
-          config: config,
-          language: lang,
-          onNavigate: _onNavigate,
+        RepaintBoundary(
+          child: FooterSection(
+            isDark: _isDark,
+            config: config,
+            language: lang,
+            onNavigate: _onNavigate,
+          ),
         ),
       ],
     );
@@ -323,34 +367,42 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     return Column(
       children: [
         // Full About Section
-        AboutSection(
-          isDark: _isDark,
-          config: config,
-          language: lang,
+        RepaintBoundary(
+          child: AboutSection(
+            isDark: _isDark,
+            config: config,
+            language: lang,
+          ),
         ),
 
         // Why Work With Me Breakdown
-        WhyWorkWithMeSection(
-          isDark: _isDark,
-          items: _cmsService.whyWorkList,
-          config: config,
-          language: lang,
+        RepaintBoundary(
+          child: WhyWorkWithMeSection(
+            isDark: _isDark,
+            items: _cmsService.whyWorkList,
+            config: config,
+            language: lang,
+          ),
         ),
 
         // Bottom CTA
-        _buildPageBottomCta(
-          title: loc.ctaReadyTitle,
-          subtitle: loc.ctaReadySubtitle,
-          buttonText: loc.ctaDiscussBtn,
-          targetPage: 'contact',
+        RepaintBoundary(
+          child: _buildPageBottomCta(
+            title: loc.ctaReadyTitle,
+            subtitle: loc.ctaReadySubtitle,
+            buttonText: loc.ctaDiscussBtn,
+            targetPage: 'contact',
+          ),
         ),
 
         // Footer
-        FooterSection(
-          isDark: _isDark,
-          config: config,
-          language: lang,
-          onNavigate: _onNavigate,
+        RepaintBoundary(
+          child: FooterSection(
+            isDark: _isDark,
+            config: config,
+            language: lang,
+            onNavigate: _onNavigate,
+          ),
         ),
       ],
     );
@@ -366,26 +418,32 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     return Column(
       children: [
         // Full Services Section
-        ServicesSection(
-          isDark: _isDark,
-          services: _cmsService.services,
-          language: lang,
+        RepaintBoundary(
+          child: ServicesSection(
+            isDark: _isDark,
+            services: _cmsService.services,
+            language: lang,
+          ),
         ),
 
         // Custom Requirements CTA
-        _buildPageBottomCta(
-          title: loc.ctaReadyTitle,
-          subtitle: loc.ctaReadySubtitle,
-          buttonText: loc.bookConsultationBtn,
-          targetPage: 'contact',
+        RepaintBoundary(
+          child: _buildPageBottomCta(
+            title: loc.ctaReadyTitle,
+            subtitle: loc.ctaReadySubtitle,
+            buttonText: loc.bookConsultationBtn,
+            targetPage: 'contact',
+          ),
         ),
 
         // Footer
-        FooterSection(
-          isDark: _isDark,
-          config: config,
-          language: lang,
-          onNavigate: _onNavigate,
+        RepaintBoundary(
+          child: FooterSection(
+            isDark: _isDark,
+            config: config,
+            language: lang,
+            onNavigate: _onNavigate,
+          ),
         ),
       ],
     );
@@ -401,26 +459,32 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     return Column(
       children: [
         // Full Projects Section with Category Filters
-        ProjectsSection(
-          projects: _cmsService.projects,
-          isDark: _isDark,
-          language: lang,
+        RepaintBoundary(
+          child: ProjectsSection(
+            projects: _cmsService.projects,
+            isDark: _isDark,
+            language: lang,
+          ),
         ),
 
         // Project Proposal CTA
-        _buildPageBottomCta(
-          title: loc.ctaReadyTitle,
-          subtitle: loc.ctaReadySubtitle,
-          buttonText: loc.liveDemoBtn,
-          targetPage: 'contact',
+        RepaintBoundary(
+          child: _buildPageBottomCta(
+            title: loc.ctaReadyTitle,
+            subtitle: loc.ctaReadySubtitle,
+            buttonText: loc.liveDemoBtn,
+            targetPage: 'contact',
+          ),
         ),
 
         // Footer
-        FooterSection(
-          isDark: _isDark,
-          config: config,
-          language: lang,
-          onNavigate: _onNavigate,
+        RepaintBoundary(
+          child: FooterSection(
+            isDark: _isDark,
+            config: config,
+            language: lang,
+            onNavigate: _onNavigate,
+          ),
         ),
       ],
     );
@@ -436,18 +500,22 @@ class _ManishPortfolioPageState extends State<ManishPortfolioPage> {
     return Column(
       children: [
         // Full Contact Section
-        ContactSection(
-          isDark: _isDark,
-          config: config,
-          language: lang,
+        RepaintBoundary(
+          child: ContactSection(
+            isDark: _isDark,
+            config: config,
+            language: lang,
+          ),
         ),
 
         // Footer
-        FooterSection(
-          isDark: _isDark,
-          config: config,
-          language: lang,
-          onNavigate: _onNavigate,
+        RepaintBoundary(
+          child: FooterSection(
+            isDark: _isDark,
+            config: config,
+            language: lang,
+            onNavigate: _onNavigate,
+          ),
         ),
       ],
     );
