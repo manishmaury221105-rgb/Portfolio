@@ -107,7 +107,7 @@ class ProfileConfigModel {
         'Hello Manish! I visited your portfolio website and would like to discuss your Digital Marketing / Web & App Development services.',
     this.whatsappMotivationText = '🚀 Ready to grow your business? Chat on WhatsApp now!',
     this.mapsEmbedQuery = 'Varanasi, Uttar Pradesh, India',
-    this.youtubeUrl = 'https://youtube.com',
+    this.youtubeUrl = 'https://www.youtube.com/@DigitalManish-s8i',
     this.instagramUrl = 'https://www.instagram.com/digitalmanish.online/',
     this.facebookUrl = 'https://www.facebook.com/digimanish',
     this.linkedinUrl = 'https://linkedin.com',
