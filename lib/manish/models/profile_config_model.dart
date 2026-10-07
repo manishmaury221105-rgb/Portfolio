@@ -108,8 +108,8 @@ class ProfileConfigModel {
     this.whatsappMotivationText = '🚀 Ready to grow your business? Chat on WhatsApp now!',
     this.mapsEmbedQuery = 'Varanasi, Uttar Pradesh, India',
     this.youtubeUrl = 'https://youtube.com',
-    this.instagramUrl = 'https://instagram.com',
-    this.facebookUrl = 'https://facebook.com',
+    this.instagramUrl = 'https://www.instagram.com/digitalmanish.online/',
+    this.facebookUrl = 'https://www.facebook.com/digimanish',
     this.linkedinUrl = 'https://linkedin.com',
     this.githubUrl = 'https://github.com',
     this.footerAbout =

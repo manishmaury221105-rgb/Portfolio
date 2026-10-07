@@ -10,6 +10,8 @@ class UrlHelper {
   static const String locationName = 'Varanasi, Uttar Pradesh, India';
   static const String githubProfile = 'https://github.com';
   static const String linkedinProfile = 'https://linkedin.com';
+  static const String instagramProfile = 'https://www.instagram.com/digitalmanish.online/';
+  static const String facebookProfile = 'https://www.facebook.com/digimanish';
 
   /// Helper to extract clean 10-digit Indian phone number or standard international digits
   static String _normalizePhone(String rawPhone) {
