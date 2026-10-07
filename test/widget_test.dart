@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:portfolio/manish/data/cms_storage_service.dart';
+import 'package:portfolio/manish/data/portfolio_data.dart';
 import 'package:portfolio/manish/manish_app.dart';
-import 'package:portfolio/manish/models/project_model.dart';
-import 'package:portfolio/manish/models/service_model.dart';
 import 'package:portfolio/manish/utils/url_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,71 +57,23 @@ void main() {
     expect(find.byType(ManishApp), findsOneWidget);
   });
 
-  test('UrlHelper normalizes phone numbers properly', () async {
+  test('UrlHelper normalizes phone numbers and social links properly', () async {
     expect(UrlHelper.phoneNumber, '9214468818');
+    expect(UrlHelper.instagramProfile, 'https://www.instagram.com/digitalmanish.online/');
+    expect(UrlHelper.facebookProfile, 'https://www.facebook.com/share/1HR3JDm7oZ/');
+    expect(UrlHelper.youtubeProfile, 'https://www.youtube.com/@DigitalManish-s8i');
   });
 
-  test('CmsStorageService persists data and handles JSON backup export/import', () async {
-    SharedPreferences.setMockInitialValues({});
+  test('PortfolioData provides 100% complete local static data', () {
     final service = CmsStorageService();
-    await service.loadData();
-
     expect(service.isLoaded, true);
     expect(service.config.name, 'Digital Manish');
+    expect(service.services.isNotEmpty, true);
+    expect(service.projects.length >= 4, true);
+    expect(service.whyWorkList.length, 6);
 
-    // 1. Update config
-    final updated = service.config.copyWith(
-      name: 'Digital Manish Pro',
-      tagline: 'Lead Generation & Growth Specialist',
-    );
-    await service.updateConfig(updated);
-    expect(service.config.name, 'Digital Manish Pro');
-
-    // 2. Add custom service
-    const customService = ServiceModel(
-      id: 'custom_growth_hack',
-      titleHindi: 'Growth Hacking',
-      titleEnglish: 'Growth Hacking',
-      shortDesc: 'Rapid customer acquisition',
-      detailedDesc: 'Detailed growth strategies',
-      iconCodePoint: 0xe567,
-      accentColorValue: 0xFF6366F1,
-      subOfferings: ['Funnel optimization', 'Viral loops'],
-      benefits: ['Rapid scale', 'Lower CAC'],
-    );
-    await service.addService(customService);
-    expect(service.services.any((s) => s.id == 'custom_growth_hack'), true);
-
-    // 3. Add custom project
-    const customProj = ProjectModel(
-      id: 'custom_proj_1',
-      title: 'E-Commerce Scale',
-      category: 'Website',
-      shortDesc: 'Built scalable portal',
-      detailedDesc: 'High conversion e-commerce portal',
-      techStack: ['Flutter', 'Node.js'],
-      imageUrl: 'https://example.com/img.jpg',
-    );
-    await service.addProject(customProj);
-    expect(service.projects.any((p) => p.id == 'custom_proj_1'), true);
-
-    // 4. Export backup JSON
-    final jsonBackup = service.exportAllDataAsJson();
-    expect(jsonBackup.contains('Digital Manish Pro'), true);
-    expect(jsonBackup.contains('custom_growth_hack'), true);
-    expect(jsonBackup.contains('custom_proj_1'), true);
-
-    // 5. Simulate new instance loading persisted data
-    final service2 = CmsStorageService();
-    await service2.loadData();
-
-    expect(service2.config.name, 'Digital Manish Pro');
-    expect(service2.services.any((s) => s.id == 'custom_growth_hack'), true);
-    expect(service2.projects.any((p) => p.id == 'custom_proj_1'), true);
-
-    // 6. Test JSON Import
-    final importResult = await service2.importDataFromJson(jsonBackup);
-    expect(importResult, true);
-    expect(service2.config.name, 'Digital Manish Pro');
+    // Verify live Vercel projects are loaded locally
+    expect(PortfolioData.defaultProjects.any((p) => p.liveDemoUrl?.contains('school-management') ?? false), true);
+    expect(PortfolioData.defaultProjects.any((p) => p.liveDemoUrl?.contains('e-commerse') ?? false), true);
   });
 }
