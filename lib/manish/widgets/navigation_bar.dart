@@ -3,14 +3,13 @@ import '../models/profile_config_model.dart';
 import '../theme/app_colors.dart';
 import '../utils/app_localization.dart';
 import 'brand_logo_badge.dart';
-import 'language_selector_pill.dart';
 
 class PortfolioNavBar extends StatelessWidget {
   final bool isDark;
   final String activePage;
   final ProfileConfigModel config;
   final AppLanguage currentLanguage;
-  final Function(AppLanguage lang) onLanguageChanged;
+  final Function(AppLanguage lang)? onLanguageChanged;
   final VoidCallback onToggleTheme;
   final Function(String pageKey) onNavigate;
 
@@ -19,8 +18,8 @@ class PortfolioNavBar extends StatelessWidget {
     required this.isDark,
     required this.activePage,
     required this.config,
-    required this.currentLanguage,
-    required this.onLanguageChanged,
+    this.currentLanguage = AppLanguage.english,
+    this.onLanguageChanged,
     required this.onToggleTheme,
     required this.onNavigate,
   });
@@ -39,7 +38,6 @@ class PortfolioNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final isDesktop = width >= 1300;
-    final isCompact = width < 720;
     final loc = AppLocalization(currentLanguage);
     final pages = _getPages(loc);
 
@@ -171,10 +169,6 @@ class PortfolioNavBar extends StatelessWidget {
 
                   const Spacer(),
 
-                  // Language Switcher (Hindi, Hinglish, English)
-                  _buildLanguageSwitcher(isCompact: isCompact),
-                  const SizedBox(width: 8),
-
                   // Theme Toggle Button
                   Container(
                     decoration: BoxDecoration(
@@ -265,15 +259,6 @@ class PortfolioNavBar extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildLanguageSwitcher({required bool isCompact}) {
-    return LanguageSelectorPill(
-      currentLanguage: currentLanguage,
-      onLanguageChanged: onLanguageChanged,
-      isDark: isDark,
-      isCompact: isCompact,
     );
   }
 }
