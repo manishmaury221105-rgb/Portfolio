@@ -1,12 +1,21 @@
 {
   "name": "digital-manish-portfolio",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Portfolio website of Digital Manish built with Flutter Web",
+  "description": "Portfolio website of Digital Manish built with HTML, CSS and JavaScript",
   "scripts": {
-    "build": "bash build.sh",
-    "vercel-build": "bash build.sh"
+    "dev": "npx -y serve -l 3000 .",
+    "start": "npx -y serve -l 3000 .",
+    "build": "echo 'Static HTML/CSS/JS ready'"
   },
-  "keywords": ["flutter", "portfolio", "web", "digital-marketing"],
+  "keywords": [
+    "portfolio",
+    "web",
+    "digital-marketing",
+    "seo",
+    "html",
+    "css",
+    "javascript"
+  ],
   "author": "Digital Manish"
 }
