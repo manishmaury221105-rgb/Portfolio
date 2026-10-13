@@ -685,8 +685,33 @@ body.light-theme .theme-toggle-btn {
 =================================================================== */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
+  transition: all var(--transition-normal);
+}
+
+.services-grid.is-expanded {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.services-grid .service-card.service-card-extra {
+  display: none;
+}
+
+.services-grid.is-expanded .service-card.service-card-extra {
+  display: flex;
+  animation: serviceCardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes serviceCardFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .service-card {
@@ -827,6 +852,76 @@ body.light-theme .service-actions-row {
   background: var(--whatsapp);
   color: #ffffff;
   transform: scale(1.1);
+}
+
+/* Services Expand / Collapse Toggle */
+.services-toggle-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+}
+
+.btn-toggle-services {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 28px;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.btn-toggle-services::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  z-index: 0;
+}
+
+.btn-toggle-services:hover {
+  border-color: rgba(99, 102, 241, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+  color: #ffffff;
+}
+
+.btn-toggle-services:hover::before {
+  opacity: 0.15;
+}
+
+.btn-toggle-services:active {
+  transform: translateY(0);
+}
+
+.btn-toggle-services span,
+.btn-toggle-services svg {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-toggle-services .toggle-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-toggle-services.is-active .toggle-icon {
+  transform: rotate(180deg);
 }
 .btn-service-whatsapp svg {
   width: 18px;
@@ -1905,7 +2000,8 @@ body.light-theme .skill-card {
   .why-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .services-grid {
+  .services-grid,
+  .services-grid.is-expanded {
     grid-template-columns: repeat(2, 1fr);
   }
   .projects-grid {
@@ -1947,7 +2043,8 @@ body.light-theme .skill-card {
   .why-grid {
     grid-template-columns: 1fr;
   }
-  .services-grid {
+  .services-grid,
+  .services-grid.is-expanded {
     grid-template-columns: 1fr;
   }
   .skills-grid {

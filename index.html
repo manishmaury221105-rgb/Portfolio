@@ -231,6 +231,7 @@
           </p>
         </div>
         <div class="services-grid" id="services-grid-container">
+          <!-- 1. Google My Business (Top 4) -->
           <div class="service-card" style="--service-color: #22c55e;" onclick="openServiceModal('gmb_setup')">
             <div class="service-image-box">
               <picture>
@@ -252,6 +253,8 @@
               </div>
             </div>
           </div>
+
+          <!-- 2. Meta Ads (Top 4) -->
           <div class="service-card" style="--service-color: #ec4899;" onclick="openServiceModal('meta_ads')">
             <div class="service-image-box">
               <picture>
@@ -273,6 +276,8 @@
               </div>
             </div>
           </div>
+
+          <!-- 3. Google Ads (Top 4) -->
           <div class="service-card" style="--service-color: #f59e0b;" onclick="openServiceModal('google_ads')">
             <div class="service-image-box">
               <picture>
@@ -294,90 +299,8 @@
               </div>
             </div>
           </div>
-          <div class="service-card" style="--service-color: #8b5cf6;" onclick="openServiceModal('email_marketing')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_email_marketing.webp" type="image/webp">
-                <img src="assets/images/services/service_email_marketing.jpg" alt="Email Marketing & Drip Automation" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Email Marketing & Drip Automation</h3>
-              <span class="service-title-english">Funnels & Retention Workflows</span>
-              <p class="service-desc">High-converting email sequences, newsletters, retention funnels, and automated drip workflows.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('email_marketing')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #06b6d4;" onclick="openServiceModal('chart_ads')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_chart_ads.webp" type="image/webp">
-                <img src="assets/images/services/service_chart_ads.jpg" alt="Performance Chart & Conversion Ads" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Performance Chart & Conversion Ads</h3>
-              <span class="service-title-english">Analytics & ROAS Scaling</span>
-              <p class="service-desc">Data-driven growth ads, real-time ROI chart analytics, conversion tracking funnels, and budget scaling.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('chart_ads')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #10b981;" onclick="openServiceModal('seo')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_seo_ranking.webp" type="image/webp">
-                <img src="assets/images/services/service_seo_ranking.jpg" alt="SEO & Google Ranking" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">SEO & Google Ranking</h3>
-              <span class="service-title-english">Search Engine Optimization</span>
-              <p class="service-desc">Rank on Google Page 1 and generate sustainable organic traffic, map citations, and regular customer inquiries.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('seo')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #6366f1;" onclick="openServiceModal('digital_marketing')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_digital_marketing.webp" type="image/webp">
-                <img src="assets/images/services/service_digital_marketing.jpg" alt="Digital Marketing & Growth" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Digital Marketing & Growth</h3>
-              <span class="service-title-english">Social Media & Brand Strategy</span>
-              <p class="service-desc">Drive continuous qualified leads, elevate brand awareness, and scale your online business presence.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('digital_marketing')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
+
+          <!-- 4. Website Development (Top 4) -->
           <div class="service-card" style="--service-color: #38bdf8;" onclick="openServiceModal('web_dev')">
             <div class="service-image-box">
               <picture>
@@ -399,7 +322,32 @@
               </div>
             </div>
           </div>
-          <div class="service-card" style="--service-color: #8b5cf6;" onclick="openServiceModal('app_dev')">
+
+          <!-- 5. SEO & Google Ranking (Extra) -->
+          <div class="service-card service-card-extra" style="--service-color: #10b981;" onclick="openServiceModal('seo')">
+            <div class="service-image-box">
+              <picture>
+                <source srcset="assets/images/services/service_seo_ranking.webp" type="image/webp">
+                <img src="assets/images/services/service_seo_ranking.jpg" alt="SEO & Google Ranking" width="400" height="240" loading="lazy">
+              </picture>
+              <div class="service-image-overlay"></div>
+              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+            </div>
+            <div class="service-body">
+              <h3 class="service-title-hindi">SEO & Google Ranking</h3>
+              <span class="service-title-english">Search Engine Optimization</span>
+              <p class="service-desc">Rank on Google Page 1 and generate sustainable organic traffic, map citations, and regular customer inquiries.</p>
+              <div class="service-actions-row">
+                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('seo')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
+                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Mobile Applications (Extra) -->
+          <div class="service-card service-card-extra" style="--service-color: #8b5cf6;" onclick="openServiceModal('app_dev')">
             <div class="service-image-box">
               <picture>
                 <source srcset="assets/images/services/service_app_dev.webp" type="image/webp">
@@ -420,6 +368,85 @@
               </div>
             </div>
           </div>
+
+          <!-- 7. Digital Marketing & Growth (Extra) -->
+          <div class="service-card service-card-extra" style="--service-color: #6366f1;" onclick="openServiceModal('digital_marketing')">
+            <div class="service-image-box">
+              <picture>
+                <source srcset="assets/images/services/service_digital_marketing.webp" type="image/webp">
+                <img src="assets/images/services/service_digital_marketing.jpg" alt="Digital Marketing & Growth" width="400" height="240" loading="lazy">
+              </picture>
+              <div class="service-image-overlay"></div>
+              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg></div>
+            </div>
+            <div class="service-body">
+              <h3 class="service-title-hindi">Digital Marketing & Growth</h3>
+              <span class="service-title-english">Social Media & Brand Strategy</span>
+              <p class="service-desc">Drive continuous qualified leads, elevate brand awareness, and scale your online business presence.</p>
+              <div class="service-actions-row">
+                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('digital_marketing')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
+                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Email Marketing (Extra) -->
+          <div class="service-card service-card-extra" style="--service-color: #8b5cf6;" onclick="openServiceModal('email_marketing')">
+            <div class="service-image-box">
+              <picture>
+                <source srcset="assets/images/services/service_email_marketing.webp" type="image/webp">
+                <img src="assets/images/services/service_email_marketing.jpg" alt="Email Marketing & Drip Automation" width="400" height="240" loading="lazy">
+              </picture>
+              <div class="service-image-overlay"></div>
+              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+            </div>
+            <div class="service-body">
+              <h3 class="service-title-hindi">Email Marketing & Drip Automation</h3>
+              <span class="service-title-english">Funnels & Retention Workflows</span>
+              <p class="service-desc">High-converting email sequences, newsletters, retention funnels, and automated drip workflows.</p>
+              <div class="service-actions-row">
+                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('email_marketing')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
+                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9. Performance Chart & Conversion Ads (Extra) -->
+          <div class="service-card service-card-extra" style="--service-color: #06b6d4;" onclick="openServiceModal('chart_ads')">
+            <div class="service-image-box">
+              <picture>
+                <source srcset="assets/images/services/service_chart_ads.webp" type="image/webp">
+                <img src="assets/images/services/service_chart_ads.jpg" alt="Performance Chart & Conversion Ads" width="400" height="240" loading="lazy">
+              </picture>
+              <div class="service-image-overlay"></div>
+              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+            </div>
+            <div class="service-body">
+              <h3 class="service-title-hindi">Performance Chart & Conversion Ads</h3>
+              <span class="service-title-english">Analytics & ROAS Scaling</span>
+              <p class="service-desc">Data-driven growth ads, real-time ROI chart analytics, conversion tracking funnels, and budget scaling.</p>
+              <div class="service-actions-row">
+                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('chart_ads')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
+                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View All / Show Less Services Toggle -->
+        <div class="services-toggle-wrap">
+          <button type="button" id="toggle-services-btn" class="btn-toggle-services" aria-expanded="false" aria-controls="services-grid-container">
+            <span class="btn-toggle-text">View All Services (9)</span>
+            <svg class="toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </svg>
+          </button>
         </div>
       </div>
     </section>
