@@ -470,6 +470,49 @@ function initSmoothNavigation() {
   sections.forEach(sec => observer.observe(sec));
 }
 
+const PageSEOMap = {
+  home: {
+    title: 'Digital Manish | Best Digital Marketing Agency in Varanasi',
+    description: 'Digital Manish: Premier Digital Marketing Agency in Varanasi. Expert Meta & Google Ads, Local GMB 3-Pack SEO, and fast Websites. Call +91 9214468818 today!'
+  },
+  services: {
+    title: 'Digital Marketing & Web Services in Varanasi | Digital Manish',
+    description: 'Explore ROI-driven digital services by Digital Manish in Varanasi: Meta Ads, Google PPC, GMB Map Ranking, SEO, Web & App Development. Get a free proposal!'
+  },
+  projects: {
+    title: 'Client Projects & Case Studies Portfolio | Digital Manish',
+    description: 'See live case studies: E-commerce stores, School management portals, ₹18/lead Meta ad campaigns & Google #1 local SEO ranking projects by Digital Manish.'
+  },
+  'why-work': {
+    title: 'Why Choose Digital Manish | Trusted Digital Partner Varanasi',
+    description: 'Discover why Varanasi businesses trust Digital Manish: Transparent ROI reporting, modern technology, direct WhatsApp support & tailored business growth.'
+  },
+  about: {
+    title: 'About Digital Manish | Digital Growth Specialist in Varanasi',
+    description: 'Meet Digital Manish, leading digital marketing strategist & developer in Varanasi (UP). 3+ years experience driving 10x business growth through tech and ads.'
+  },
+  contact: {
+    title: 'Contact Digital Manish | Free Consultation in Varanasi',
+    description: 'Ready to scale your business? Contact Digital Manish for a free 1-on-1 strategy consultation. Direct WhatsApp: +91 9214468818 or submit your project inquiry.'
+  }
+};
+
+function updatePageSEO(pageKey) {
+  const seo = PageSEOMap[pageKey];
+  if (!seo) return;
+
+  document.title = seo.title;
+
+  const descMeta = document.querySelector('meta[name="description"]');
+  if (descMeta) descMeta.setAttribute('content', seo.description);
+
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', seo.title);
+
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogDesc) ogDesc.setAttribute('content', seo.description);
+}
+
 function updateActiveNav(activeId) {
   document.querySelectorAll('.nav-pill, .mobile-nav-pill').forEach(pill => {
     const href = pill.getAttribute('href');
@@ -479,6 +522,7 @@ function updateActiveNav(activeId) {
       pill.classList.remove('active');
     }
   });
+  updatePageSEO(activeId);
 }
 
 // ============================================================================
@@ -601,11 +645,15 @@ function initModals() {
 function closeAllModals() {
   document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
   document.body.style.overflow = 'auto';
+  const activePill = document.querySelector('.nav-pill.active, .mobile-nav-pill.active');
+  const activeId = activePill ? activePill.getAttribute('href').replace('#', '') : 'home';
+  updatePageSEO(activeId);
 }
 
 function openServiceModal(serviceId) {
   const s = ServicesData.find(item => item.id === serviceId);
   if (!s) return;
+  document.title = `${s.title} | Digital Manish Varanasi`;
 
   const modal = document.getElementById('service-modal');
   const modalContent = document.getElementById('service-modal-content');
@@ -664,6 +712,7 @@ function openServiceModal(serviceId) {
 function openProjectModal(projectId) {
   const p = ProjectsData.find(item => item.id === projectId);
   if (!p) return;
+  document.title = `${p.title} | Digital Manish Projects`;
 
   const modal = document.getElementById('project-modal');
   const modalContent = document.getElementById('project-modal-content');
