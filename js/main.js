@@ -482,20 +482,25 @@ function updateActiveNav(activeId) {
 }
 
 // ============================================================================
+// ============================================================================
 // 5. RENDER SERVICES
 // ============================================================================
 
 function renderServices() {
   const container = document.getElementById('services-grid-container');
-  if (!container) return;
+  if (!container || container.children.length > 0) return;
 
   container.innerHTML = ServicesData.map(s => {
     const iconSvg = SvgIcons[s.icon] || SvgIcons.location;
+    const webpUrl = s.imageUrl.replace(/\.(jpg|png)$/, '.webp');
 
     return `
       <div class="service-card" style="--service-color: ${s.accentColor};" onclick="openServiceModal('${s.id}')">
         <div class="service-image-box">
-          <img src="${s.imageUrl}" alt="${s.title}" width="400" height="240" loading="lazy">
+          <picture>
+            <source srcset="${webpUrl}" type="image/webp">
+            <img src="${s.imageUrl}" alt="${s.title}" width="400" height="240" loading="lazy">
+          </picture>
           <div class="service-image-overlay"></div>
           <div class="service-icon-floating">${iconSvg}</div>
         </div>
@@ -523,44 +528,24 @@ function renderProjects() {
   const container = document.getElementById('projects-grid-container');
   if (!container) return;
 
-  const filtered = AppState.projectFilter === 'All'
-    ? ProjectsData
-    : ProjectsData.filter(p => p.category.toLowerCase().includes(AppState.projectFilter.toLowerCase()));
-
-  container.innerHTML = filtered.map(p => {
-    const tagsHtml = p.techStack.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('');
-    const liveDemoBtn = p.liveDemoUrl ? `
-      <a href="${p.liveDemoUrl}" target="_blank" rel="noopener" class="btn-project-live" onclick="event.stopPropagation();" aria-label="Open Demo">
-        Demo ${SvgIcons.open_link}
-      </a>
-    ` : '';
-
-    return `
-      <div class="project-card" onclick="openProjectModal('${p.id}')">
-        <div class="project-image-box">
-          <img src="${p.imageUrl}" alt="${p.title}" width="500" height="280" loading="lazy">
-          <span class="project-tag-pill">${p.category}</span>
-          ${p.resultsMetric ? `<span class="project-metric-pill">${p.resultsMetric}</span>` : ''}
-        </div>
-        <div class="project-body">
-          <h3 class="project-title">${p.title}</h3>
-          <p class="project-desc">${p.shortDesc}</p>
-          <div class="project-tech-tags">${tagsHtml}</div>
-          <div class="project-actions-row">
-            <span class="btn-project-details">View Details ${SvgIcons.arrow_forward}</span>
-            ${liveDemoBtn}
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
+  const filterCards = () => {
+    const cards = container.querySelectorAll('.project-card');
+    cards.forEach(card => {
+      const cat = card.getAttribute('data-category') || '';
+      if (AppState.projectFilter === 'All' || cat.toLowerCase().includes(AppState.projectFilter.toLowerCase())) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  };
 
   document.querySelectorAll('.project-filter-btn').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.project-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       AppState.projectFilter = btn.getAttribute('data-category');
-      renderProjects();
+      filterCards();
     };
   });
 }
@@ -573,21 +558,22 @@ function renderWhyWork() {
   const containers = document.querySelectorAll('.why-grid-container');
   if (!containers.length) return;
 
-  const html = WhyWorkData.map(w => {
-    const iconSvg = SvgIcons[w.icon] || SvgIcons.sparkles;
+  containers.forEach(container => {
+    if (container.children.length > 0) return;
+    container.innerHTML = WhyWorkData.map(w => {
+      const iconSvg = SvgIcons[w.icon] || SvgIcons.sparkles;
 
-    return `
-      <div class="why-card" style="--card-accent: ${w.color};">
-        <div class="why-icon-box" style="background: ${w.color}20; color: ${w.color};">
-          ${iconSvg}
+      return `
+        <div class="why-card" style="--card-accent: ${w.color};">
+          <div class="why-icon-box" style="background: ${w.color}20; color: ${w.color};">
+            ${iconSvg}
+          </div>
+          <h3 class="why-title">${w.title}</h3>
+          <p class="why-desc">${w.subtitle}</p>
         </div>
-        <h3 class="why-title">${w.title}</h3>
-        <p class="why-desc">${w.subtitle}</p>
-      </div>
-    `;
-  }).join('');
-
-  containers.forEach(c => c.innerHTML = html);
+      `;
+    }).join('');
+  });
 }
 
 // ============================================================================
@@ -641,7 +627,10 @@ function openServiceModal(serviceId) {
 
   modalContent.innerHTML = `
     <div class="modal-banner">
-      <img src="${s.imageUrl}" alt="${s.title}" loading="lazy">
+      <picture>
+        <source srcset="${s.imageUrl.replace(/\.(jpg|png)$/, '.webp')}" type="image/webp">
+        <img src="${s.imageUrl}" alt="${s.title}" loading="lazy">
+      </picture>
       <div class="modal-banner-gradient"></div>
     </div>
     <div class="modal-header-info" style="--modal-color: ${s.accentColor};">
@@ -692,7 +681,10 @@ function openProjectModal(projectId) {
 
   modalContent.innerHTML = `
     <div class="modal-banner">
-      <img src="${p.imageUrl}" alt="${p.title}" loading="lazy">
+      <picture>
+        <source srcset="${p.imageUrl.replace(/\.(jpg|png)$/, '.webp')}" type="image/webp">
+        <img src="${p.imageUrl}" alt="${p.title}" loading="lazy">
+      </picture>
       <div class="modal-banner-gradient"></div>
     </div>
     <div class="modal-header-info">
