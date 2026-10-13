@@ -381,6 +381,7 @@ const AppState = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  cleanupStaleServiceWorkers();
   initTheme();
   initSmoothNavigation();
   renderServices();
@@ -391,6 +392,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initScrollListeners();
 });
+
+function cleanupStaleServiceWorkers() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      for (const reg of registrations) {
+        reg.unregister();
+      }
+    }).catch(() => {});
+  }
+}
 
 // ============================================================================
 // 3. THEME TOGGLE
