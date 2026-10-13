@@ -1,17 +1,30 @@
-# portfolio
+# Digital Manish - Portfolio Website
 
-A new Flutter project.
+Premier Digital Marketing Agency in Varanasi | Full-Stack Web & App Development.
 
-## Getting Started
+Built with **HTML5, Vanilla CSS3, and JavaScript**.
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
+- **Ultra-Fast Performance**: Lightweight static website loading in under 100ms.
+- **Modern Responsive Design**: Fluid layouts optimized for Mobile, Tablet, and Desktop screens.
+- **Dark & Light Modes**: Toggle between curated dark (`#0B0F19`) and clean light (`#F8FAFC`) palettes.
+- **Interactive Modals**: Detailed checklists and feature breakdowns for Services and Showcase Projects.
+- **WhatsApp Integration**: Direct one-click lead inquiry and consultation booking.
+- **SEO Optimized**: Schema.org JSON-LD structured data, Open Graph cards, sitemap, and robots.txt.
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ Local Development
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+To run the portfolio locally:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+# Using Python built-in server
+python3 -m http.server 3000
+
+# Or using Node / npm
+npm run dev
+```
+
+Open `http://localhost:3000` in your web browser.
+
+## 📦 Deployment
+Deployable with zero configuration to **Vercel**, **GitHub Pages**, **Netlify**, or any static web host.
