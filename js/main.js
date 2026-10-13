@@ -90,98 +90,6 @@ const ServicesData = [
     ]
   },
   {
-    id: 'web_dev',
-    title: 'Fast & Modern Responsive Websites',
-    subTitle: 'Clean Code & High Conversion',
-    shortDesc: 'Ultra-fast, responsive, modern websites and digital platforms optimized for conversions and search engines.',
-    detailedDesc: 'Custom modern business websites, e-commerce stores, portfolio showcases, and high-converting landing pages built with clean code and blazing fast loading speeds.',
-    accentColor: '#38bdf8',
-    imageUrl: 'assets/images/services/service_web_app_dev.jpg',
-    icon: 'laptop',
-    subOfferings: [
-      'Professional Business & Corporate Websites',
-      'Full E-Commerce Stores with Payment Gateway',
-      'Personal Portfolio & Freelancer Showcase',
-      '100% Mobile Responsive & Fast Loading Speed',
-      'Clean, Modern UI/UX Architecture'
-    ],
-    benefits: [
-      '24/7 online storefront for your business',
-      'Modern aesthetics designed to impress and convert visitors',
-      'SSL secure, fast hosting, and clean code standards',
-      'SEO-friendly structure for superior Google rank'
-    ]
-  },
-  {
-    id: 'seo',
-    title: 'SEO & Google Ranking',
-    subTitle: 'Search Engine Optimization',
-    shortDesc: 'Rank on Google Page 1 and generate sustainable organic traffic, map citations, and regular customer inquiries.',
-    detailedDesc: 'Full-cycle Search Engine Optimization process covering on-page optimization, technical audits, Google Business Profile supremacy, and high-intent keyword strategies.',
-    accentColor: '#10b981',
-    imageUrl: 'assets/images/services/service_seo_ranking.jpg',
-    icon: 'search',
-    subOfferings: [
-      'On-Page SEO & Content Optimization',
-      'Technical SEO & Core Web Vitals Fixes',
-      'High-Intent Keyword Research & Competitor Analysis',
-      'Authority Backlink Building & Technical Audits',
-      'Google Search Console & Analytics Setup'
-    ],
-    benefits: [
-      'Sustainable organic Google traffic without ongoing ad spend',
-      'Top rank on Google for high-value business keywords',
-      'Long-term sustainable business growth & authority',
-      'High search visibility & trustworthy brand reputation'
-    ]
-  },
-  {
-    id: 'app_dev',
-    title: 'Android & iOS Mobile Applications',
-    subTitle: 'Cross-Platform App Development',
-    shortDesc: 'Feature-rich, smooth, and scalable mobile apps for Android & iOS with robust cloud backends.',
-    detailedDesc: 'Cross-platform mobile applications delivering lightweight, fast, secure, and intuitive user experiences with real-time capabilities.',
-    accentColor: '#8b5cf6',
-    imageUrl: 'assets/images/services/service_app_dev.jpg',
-    icon: 'phone',
-    subOfferings: [
-      'Custom Android & iOS Cross-Platform Apps',
-      'Business Management & Customer Service Apps',
-      'E-Commerce & Service Booking Mobile Applications',
-      'Real-time Firebase Backend & Push Notifications',
-      'Play Store & App Store Deployment Support'
-    ],
-    benefits: [
-      'Direct channel to customers via their mobile screen',
-      'Instant push notifications for offers and updates',
-      'Offline capabilities and ultra-smooth UI animations',
-      'Scalable and secure cloud infrastructure'
-    ]
-  },
-  {
-    id: 'digital_marketing',
-    title: 'Digital Marketing & Growth',
-    subTitle: 'Social Media & Brand Strategy',
-    shortDesc: 'Drive continuous qualified leads, elevate brand awareness, and scale your online business presence.',
-    detailedDesc: 'Comprehensive performance marketing strategies including social media marketing, targeted audience acquisition, brand positioning, and high-converting lead funnels to ensure your business dominates its market.',
-    accentColor: '#6366f1',
-    imageUrl: 'assets/images/services/service_digital_marketing.jpg',
-    icon: 'trending_up',
-    subOfferings: [
-      'Social Media Marketing (SMM)',
-      'High-Converting Lead Generation',
-      'Online Business Promotion & Branding',
-      'Audience Research & Growth Strategies',
-      'Brand Awareness & Content Planning'
-    ],
-    benefits: [
-      'High volume of genuine, qualified inquiries',
-      'Enhanced brand credibility and online presence',
-      'Laser-targeted local and national audience reach',
-      'Transparent analytics and periodic performance reports'
-    ]
-  },
-  {
     id: 'email_marketing',
     title: 'Email Marketing & Drip Automation',
     subTitle: 'Funnels & Retention Workflows',
@@ -225,6 +133,98 @@ const ServicesData = [
       'Predictable customer acquisition cost (CAC) scaling',
       'Eliminate wasted ad spend with negative keyword filtering',
       'Comprehensive weekly performance chart reports'
+    ]
+  },
+  {
+    id: 'seo',
+    title: 'SEO & Google Ranking',
+    subTitle: 'Search Engine Optimization',
+    shortDesc: 'Rank on Google Page 1 and generate sustainable organic traffic, map citations, and regular customer inquiries.',
+    detailedDesc: 'Full-cycle Search Engine Optimization process covering on-page optimization, technical audits, Google Business Profile supremacy, and high-intent keyword strategies.',
+    accentColor: '#10b981',
+    imageUrl: 'assets/images/services/service_seo_ranking.jpg',
+    icon: 'search',
+    subOfferings: [
+      'On-Page SEO & Content Optimization',
+      'Technical SEO & Core Web Vitals Fixes',
+      'High-Intent Keyword Research & Competitor Analysis',
+      'Authority Backlink Building & Technical Audits',
+      'Google Search Console & Analytics Setup'
+    ],
+    benefits: [
+      'Sustainable organic Google traffic without ongoing ad spend',
+      'Top rank on Google for high-value business keywords',
+      'Long-term sustainable business growth & authority',
+      'High search visibility & trustworthy brand reputation'
+    ]
+  },
+  {
+    id: 'digital_marketing',
+    title: 'Digital Marketing & Growth',
+    subTitle: 'Social Media & Brand Strategy',
+    shortDesc: 'Drive continuous qualified leads, elevate brand awareness, and scale your online business presence.',
+    detailedDesc: 'Comprehensive performance marketing strategies including social media marketing, targeted audience acquisition, brand positioning, and high-converting lead funnels to ensure your business dominates its market.',
+    accentColor: '#6366f1',
+    imageUrl: 'assets/images/services/service_digital_marketing.jpg',
+    icon: 'trending_up',
+    subOfferings: [
+      'Social Media Marketing (SMM)',
+      'High-Converting Lead Generation',
+      'Online Business Promotion & Branding',
+      'Audience Research & Growth Strategies',
+      'Brand Awareness & Content Planning'
+    ],
+    benefits: [
+      'High volume of genuine, qualified inquiries',
+      'Enhanced brand credibility and online presence',
+      'Laser-targeted local and national audience reach',
+      'Transparent analytics and periodic performance reports'
+    ]
+  },
+  {
+    id: 'web_dev',
+    title: 'Fast & Modern Responsive Websites',
+    subTitle: 'Clean Code & High Conversion',
+    shortDesc: 'Ultra-fast, responsive, modern websites and digital platforms optimized for conversions and search engines.',
+    detailedDesc: 'Custom modern business websites, e-commerce stores, portfolio showcases, and high-converting landing pages built with clean code and blazing fast loading speeds.',
+    accentColor: '#38bdf8',
+    imageUrl: 'assets/images/services/service_web_app_dev.jpg',
+    icon: 'laptop',
+    subOfferings: [
+      'Professional Business & Corporate Websites',
+      'Full E-Commerce Stores with Payment Gateway',
+      'Personal Portfolio & Freelancer Showcase',
+      '100% Mobile Responsive & Fast Loading Speed',
+      'Clean, Modern UI/UX Architecture'
+    ],
+    benefits: [
+      '24/7 online storefront for your business',
+      'Modern aesthetics designed to impress and convert visitors',
+      'SSL secure, fast hosting, and clean code standards',
+      'SEO-friendly structure for superior Google rank'
+    ]
+  },
+  {
+    id: 'app_dev',
+    title: 'Android & iOS Mobile Applications',
+    subTitle: 'Cross-Platform App Development',
+    shortDesc: 'Feature-rich, smooth, and scalable mobile apps for Android & iOS with robust cloud backends.',
+    detailedDesc: 'Cross-platform mobile applications delivering lightweight, fast, secure, and intuitive user experiences with real-time capabilities.',
+    accentColor: '#8b5cf6',
+    imageUrl: 'assets/images/services/service_app_dev.jpg',
+    icon: 'phone',
+    subOfferings: [
+      'Custom Android & iOS Cross-Platform Apps',
+      'Business Management & Customer Service Apps',
+      'E-Commerce & Service Booking Mobile Applications',
+      'Real-time Firebase Backend & Push Notifications',
+      'Play Store & App Store Deployment Support'
+    ],
+    benefits: [
+      'Direct channel to customers via their mobile screen',
+      'Instant push notifications for offers and updates',
+      'Offline capabilities and ultra-smooth UI animations',
+      'Scalable and secure cloud infrastructure'
     ]
   }
 ];
@@ -381,27 +381,15 @@ const AppState = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  cleanupStaleServiceWorkers();
   initTheme();
   initSmoothNavigation();
   renderServices();
-  initServicesToggle();
   renderProjects();
   renderWhyWork();
   initContactForm();
   initModals();
   initScrollListeners();
 });
-
-function cleanupStaleServiceWorkers() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(registrations => {
-      for (const reg of registrations) {
-        reg.unregister();
-      }
-    }).catch(() => {});
-  }
-}
 
 // ============================================================================
 // 3. THEME TOGGLE
@@ -546,13 +534,12 @@ function renderServices() {
   const container = document.getElementById('services-grid-container');
   if (!container || container.children.length > 0) return;
 
-  container.innerHTML = ServicesData.map((s, idx) => {
+  container.innerHTML = ServicesData.map(s => {
     const iconSvg = SvgIcons[s.icon] || SvgIcons.location;
     const webpUrl = s.imageUrl.replace(/\.(jpg|png)$/, '.webp');
-    const extraClass = idx >= 4 ? ' service-card-extra' : '';
 
     return `
-      <div class="service-card${extraClass}" style="--service-color: ${s.accentColor};" onclick="openServiceModal('${s.id}')">
+      <div class="service-card" style="--service-color: ${s.accentColor};" onclick="openServiceModal('${s.id}')">
         <div class="service-image-box">
           <picture>
             <source srcset="${webpUrl}" type="image/webp">
@@ -576,49 +563,6 @@ function renderServices() {
     `;
   }).join('');
 }
-
-function initServicesToggle() {
-  const toggleBtn = document.getElementById('toggle-services-btn');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', toggleServices);
-  }
-
-  // Hero section "Explore All Services" CTA button auto-expands services
-  const heroExploreBtn = document.querySelector('.hero-actions a[href="#services"]');
-  if (heroExploreBtn) {
-    heroExploreBtn.addEventListener('click', () => {
-      const grid = document.getElementById('services-grid-container');
-      if (grid && !grid.classList.contains('is-expanded')) {
-        toggleServices();
-      }
-    });
-  }
-}
-
-function toggleServices() {
-  const grid = document.getElementById('services-grid-container');
-  const btn = document.getElementById('toggle-services-btn');
-  if (!grid || !btn) return;
-
-  const textSpan = btn.querySelector('.btn-toggle-text');
-  const isExpanded = grid.classList.toggle('is-expanded');
-  btn.classList.toggle('is-active', isExpanded);
-  btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-
-  if (isExpanded) {
-    if (textSpan) textSpan.textContent = 'Show Less Services';
-  } else {
-    if (textSpan) textSpan.textContent = 'View All Services (9)';
-    const servicesSection = document.getElementById('services');
-    if (servicesSection) {
-      const navHeight = document.getElementById('navbar-header')?.offsetHeight || 72;
-      const targetPos = servicesSection.getBoundingClientRect().top + window.scrollY - navHeight;
-      window.scrollTo({ top: targetPos, behavior: 'smooth' });
-    }
-  }
-}
-window.toggleServices = toggleServices;
-
 
 // ============================================================================
 // 6. RENDER PROJECTS & FILTERING

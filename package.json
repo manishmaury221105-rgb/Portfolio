@@ -4,8 +4,8 @@
   "private": true,
   "description": "Portfolio website of Digital Manish built with HTML, CSS and JavaScript",
   "scripts": {
-    "dev": "npx -y serve -l 5500 .",
-    "start": "npx -y serve -l 5500 .",
+    "dev": "npx -y serve -l 3000 .",
+    "start": "npx -y serve -l 3000 .",
     "build": "echo 'Static HTML/CSS/JS ready'"
   },
   "keywords": [
