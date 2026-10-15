@@ -11,7 +11,7 @@ cp -r assets build/web/
 cp -r css build/web/
 cp -r js build/web/
 cp -r icons build/web/
-cp index.html build/web/
+cp *.html build/web/
 cp favicon.png build/web/
 cp manifest.json build/web/
 cp robots.txt build/web/

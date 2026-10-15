@@ -382,6 +382,7 @@ const AppState = {
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initActivePageNav();
   initSmoothNavigation();
   renderServices();
   renderProjects();
@@ -423,8 +424,27 @@ function updateThemeIcon() {
 }
 
 // ============================================================================
-// 4. SMOOTH NAVIGATION & INTERSECTION OBSERVER
+// 4. MULTI-PAGE NAVIGATION & ACTIVE NAV INDICATOR
 // ============================================================================
+
+function initActivePageNav() {
+  const currentPath = window.location.pathname.toLowerCase();
+  let currentPage = 'home';
+  if (currentPath.includes('services')) currentPage = 'services';
+  else if (currentPath.includes('projects')) currentPage = 'projects';
+  else if (currentPath.includes('why-work')) currentPage = 'why-work';
+  else if (currentPath.includes('about')) currentPage = 'about';
+  else if (currentPath.includes('contact')) currentPage = 'contact';
+
+  document.querySelectorAll('.nav-pill, .mobile-nav-pill').forEach(pill => {
+    const pageAttr = pill.getAttribute('data-page');
+    if (pageAttr === currentPage) {
+      pill.classList.add('active');
+    } else if (pageAttr) {
+      pill.classList.remove('active');
+    }
+  });
+}
 
 function initSmoothNavigation() {
   const navLinks = document.querySelectorAll('.nav-pill, .mobile-nav-pill, .footer-links a');
@@ -450,24 +470,26 @@ function initSmoothNavigation() {
     });
   });
 
-  // Track active section as user scrolls using IntersectionObserver
-  const sections = document.querySelectorAll('section[id]');
-  const observerOptions = {
-    root: null,
-    rootMargin: '-20% 0px -70% 0px',
-    threshold: 0
-  };
+  // Track active section as user scrolls using IntersectionObserver only when multiple section[id] exist
+  const sections = document.querySelectorAll('main > section[id]');
+  if (sections.length > 1) {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        updateActiveNav(id);
-      }
-    });
-  }, observerOptions);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          updateActiveNav(id);
+        }
+      });
+    }, observerOptions);
 
-  sections.forEach(sec => observer.observe(sec));
+    sections.forEach(sec => observer.observe(sec));
+  }
 }
 
 const PageSEOMap = {

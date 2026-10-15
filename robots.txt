@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
-Allow: /#services
-Allow: /#projects
-Allow: /#why-work
-Allow: /#about
-Allow: /#contact
+Allow: /services
+Allow: /projects
+Allow: /why-work
+Allow: /about
+Allow: /contact
 
 Sitemap: https://digitalmanish.online/sitemap.xml
