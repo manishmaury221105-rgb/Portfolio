@@ -488,29 +488,115 @@ body.light-theme .theme-toggle-btn {
   border-color: rgba(99, 102, 241, 0.3);
 }
 
-/* Hero Avatar Showcase - Continuous Motion & Rotating Neon Halo */
+/* Hero Avatar Showcase - Ultra-Fast Continuous Motion & Interactive Touch Color Shift */
 .hero-avatar-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   perspective: 1000px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* Base Neon Variables (Default Theme 0: Electric Cyan / Blue / Purple / Pink) */
+.hero-avatar-wrapper,
+.hero-avatar-card {
+  --neon-1: #00d2ff;
+  --neon-2: #3b82f6;
+  --neon-3: #a855f7;
+  --neon-4: #ec4899;
+  --neon-glow-primary: rgba(99, 102, 241, 0.8);
+  --neon-glow-secondary: rgba(0, 210, 255, 0.6);
+  --spin-speed: 1.2s;
+  --spin-reverse-speed: 1.6s;
+  --float-speed: 2.0s;
+}
+
+/* Theme 1: Emerald Lime & Radiant Gold */
+.hero-avatar-wrapper[data-color-theme="1"],
+.hero-avatar-card[data-color-theme="1"] {
+  --neon-1: #00ff88;
+  --neon-2: #10b981;
+  --neon-3: #f59e0b;
+  --neon-4: #ffd700;
+  --neon-glow-primary: rgba(16, 185, 129, 0.9);
+  --neon-glow-secondary: rgba(245, 158, 11, 0.7);
+}
+
+/* Theme 2: Fiery Sunset Crimson & Solar Amber */
+.hero-avatar-wrapper[data-color-theme="2"],
+.hero-avatar-card[data-color-theme="2"] {
+  --neon-1: #ff0055;
+  --neon-2: #f97316;
+  --neon-3: #fbbf24;
+  --neon-4: #ef4444;
+  --neon-glow-primary: rgba(239, 68, 68, 0.9);
+  --neon-glow-secondary: rgba(249, 115, 22, 0.7);
+}
+
+/* Theme 3: Deep Galactic Violet & Hot Magenta */
+.hero-avatar-wrapper[data-color-theme="3"],
+.hero-avatar-card[data-color-theme="3"] {
+  --neon-1: #8b5cf6;
+  --neon-2: #d946ef;
+  --neon-3: #00f0ff;
+  --neon-4: #a855f7;
+  --neon-glow-primary: rgba(168, 85, 247, 0.9);
+  --neon-glow-secondary: rgba(217, 70, 239, 0.7);
+}
+
+/* Theme 4: High-Voltage Rainbow Spectrum */
+.hero-avatar-wrapper[data-color-theme="4"],
+.hero-avatar-card[data-color-theme="4"] {
+  --neon-1: #00ffff;
+  --neon-2: #ff00ff;
+  --neon-3: #ffff00;
+  --neon-4: #00ff66;
+  --neon-glow-primary: rgba(0, 255, 255, 0.9);
+  --neon-glow-secondary: rgba(255, 0, 255, 0.7);
+}
+
+/* Theme 5: Electric Azure & Cosmic Sapphire */
+.hero-avatar-wrapper[data-color-theme="5"],
+.hero-avatar-card[data-color-theme="5"] {
+  --neon-1: #38bdf8;
+  --neon-2: #0284c7;
+  --neon-3: #6366f1;
+  --neon-4: #818cf8;
+  --neon-glow-primary: rgba(56, 189, 248, 0.9);
+  --neon-glow-secondary: rgba(99, 102, 241, 0.7);
+}
+
+/* Theme 6: Radioactive Neon Green & Lime */
+.hero-avatar-wrapper[data-color-theme="6"],
+.hero-avatar-card[data-color-theme="6"] {
+  --neon-1: #39ff14;
+  --neon-2: #10b981;
+  --neon-3: #00f0ff;
+  --neon-4: #a3e635;
+  --neon-glow-primary: rgba(57, 255, 20, 0.9);
+  --neon-glow-secondary: rgba(0, 240, 255, 0.7);
 }
 
 /* Ambient Pulsing Glow Aura behind Avatar */
 .hero-avatar-glow-ring {
   position: absolute;
-  width: 340px;
-  height: 340px;
+  width: 360px;
+  height: 360px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, rgba(56, 189, 248, 0.3) 40%, rgba(236, 72, 153, 0.25) 70%, transparent 80%);
-  filter: blur(28px);
-  animation: auraPulseAllTime 4s ease-in-out infinite alternate;
+  background: radial-gradient(circle, var(--neon-glow-primary) 0%, var(--neon-glow-secondary) 42%, transparent 75%);
+  filter: blur(30px);
+  animation: auraPulseAllTime 1.6s ease-in-out infinite alternate;
   pointer-events: none;
   z-index: 1;
+  transition: background 0.35s ease, filter 0.35s ease;
 }
 
-/* Outer Spinning Neon Gradient Border Ring */
+/* Outer Spinning Neon Gradient Border Ring - ULTRA-FAST ALL-TIME MOTION */
 .hero-avatar-card {
   width: 290px;
   height: 290px;
@@ -521,51 +607,54 @@ body.light-theme .theme-toggle-btn {
   align-items: center;
   justify-content: center;
   z-index: 2;
-  animation: floatAvatarAllTime 5s ease-in-out infinite, glowPulseAllTime 3.5s ease-in-out infinite alternate;
+  animation: floatAvatarAllTime var(--float-speed) ease-in-out infinite, glowPulseAllTime 1.4s ease-in-out infinite alternate;
   will-change: transform, box-shadow;
-  box-shadow: 0 0 35px rgba(99, 102, 241, 0.6), 0 0 65px rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 45px var(--neon-glow-primary), 0 0 85px var(--neon-glow-secondary);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, filter 0.3s ease;
 }
 
-/* Continuous 360-Degree Spinning Gradient Border */
+/* Continuous 360-Degree Spinning Gradient Border (ULTRA-FAST 1.2s) */
 .hero-avatar-card::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -5px;
   border-radius: 50%;
-  padding: 4px;
+  padding: 5px;
   background: conic-gradient(
     from 0deg,
-    #00d2ff 0deg,
-    #3b82f6 90deg,
-    #a855f7 180deg,
-    #ec4899 270deg,
-    #00d2ff 360deg
+    var(--neon-1) 0deg,
+    var(--neon-2) 90deg,
+    var(--neon-3) 180deg,
+    var(--neon-4) 270deg,
+    var(--neon-1) 360deg
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  animation: spinBorderAllTime 4s linear infinite;
+  animation: spinBorderAllTime var(--spin-speed) linear infinite;
   z-index: -1;
-  filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.85));
+  filter: drop-shadow(0 0 14px var(--neon-1));
+  transition: background 0.35s ease, filter 0.35s ease;
 }
 
-/* Secondary Neon Accent Halo */
+/* Secondary Neon Accent Halo (ULTRA-FAST 1.6s) */
 .hero-avatar-card::after {
   content: '';
   position: absolute;
-  inset: -12px;
+  inset: -14px;
   border-radius: 50%;
   background: conic-gradient(
     from 180deg,
-    rgba(236, 72, 153, 0.7) 0deg,
-    rgba(99, 102, 241, 0.7) 120deg,
-    rgba(56, 189, 248, 0.7) 240deg,
-    rgba(236, 72, 153, 0.7) 360deg
+    var(--neon-4) 0deg,
+    var(--neon-3) 120deg,
+    var(--neon-2) 240deg,
+    var(--neon-4) 360deg
   );
   filter: blur(14px);
-  opacity: 0.7;
-  animation: spinBorderReverse 6s linear infinite;
+  opacity: 0.85;
+  animation: spinBorderReverse var(--spin-reverse-speed) linear infinite;
   z-index: -2;
+  transition: background 0.35s ease;
 }
 
 .hero-avatar-card img {
@@ -577,29 +666,96 @@ body.light-theme .theme-toggle-btn {
   display: block;
   position: relative;
   z-index: 3;
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
 }
 
-/* Continuous All-Time Floating Animation */
+/* Interactive Tap Hint Badge */
+.avatar-interactive-hint {
+  position: absolute;
+  bottom: -34px;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 14px var(--neon-glow-primary);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 10;
+  letter-spacing: 0.02em;
+}
+
+.avatar-interactive-hint .hint-sparkle {
+  animation: sparkleTwinkle 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes sparkleTwinkle {
+  0% { transform: scale(0.9) rotate(0deg); opacity: 0.8; }
+  100% { transform: scale(1.25) rotate(18deg); opacity: 1; filter: drop-shadow(0 0 6px var(--neon-1)); }
+}
+
+/* Quick theme shockwave animation on tap */
+.hero-avatar-card.theme-pop {
+  animation: themeShockwave 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes themeShockwave {
+  0% { transform: scale(0.92); filter: brightness(1.5) saturate(2.2); }
+  50% { transform: scale(1.1); filter: brightness(1.7) saturate(2.5); }
+  100% { transform: scale(1); filter: brightness(1) saturate(1); }
+}
+
+/* TOUCH & HOVER INTERACTIONS - Dynamic Color Shift & Turbo Acceleration */
+.hero-avatar-card:hover,
+.hero-avatar-card:active,
+.hero-avatar-card.touch-active {
+  transform: translateY(-16px) scale(1.08);
+  filter: saturate(2) brightness(1.2);
+  box-shadow: 0 0 65px var(--neon-glow-primary), 0 0 120px var(--neon-glow-secondary), 0 20px 45px rgba(0, 0, 0, 0.5);
+}
+
+.hero-avatar-card:hover::before,
+.hero-avatar-card:active::before,
+.hero-avatar-card.touch-active::before {
+  animation-duration: 0.5s; /* Turbo lightning spin on hover/touch! */
+  filter: drop-shadow(0 0 22px var(--neon-4));
+}
+
+.hero-avatar-card:hover::after,
+.hero-avatar-card:active::after,
+.hero-avatar-card.touch-active::after {
+  animation-duration: 0.8s;
+  opacity: 1;
+}
+
+/* Fast Continuous All-Time Floating (2.0s) */
 @keyframes floatAvatarAllTime {
   0% {
     transform: translateY(0px) rotate(0deg);
   }
   25% {
-    transform: translateY(-10px) rotate(1.2deg);
+    transform: translateY(-14px) rotate(2deg);
   }
   50% {
-    transform: translateY(-20px) rotate(0deg) scale(1.02);
+    transform: translateY(-26px) rotate(0deg) scale(1.04);
   }
   75% {
-    transform: translateY(-10px) rotate(-1.2deg);
+    transform: translateY(-14px) rotate(-2deg);
   }
   100% {
     transform: translateY(0px) rotate(0deg);
   }
 }
 
-/* Continuous All-Time 360-Degree Rotation */
+/* Fast Continuous All-Time 360-Degree Rotation */
 @keyframes spinBorderAllTime {
   0% {
     transform: rotate(0deg);
@@ -618,27 +774,27 @@ body.light-theme .theme-toggle-btn {
   }
 }
 
-/* Continuous Glowing Pulse */
+/* Fast Continuous Pulsing Glow */
 @keyframes glowPulseAllTime {
   0% {
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.5), 0 0 50px rgba(56, 189, 248, 0.3), 0 15px 35px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 25px var(--neon-glow-primary), 0 0 50px var(--neon-glow-secondary), 0 15px 35px rgba(0, 0, 0, 0.4);
   }
   50% {
-    box-shadow: 0 0 45px rgba(236, 72, 153, 0.75), 0 0 85px rgba(99, 102, 241, 0.65), 0 25px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 55px var(--neon-glow-primary), 0 0 95px var(--neon-glow-secondary), 0 25px 55px rgba(0, 0, 0, 0.5);
   }
   100% {
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.5), 0 0 50px rgba(56, 189, 248, 0.3), 0 15px 35px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 25px var(--neon-glow-primary), 0 0 50px var(--neon-glow-secondary), 0 15px 35px rgba(0, 0, 0, 0.4);
   }
 }
 
 @keyframes auraPulseAllTime {
   0% {
-    transform: scale(0.92);
-    opacity: 0.6;
+    transform: scale(0.9);
+    opacity: 0.65;
   }
   100% {
-    transform: scale(1.15);
-    opacity: 0.95;
+    transform: scale(1.2);
+    opacity: 1;
   }
 }
 

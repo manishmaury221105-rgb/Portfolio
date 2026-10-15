@@ -384,6 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initActivePageNav();
   initSmoothNavigation();
+  initInteractiveAvatar();
   renderServices();
   renderProjects();
   renderWhyWork();
@@ -895,9 +896,99 @@ function initScrollListeners() {
   }
 }
 
+// ============================================================================
+// 12. INTERACTIVE AVATAR - ULTRA-FAST MOTION & DYNAMIC TOUCH COLOR SHIFT
+// ============================================================================
+
+const AVATAR_COLOR_THEMES = [
+  { id: '0', name: 'Electric Cyan & Magenta' },
+  { id: '1', name: 'Cyber Emerald & Gold' },
+  { id: '2', name: 'Fiery Sunset Crimson' },
+  { id: '3', name: 'Galactic Violet & Pink' },
+  { id: '4', name: 'High-Voltage Rainbow' },
+  { id: '5', name: 'Cosmic Azure & Sapphire' },
+  { id: '6', name: 'Radioactive Lime & Neon Green' }
+];
+
+let currentAvatarThemeIdx = 0;
+let lastAvatarTouchTime = 0;
+
+function cycleAvatarTheme() {
+  const avatarWrapper = document.getElementById('hero-avatar-wrapper');
+  const avatarCard = document.getElementById('hero-avatar-card');
+  const hintText = document.querySelector('#avatar-interactive-hint .hint-text');
+
+  currentAvatarThemeIdx = (currentAvatarThemeIdx + 1) % AVATAR_COLOR_THEMES.length;
+  const theme = AVATAR_COLOR_THEMES[currentAvatarThemeIdx];
+
+  if (avatarWrapper) avatarWrapper.setAttribute('data-color-theme', theme.id);
+  if (avatarCard) {
+    avatarCard.setAttribute('data-color-theme', theme.id);
+    avatarCard.classList.remove('theme-pop');
+    void avatarCard.offsetWidth; // Force reflow
+    avatarCard.classList.add('theme-pop');
+  }
+
+  if (hintText) {
+    hintText.textContent = `Theme: ${theme.name}`;
+  }
+
+  if (typeof navigator !== 'undefined' && navigator.vibrate) {
+    try {
+      navigator.vibrate(30);
+    } catch (err) {
+      // Ignored
+    }
+  }
+}
+
+function initInteractiveAvatar() {
+  const avatarWrapper = document.getElementById('hero-avatar-wrapper');
+  const avatarCard = document.getElementById('hero-avatar-card');
+  const heroSection = document.getElementById('home');
+
+  if (!avatarCard && !avatarWrapper) return;
+
+  function handleTrigger(e) {
+    const now = Date.now();
+    if (now - lastAvatarTouchTime < 180) return;
+    lastAvatarTouchTime = now;
+    cycleAvatarTheme();
+  }
+
+  // Touch and click on the avatar wrapper & card
+  if (avatarWrapper) {
+    avatarWrapper.addEventListener('click', handleTrigger);
+    avatarWrapper.addEventListener('touchend', (e) => {
+      handleTrigger(e);
+    }, { passive: true });
+  }
+
+  // Keyboard accessibility (Enter / Space on avatar)
+  if (avatarCard) {
+    avatarCard.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleTrigger(e);
+      }
+    });
+  }
+
+  // Tap anywhere on the hero section background (excluding links/buttons/inputs)
+  if (heroSection) {
+    heroSection.addEventListener('click', (e) => {
+      if (e.target.closest('a, button, input, select, textarea, .nav-pill, .mobile-nav-pill')) {
+        return;
+      }
+      handleTrigger(e);
+    });
+  }
+}
+
 // Global window bindings for inline HTML handlers
 window.openServiceModal = openServiceModal;
 window.openProjectModal = openProjectModal;
 window.inquireServiceWhatsApp = inquireServiceWhatsApp;
 window.inquireProjectWhatsApp = inquireProjectWhatsApp;
 window.closeAllModals = closeAllModals;
+window.cycleAvatarTheme = cycleAvatarTheme;
