@@ -512,7 +512,7 @@ const PageSEOMap = {
   },
   about: {
     title: 'About Digital Manish | Digital Growth Specialist in Varanasi',
-    description: 'Meet Digital Manish, leading digital marketing strategist & developer in Varanasi (UP). 3+ years experience driving 10x business growth through tech and ads.'
+    description: 'Meet Digital Manish, leading digital marketing strategist & developer in Varanasi (UP), driving business growth through modern tech, SEO and ads.'
   },
   contact: {
     title: 'Contact Digital Manish | Free Consultation in Varanasi',
