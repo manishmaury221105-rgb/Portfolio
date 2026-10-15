@@ -385,6 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initActivePageNav();
   initSmoothNavigation();
   initInteractiveAvatar();
+  initYearText();
   renderServices();
   renderProjects();
   renderWhyWork();
@@ -392,6 +393,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initScrollListeners();
 });
+
+function initYearText() {
+  const yearEl = document.getElementById('year-text');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+}
 
 // ============================================================================
 // 3. THEME TOGGLE
@@ -537,16 +545,14 @@ function updatePageSEO(pageKey) {
 }
 
 function updateActiveNav(activeId) {
-  document.querySelectorAll('.nav-pill, .mobile-nav-pill').forEach(pill => {
-    const href = pill.getAttribute('href');
-    const pageAttr = pill.getAttribute('data-page');
-    if (href === `#${activeId}` || pageAttr === activeId) {
-      pill.classList.add('active');
-    } else {
+  // If we are on a multi-page site, only switch active pill if an in-page anchor matches
+  const matchingPill = document.querySelector(`.nav-pill[href="#${activeId}"], .mobile-nav-pill[href="#${activeId}"]`);
+  if (matchingPill) {
+    document.querySelectorAll('.nav-pill, .mobile-nav-pill').forEach(pill => {
       pill.classList.remove('active');
-    }
-  });
-  updatePageSEO(activeId);
+    });
+    matchingPill.classList.add('active');
+  }
 }
 
 // ============================================================================
@@ -666,17 +672,20 @@ function initModals() {
   });
 }
 
+let originalDocumentPageTitle = '';
+
 function closeAllModals() {
   document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-  document.body.style.overflow = 'auto';
-  const activePill = document.querySelector('.nav-pill.active, .mobile-nav-pill.active');
-  const activeId = activePill ? activePill.getAttribute('href').replace('#', '') : 'home';
-  updatePageSEO(activeId);
+  document.body.style.overflow = '';
+  if (originalDocumentPageTitle) {
+    document.title = originalDocumentPageTitle;
+  }
 }
 
 function openServiceModal(serviceId) {
   const s = ServicesData.find(item => item.id === serviceId);
   if (!s) return;
+  if (!originalDocumentPageTitle) originalDocumentPageTitle = document.title;
   document.title = `${s.title} | Digital Manish Varanasi`;
 
   const modal = document.getElementById('service-modal');
@@ -736,6 +745,7 @@ function openServiceModal(serviceId) {
 function openProjectModal(projectId) {
   const p = ProjectsData.find(item => item.id === projectId);
   if (!p) return;
+  if (!originalDocumentPageTitle) originalDocumentPageTitle = document.title;
   document.title = `${p.title} | Digital Manish Projects`;
 
   const modal = document.getElementById('project-modal');
@@ -832,7 +842,8 @@ function initContactForm() {
     const service = document.getElementById('form-service').value;
     const message = document.getElementById('form-message').value.trim();
 
-    if (!name || phone.length < 10 || !message) {
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (!name || cleanPhone.length < 10 || !message) {
       alert('Please fill out all required fields with a valid 10-digit phone number.');
       return;
     }
