@@ -238,701 +238,113 @@
       </div>
     </section>
 
-    <section class="section" id="services">
+    <!-- ==================== 2. MULTI-PAGE NAVIGATION HUB ==================== -->
+    <section class="section" id="explore">
       <div class="container">
-        <div class="section-header-row">
-          <div class="section-header" style="margin-bottom: 0; text-align: left;">
-            <span class="section-badge">SPECIALIZED SERVICES</span>
-            <h2 class="section-title" style="margin-left: 0;">My Specialized Services</h2>
-            <p class="section-subtitle" style="margin-left: 0;">
-              Comprehensive digital solutions engineered to scale your business with modern technology and results-oriented marketing.
-            </p>
-          </div>
-          <a href="services.html" class="section-badge-link">
-            <span>View Full Services Page &rarr;</span>
+        <div class="section-header">
+          <span class="section-badge">EXPLORE PORTFOLIO</span>
+          <h2 class="section-title">Discover Dedicated Pages</h2>
+          <p class="section-subtitle">
+            Explore specialized services, client case studies, benefits of working together, about Manish, and direct project inquiry.
+          </p>
+        </div>
+
+        <div class="hub-grid">
+
+          <!-- 1. Services -->
+          <a href="services.html" class="hub-card" style="--card-accent: #6366f1; --icon-bg: rgba(99, 102, 241, 0.12);">
+            <div class="hub-card-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+            </div>
+            <span class="hub-card-tag">9 Specialized Services</span>
+            <h3 class="hub-card-title">Digital Marketing & Services</h3>
+            <p class="hub-card-desc">Google Maps 3-Pack SEO, Meta Ads, Google PPC campaigns, content marketing, modern websites, and cross-platform apps.</p>
+            <span class="hub-card-btn">
+              <span>Explore Services Page</span>
+              <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </span>
           </a>
-        </div>
-        <div class="services-grid" id="services-grid-container">
-          <div class="service-card" style="--service-color: #22c55e;" onclick="openServiceModal('gmb_setup')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_gmb_setup.webp" type="image/webp">
-                <img src="assets/images/services/service_gmb_setup.jpg" alt="Google My Business & Map Ranking" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Google My Business & Map Ranking</h3>
-              <span class="service-title-english">GMB Setup & Local 3-Pack SEO</span>
-              <p class="service-desc">Complete Google Business Profile setup, instant verification, local 3-Pack Map dominance, and 5-star review growth.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('gmb_setup')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #ec4899;" onclick="openServiceModal('meta_ads')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_meta_ads.webp" type="image/webp">
-                <img src="assets/images/services/service_meta_ads.jpg" alt="Facebook & Instagram Advertising" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1v4c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-4h2l5 3V6L9 9H4z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Facebook & Instagram Advertising</h3>
-              <span class="service-title-english">Meta Ads & Sponsored Campaigns</span>
-              <p class="service-desc">Run laser-targeted Facebook & Instagram campaigns to generate maximum qualified leads at optimal cost.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('meta_ads')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #f59e0b;" onclick="openServiceModal('google_ads')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_google_ads.webp" type="image/webp">
-                <img src="assets/images/services/service_google_ads.jpg" alt="Google Search, Display & YouTube Ads" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.4z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Google Search, Display & YouTube Ads</h3>
-              <span class="service-title-english">Google Ads & PPC Campaigns</span>
-              <p class="service-desc">Position your business at the top of Google when high-intent customers search for your services.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('google_ads')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #8b5cf6;" onclick="openServiceModal('email_marketing')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_email_marketing.webp" type="image/webp">
-                <img src="assets/images/services/service_email_marketing.jpg" alt="Email Marketing & Drip Automation" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Email Marketing & Drip Automation</h3>
-              <span class="service-title-english">Funnels & Retention Workflows</span>
-              <p class="service-desc">High-converting email sequences, newsletters, retention funnels, and automated drip workflows.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('email_marketing')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #06b6d4;" onclick="openServiceModal('chart_ads')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_chart_ads.webp" type="image/webp">
-                <img src="assets/images/services/service_chart_ads.jpg" alt="Performance Chart & Conversion Ads" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Performance Chart & Conversion Ads</h3>
-              <span class="service-title-english">Analytics & ROAS Scaling</span>
-              <p class="service-desc">Data-driven growth ads, real-time ROI chart analytics, conversion tracking funnels, and budget scaling.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('chart_ads')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #10b981;" onclick="openServiceModal('seo')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_seo_ranking.webp" type="image/webp">
-                <img src="assets/images/services/service_seo_ranking.jpg" alt="SEO & Google Ranking" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">SEO & Google Ranking</h3>
-              <span class="service-title-english">Search Engine Optimization</span>
-              <p class="service-desc">Rank on Google Page 1 and generate sustainable organic traffic, map citations, and regular customer inquiries.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('seo')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #6366f1;" onclick="openServiceModal('digital_marketing')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_digital_marketing.webp" type="image/webp">
-                <img src="assets/images/services/service_digital_marketing.jpg" alt="Digital Marketing & Growth" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Digital Marketing & Growth</h3>
-              <span class="service-title-english">Social Media & Brand Strategy</span>
-              <p class="service-desc">Drive continuous qualified leads, elevate brand awareness, and scale your online business presence.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('digital_marketing')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #38bdf8;" onclick="openServiceModal('web_dev')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_web_app_dev.webp" type="image/webp">
-                <img src="assets/images/services/service_web_app_dev.jpg" alt="Fast & Modern Responsive Websites" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Fast & Modern Responsive Websites</h3>
-              <span class="service-title-english">Clean Code & High Conversion</span>
-              <p class="service-desc">Ultra-fast, responsive, modern websites and digital platforms optimized for conversions and search engines.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('web_dev')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="service-card" style="--service-color: #8b5cf6;" onclick="openServiceModal('app_dev')">
-            <div class="service-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_app_dev.webp" type="image/webp">
-                <img src="assets/images/services/service_app_dev.jpg" alt="Android & iOS Mobile Applications" width="400" height="240" loading="lazy">
-              </picture>
-              <div class="service-image-overlay"></div>
-              <div class="service-icon-floating"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title-hindi">Android & iOS Mobile Applications</h3>
-              <span class="service-title-english">Cross-Platform App Development</span>
-              <p class="service-desc">Feature-rich, smooth, and scalable mobile apps for Android & iOS with robust cloud backends.</p>
-              <div class="service-actions-row">
-                <span class="btn-service-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <button type="button" class="btn-service-whatsapp" onclick="event.stopPropagation(); inquireServiceWhatsApp('app_dev')" title="Inquire on WhatsApp" aria-label="WhatsApp Inquiry">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ==================== 3. PROJECTS SECTION ==================== -->
-    <section class="section alt-bg" id="projects">
-      <div class="container">
-        <div class="section-header-row">
-          <div class="section-header" style="margin-bottom: 0; text-align: left;">
-            <span class="section-badge">PORTFOLIO SHOWCASE</span>
-            <h2 class="section-title" style="margin-left: 0;">Featured Projects Showcase</h2>
-            <p class="section-subtitle" style="margin-left: 0;">
-              High-impact digital marketing campaigns, modern responsive websites, and dynamic cross-platform mobile apps.
-            </p>
-          </div>
-          <a href="projects.html" class="section-badge-link">
-            <span>View Dedicated Projects Page &rarr;</span>
+          <!-- 2. Projects -->
+          <a href="projects.html" class="hub-card" style="--card-accent: #38bdf8; --icon-bg: rgba(56, 189, 248, 0.12);">
+            <div class="hub-card-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28"><path d="M13.13 2.51c.2-.2.53-.22.75-.04l2.84 2.37c.23.19.26.53.07.75l-4.25 5.09-2.91-2.42 3.5-5.75zm-6.8 14.88c-.19-.24-.16-.59.08-.78l7.24-6.05 2.91 2.42-7.46 6.23c-.23.2-.58.18-.77-.06l-2-1.76zm12.3-8.8l-1.42-1.18 1.42-1.42 1.41 1.42-1.41 1.18zm-14.85 9.38l2.83 2.36-4.61.68 1.78-3.04z"/></svg>
+            </div>
+            <span class="hub-card-tag">Live Case Studies</span>
+            <h3 class="hub-card-title">Featured Client Projects</h3>
+            <p class="hub-card-desc">Explore production portals, school management system, e-commerce stores, ₹18/lead Meta ads, and Google local rankings.</p>
+            <span class="hub-card-btn">
+              <span>View Projects Page</span>
+              <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </span>
           </a>
-        </div>
 
-        <!-- Category Filter Bar -->
-        <div class="projects-filter-bar">
-          <button type="button" class="project-filter-btn active" data-category="All">🎯 All</button>
-          <button type="button" class="project-filter-btn" data-category="Website">💻 Websites</button>
-          <button type="button" class="project-filter-btn" data-category="App">📱 Apps</button>
-          <button type="button" class="project-filter-btn" data-category="Meta Ads">📢 Meta Ads</button>
-          <button type="button" class="project-filter-btn" data-category="SEO">🔍 SEO</button>
-        </div>
-
-        <div class="projects-grid" id="projects-grid-container">
-          <div class="project-card" onclick="openProjectModal('p_school')" data-category="Website">
-            <div class="project-image-box">
-              <picture>
-                <source srcset="assets/images/projects/project_school_management.webp" type="image/webp">
-                <img src="assets/images/projects/project_school_management.jpg" alt="School Management & Academia Portal" width="500" height="280" loading="lazy">
-              </picture>
-              <span class="project-tag-pill">Website</span>
-              <span class="project-metric-pill">100% Paperless School Management</span>
+          <!-- 3. Why Work -->
+          <a href="why-work.html" class="hub-card" style="--card-accent: #10b981; --icon-bg: rgba(16, 185, 129, 0.12);">
+            <div class="hub-card-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
             </div>
-            <div class="project-body">
-              <h3 class="project-title">School Management & Academia Portal</h3>
-              <p class="project-desc">Complete modern school management web app for student admissions, attendance, fees, exams, and teacher schedules.</p>
-              <div class="project-tech-tags"><span class="tech-tag">React</span><span class="tech-tag">Next.js</span><span class="tech-tag">Node.js</span></div>
-              <div class="project-actions-row">
-                <span class="btn-project-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <a href="https://school-management-system-xi-two-52.vercel.app/" target="_blank" rel="noopener" class="btn-project-live" onclick="event.stopPropagation();" aria-label="Open Demo">
-                Demo <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-              </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card" onclick="openProjectModal('p_ecommerce')" data-category="Website">
-            <div class="project-image-box">
-              <picture>
-                <source srcset="assets/images/projects/project_ecommerce_platform.webp" type="image/webp">
-                <img src="assets/images/projects/project_ecommerce_platform.jpg" alt="Full-Stack E-Commerce & Order Store" width="500" height="280" loading="lazy">
-              </picture>
-              <span class="project-tag-pill">Website</span>
-              <span class="project-metric-pill">3.2x Higher Sales Conversion</span>
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">Full-Stack E-Commerce & Order Store</h3>
-              <p class="project-desc">Ultra-fast online shopping store with dynamic product catalog, persistent cart, and instant order checkout.</p>
-              <div class="project-tech-tags"><span class="tech-tag">Next.js</span><span class="tech-tag">React</span><span class="tech-tag">Node.js</span></div>
-              <div class="project-actions-row">
-                <span class="btn-project-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <a href="https://e-commerse-flax-eight.vercel.app/" target="_blank" rel="noopener" class="btn-project-live" onclick="event.stopPropagation();" aria-label="Open Demo">
-                Demo <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-              </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card" onclick="openProjectModal('p_meta_ads')" data-category="Meta Ads">
-            <div class="project-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_meta_ads.webp" type="image/webp">
-                <img src="assets/images/services/service_meta_ads.jpg" alt="Local Business Lead Generation Engine" width="500" height="280" loading="lazy">
-              </picture>
-              <span class="project-tag-pill">Meta Ads</span>
-              <span class="project-metric-pill">450+ Qualified Leads at ₹18/Lead</span>
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">Local Business Lead Generation Engine</h3>
-              <p class="project-desc">Targeted Meta ads and automated WhatsApp funnel generating high-intent client inquiries.</p>
-              <div class="project-tech-tags"><span class="tech-tag">Meta Ads Manager</span><span class="tech-tag">WhatsApp API</span><span class="tech-tag">Canva Pro</span></div>
-              <div class="project-actions-row">
-                <span class="btn-project-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <a href="https://digitalmanish.online" target="_blank" rel="noopener" class="btn-project-live" onclick="event.stopPropagation();" aria-label="Open Demo">
-                Demo <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-              </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card" onclick="openProjectModal('p_seo_gmb')" data-category="SEO">
-            <div class="project-image-box">
-              <picture>
-                <source srcset="assets/images/services/service_seo_gmb.webp" type="image/webp">
-                <img src="assets/images/services/service_seo_gmb.jpg" alt="Local SEO & Google Map Pack Domination" width="500" height="280" loading="lazy">
-              </picture>
-              <span class="project-tag-pill">SEO</span>
-              <span class="project-metric-pill">Top 3 Google Rank & 3x Calls</span>
-            </div>
-            <div class="project-body">
-              <h3 class="project-title">Local SEO & Google Map Pack Domination</h3>
-              <p class="project-desc">Optimized Google Business Profile and local keywords to rank in top 3 Google search results.</p>
-              <div class="project-tech-tags"><span class="tech-tag">Google Search Console</span><span class="tech-tag">Google My Business</span><span class="tech-tag">Ahrefs</span></div>
-              <div class="project-actions-row">
-                <span class="btn-project-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-                <a href="https://digitalmanish.online" target="_blank" rel="noopener" class="btn-project-live" onclick="event.stopPropagation();" aria-label="Open Demo">
-                Demo <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-              </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 4. WHY WORK WITH ME SECTION ==================== -->
-    <section class="section" id="why-work">
-      <div class="container">
-        <div class="section-header-row">
-          <div class="section-header" style="margin-bottom: 0; text-align: left;">
-            <span class="section-badge">WHY CHOOSE DIGITAL MANISH</span>
-            <h2 class="section-title" style="margin-left: 0;">Why Work With Digital Manish?</h2>
-            <p class="section-subtitle" style="margin-left: 0;">A dedicated, transparent, and results-focused digital growth partner for your business.</p>
-          </div>
-          <a href="why-work.html" class="section-badge-link">
-            <span>Explore Dedicated Why Work Page &rarr;</span>
+            <span class="hub-card-tag">Client Growth Pillars</span>
+            <h3 class="hub-card-title">Why Work With Manish?</h3>
+            <p class="hub-card-desc">Transparent ROI reporting, direct phone & WhatsApp access, modern web frameworks, and custom tailor-made packages.</p>
+            <span class="hub-card-btn">
+              <span>Explore Benefits Page</span>
+              <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </span>
           </a>
-        </div>
-        <div class="why-grid why-grid-container">
-        <div class="why-card" style="--card-accent: #6366f1;">
-          <div class="why-icon-box" style="background: #6366f120; color: #6366f1;">
-            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
-          </div>
-          <h3 class="why-title">User-Friendly Solutions</h3>
-          <p class="why-desc">Intuitive and modern design that makes customer interaction seamless and enjoyable.</p>
-        </div>
-        <div class="why-card" style="--card-accent: #38bdf8;">
-          <div class="why-icon-box" style="background: #38bdf820; color: #38bdf8;">
-            <svg viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.88 0-.33-.75-.31-.78C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
-          </div>
-          <h3 class="why-title">Modern Technology</h3>
-          <p class="why-desc">Built with cutting-edge frameworks (HTML5, Next.js, Firebase) for lightning speed and reliability.</p>
-        </div>
-        <div class="why-card" style="--card-accent: #10b981;">
-          <div class="why-icon-box" style="background: #10b98120; color: #10b981;">
-            <svg viewBox="0 0 24 24"><path d="M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6zm19 2h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z"/></svg>
-          </div>
-          <h3 class="why-title">Responsive Design</h3>
-          <p class="why-desc">Pixel-perfect responsiveness and flawless performance across mobile, tablet, and desktop screens.</p>
-        </div>
-        <div class="why-card" style="--card-accent: #f59e0b;">
-          <div class="why-icon-box" style="background: #f59e0b20; color: #f59e0b;">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.4z"/></svg>
-          </div>
-          <h3 class="why-title">Business-Focused Approach</h3>
-          <p class="why-desc">Engineered for real business results, qualified leads, and measurable Return on Investment (ROI).</p>
-        </div>
-        <div class="why-card" style="--card-accent: #ec4899;">
-          <div class="why-icon-box" style="background: #ec489920; color: #ec4899;">
-            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-          </div>
-          <h3 class="why-title">Fast Communication</h3>
-          <p class="why-desc">Direct phone & WhatsApp support with prompt updates, clear milestones, and dedicated assistance.</p>
-        </div>
-        <div class="why-card" style="--card-accent: #8b5cf6;">
-          <div class="why-icon-box" style="background: #8b5cf620; color: #8b5cf6;">
-            <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
-          </div>
-          <h3 class="why-title">Customized Solutions</h3>
-          <p class="why-desc">Tailor-made packages and execution strategies aligned with your specific business goals.</p>
-        </div>
+
+          <!-- 4. About -->
+          <a href="about.html" class="hub-card" style="--card-accent: #f59e0b; --icon-bg: rgba(245, 158, 11, 0.12);">
+            <div class="hub-card-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <span class="hub-card-tag">Experience & Bio</span>
+            <h3 class="hub-card-title">About Digital Manish</h3>
+            <p class="hub-card-desc">Meet Manish Maurya: 3+ years experience, 50+ completed client projects, core business mission, and full technical skill stack.</p>
+            <span class="hub-card-btn">
+              <span>Read Manish Story</span>
+              <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </span>
+          </a>
+
+          <!-- 5. Contact -->
+          <a href="contact.html" class="hub-card" style="--card-accent: #ec4899; --icon-bg: rgba(236, 72, 153, 0.12);">
+            <div class="hub-card-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <span class="hub-card-tag">Get In Touch</span>
+            <h3 class="hub-card-title">Contact & Free Consultation</h3>
+            <p class="hub-card-desc">Direct WhatsApp chat, phone calls (+91 9214468818), Varanasi office address, and interactive proposal inquiry form.</p>
+            <span class="hub-card-btn">
+              <span>Open Contact Page</span>
+              <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </span>
+          </a>
+
         </div>
 
-        <!-- Direct Consultation Banner -->
-        <div class="consultation-banner">
+        <!-- Consultation Banner -->
+        <div class="consultation-banner" style="margin-top: 56px;">
           <div class="consultation-info">
             <div class="consultation-icon">
               <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
             </div>
             <div class="consultation-text">
-              <h4>Ready to grow your business online?</h4>
-              <p>Connect today on WhatsApp or call directly for a free consultation and project roadmap.</p>
+              <h4>Ready to scale your business online?</h4>
+              <p>Connect today on WhatsApp or call directly for a free consultation and customized project proposal.</p>
             </div>
           </div>
-          <a href="https://wa.me/919214468818?text=Hello%20Manish!%20I%20would%20like%20to%20discuss%20a%20project%20for%20my%20business." target="_blank" rel="noopener" class="btn-consultation">
+          <a href="https://wa.me/919214468818?text=Hello%20Manish!%20I%20visited%20your%20website%20DigitalManish.online%20and%20would%20like%20to%20discuss%20a%20project%20for%20my%20business." target="_blank" rel="noopener" class="btn-consultation">
             Chat on WhatsApp
           </a>
         </div>
+
       </div>
     </section>
-
-    <!-- ==================== 5. ABOUT SECTION ==================== -->
-    <section class="section alt-bg" id="about">
-      <div class="container">
-        <div class="section-header-row">
-          <div class="section-header" style="margin-bottom: 0; text-align: left;">
-            <span class="section-badge">ABOUT ME</span>
-            <h2 class="section-title" style="margin-left: 0;">About Digital Manish</h2>
-            <p class="section-subtitle" style="margin-left: 0;">Best Digital Marketing Agency in Varanasi</p>
-          </div>
-          <a href="about.html" class="section-badge-link">
-            <span>Read Dedicated About Story &rarr;</span>
-          </a>
-        </div>
-
-        <div class="about-card">
-          <div class="about-top-grid">
-            <div class="about-avatar-column">
-              <div class="about-avatar-img">
-                <picture>
-                  <source srcset="assets/images/digital_manish_logo_circle.webp" type="image/webp">
-                  <img src="assets/images/digital_manish_logo_circle.png" alt="Digital Manish" width="140" height="140" loading="lazy">
-                </picture>
-              </div>
-              <h3 class="about-avatar-name">Digital Manish</h3>
-              <span class="about-avatar-city">Varanasi (UP)</span>
-            </div>
-            <div class="about-bio-column">
-              <p class="about-bio-text">
-                Hello! I am Digital Manish from Varanasi (UP), India, leading the Best Digital Marketing Agency in Varanasi. My mission is to empower businesses, local enterprises, and digital entrepreneurs with a commanding online presence. I specialize in ROI-driven Digital Marketing, Google & Meta Ads, targeted SEO strategies, and scalable Web & App Development. Delivering highest-grade quality on schedule is always my top priority.
-              </p>
-              <div class="about-stats-row">
-                <div class="about-stat-chip">
-                  <svg class="stat-icon" style="fill: var(--primary);" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                  <div class="stat-values">
-                    <span class="stat-num">3+ Years</span>
-                    <span class="stat-label">Experience</span>
-                  </div>
-                </div>
-                <div class="about-stat-chip">
-                  <svg class="stat-icon" style="fill: var(--success);" viewBox="0 0 24 24"><path d="M13.13 2.51c.2-.2.53-.22.75-.04l2.84 2.37c.23.19.26.53.07.75l-4.25 5.09-2.91-2.42 3.5-5.75zm-6.8 14.88c-.19-.24-.16-.59.08-.78l7.24-6.05 2.91 2.42-7.46 6.23c-.23.2-.58.18-.77-.06l-2-1.76zm12.3-8.8l-1.42-1.18 1.42-1.42 1.41 1.42-1.41 1.18zm-14.85 9.38l2.83 2.36-4.61.68 1.78-3.04z"/></svg>
-                  <div class="stat-values">
-                    <span class="stat-num">50+ Done</span>
-                    <span class="stat-label">Projects</span>
-                  </div>
-                </div>
-                <div class="about-stat-chip">
-                  <svg class="stat-icon" style="fill: var(--warning);" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
-                  <div class="stat-values">
-                    <span class="stat-num">98% Happy</span>
-                    <span class="stat-label">Clients</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="about-divider">
-
-          <!-- Mission -->
-          <div class="about-mission-box">
-            <h4>My Core Mission & Vision</h4>
-            <p>Delivering customized digital blueprints, ROI-driven growth campaigns, and scalable digital execution for every business.</p>
-          </div>
-
-          <!-- Technical Skills Grid -->
-          <div class="about-skills-box">
-            <h4>Key Technical & Strategic Skills</h4>
-            <div class="skills-grid">
-              <div class="skill-card">
-                <h5 class="skill-title">GMB Setup & Local SEO</h5>
-                <p class="skill-techs">Google Business Profile, Google 3-Pack Maps, Citations, 5-Star Reviews</p>
-              </div>
-              <div class="skill-card">
-                <h5 class="skill-title">Meta & Social Ads</h5>
-                <p class="skill-techs">Facebook Ads, Instagram Sponsored Reels, Meta Pixel, Retargeting Funnels</p>
-              </div>
-              <div class="skill-card">
-                <h5 class="skill-title">Google Ads & PPC</h5>
-                <p class="skill-techs">Google Search PPC, YouTube Video Ads, Display Network, Direct Call Ads</p>
-              </div>
-              <div class="skill-card">
-                <h5 class="skill-title">Email Marketing & CRM</h5>
-                <p class="skill-techs">Drip Sequences, Automated Lead Nurturing, High Deliverability, Newsletters</p>
-              </div>
-              <div class="skill-card">
-                <h5 class="skill-title">Performance Chart Ads</h5>
-                <p class="skill-techs">Google Analytics 4, ROI Dashboards, Conversion Funnels, A/B Split Testing</p>
-              </div>
-              <div class="skill-card">
-                <h5 class="skill-title">Web & App Development</h5>
-                <p class="skill-techs">Modern HTML5/CSS3/JS, Next.js, React, Responsive UI/UX, Cloud Backends</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 6. CONTACT SECTION ==================== -->
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="section-header-row">
-          <div class="section-header" style="margin-bottom: 0; text-align: left;">
-            <span class="section-badge">GET IN TOUCH</span>
-            <h2 class="section-title" style="margin-left: 0;">Let's Discuss Your Next Big Project</h2>
-            <p class="section-subtitle" style="margin-left: 0;">
-              Get a customized proposal and strategic guidance tailored to your business requirements.
-            </p>
-          </div>
-          <a href="contact.html" class="section-badge-link">
-            <span>Open Dedicated Contact Page &rarr;</span>
-          </a>
-        </div>
-
-        <div class="contact-grid">
-          <!-- Left Info Card -->
-          <div class="contact-info-card">
-            <h3 class="contact-info-title">Digital Manish</h3>
-            <p class="contact-info-tagline">Best Digital Marketing Agency in Varanasi | Web & App Development</p>
-
-            <div class="contact-tiles-list">
-              <!-- Phone -->
-              <a href="tel:9214468818" class="contact-tile" style="--tile-color: var(--call-blue); --tile-bg: rgba(2, 132, 199, 0.08); --tile-border: rgba(2, 132, 199, 0.2);">
-                <div class="tile-icon-box">
-                  <svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
-                </div>
-                <div class="tile-content">
-                  <span class="tile-label">Direct Phone Call</span>
-                  <span class="tile-value">+91 9214468818</span>
-                </div>
-                <span class="tile-arrow">&rarr;</span>
-              </a>
-
-              <!-- WhatsApp -->
-              <a href="https://wa.me/919214468818?text=Hello%20Manish!%20I%20visited%20your%20website%20DigitalManish.online%20and%20would%20like%20to%20discuss%20a%20project%20for%20my%20business." target="_blank" rel="noopener" class="contact-tile" style="--tile-color: var(--whatsapp); --tile-bg: rgba(37, 211, 102, 0.08); --tile-border: rgba(37, 211, 102, 0.2);">
-                <div class="tile-icon-box">
-                  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
-                </div>
-                <div class="tile-content">
-                  <span class="tile-label">WhatsApp Chat</span>
-                  <span class="tile-value">+91 9214468818</span>
-                </div>
-                <span class="tile-arrow">&rarr;</span>
-              </a>
-
-              <!-- Email -->
-              <a href="mailto:manishdigital99@gmail.com" class="contact-tile" style="--tile-color: var(--mail-red); --tile-bg: rgba(234, 67, 53, 0.08); --tile-border: rgba(234, 67, 53, 0.2);">
-                <div class="tile-icon-box">
-                  <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                </div>
-                <div class="tile-content">
-                  <span class="tile-label">Email Address</span>
-                  <span class="tile-value">manishdigital99@gmail.com</span>
-                </div>
-                <span class="tile-arrow">&rarr;</span>
-              </a>
-
-              <!-- Location -->
-              <a href="https://maps.google.com/?q=Varanasi,+Uttar+Pradesh,+India" target="_blank" rel="noopener" class="contact-tile" style="--tile-color: var(--accent); --tile-bg: rgba(236, 72, 153, 0.08); --tile-border: rgba(236, 72, 153, 0.2);">
-                <div class="tile-icon-box">
-                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                </div>
-                <div class="tile-content">
-                  <span class="tile-label">Office & City</span>
-                  <span class="tile-value">Varanasi, UP, India</span>
-                </div>
-                <span class="tile-arrow">&rarr;</span>
-              </a>
-            </div>
-
-            <!-- Google Maps Box -->
-            <div class="maps-preview-box">
-              <div class="maps-preview-header">
-                <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-                <span>Varanasi (Uttar Pradesh)</span>
-              </div>
-              <p class="maps-preview-desc">Local support available across Varanasi & remote clients worldwide.</p>
-              <a href="https://maps.google.com/?q=Varanasi,+Uttar+Pradesh,+India" target="_blank" rel="noopener" class="btn-open-maps">
-                Open in Google Maps &rarr;
-              </a>
-            </div>
-
-            <!-- Socials -->
-            <h4 class="social-badges-title">Connect with me online:</h4>
-            <div class="social-badges-wrap">
-              <a href="https://www.youtube.com/@DigitalManish-s8i" target="_blank" rel="noopener" class="social-badge" style="--social-color: #ff0000; --social-bg: rgba(255,0,0,0.1); --social-border: rgba(255,0,0,0.25);">
-                YouTube
-              </a>
-              <a href="https://www.instagram.com/digitalmanish.online/" target="_blank" rel="noopener" class="social-badge" style="--social-color: #e4405f; --social-bg: rgba(228,64,95,0.1); --social-border: rgba(228,64,95,0.25);">
-                Instagram
-              </a>
-              <a href="https://www.facebook.com/share/1HR3JDm7oZ/" target="_blank" rel="noopener" class="social-badge" style="--social-color: #1877f2; --social-bg: rgba(24,119,242,0.1); --social-border: rgba(24,119,242,0.25);">
-                Facebook
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-badge" style="--social-color: #0a66c2; --social-bg: rgba(10,102,194,0.1); --social-border: rgba(10,102,194,0.25);">
-                LinkedIn
-              </a>
-            </div>
-          </div>
-
-          <!-- Right Interactive Form Card -->
-          <div class="contact-form-card">
-            <h3 class="form-title">Send a Quick Project Inquiry</h3>
-            <p class="form-subtitle">Get a customized proposal and strategic guidance tailored to your business requirements.</p>
-
-            <form id="project-contact-form">
-              <div class="form-group">
-                <label class="form-label" for="form-name">Your Name *</label>
-                <div class="form-input-box">
-                  <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                  <input type="text" id="form-name" placeholder="e.g. Rahul Sharma" required autocomplete="name">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="form-phone">Phone / WhatsApp *</label>
-                <div class="form-input-box">
-                  <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-                  <input type="tel" id="form-phone" placeholder="e.g. 9876543210" required autocomplete="tel">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="form-email">Email (Optional)</label>
-                <div class="form-input-box">
-                  <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                  <input type="email" id="form-email" placeholder="e.g. rahul@example.com" autocomplete="email">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="form-service">Service Needed *</label>
-                <div class="form-input-box">
-                  <select id="form-service">
-                    <option value="Website Development">Website Development</option>
-                    <option value="GMB Setup (Google Maps)">GMB Setup (Google Maps)</option>
-                    <option value="Meta Ads (Facebook & Instagram)">Meta Ads (Facebook & Instagram)</option>
-                    <option value="Google Ads (Search PPC & YouTube)">Google Ads (Search PPC & YouTube)</option>
-                    <option value="SEO & Google 3-Pack Ranking">SEO & Google 3-Pack Ranking</option>
-                    <option value="App Development (Mobile)">App Development (Mobile)</option>
-                    <option value="Email Marketing & Automation">Email Marketing & Automation</option>
-                    <option value="Chart Ads & Analytics">Chart Ads & Analytics</option>
-                    <option value="Digital Marketing & Growth">Digital Marketing & Growth</option>
-                    <option value="Other / General Consultation">Other / General Consultation</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="form-message">Project Requirements *</label>
-                <div class="form-input-box">
-                  <textarea id="form-message" rows="3" placeholder="Describe your website, app, or marketing requirements..." required></textarea>
-                </div>
-              </div>
-
-              <button type="submit" class="btn-submit-form" id="btn-submit-form">
-                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                <span>Send Inquiry via WhatsApp</span>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
 
   </main>
 
-    <!-- Service Detail Modal -->
-  <div class="modal-overlay" id="service-modal" role="dialog" aria-modal="true" aria-labelledby="service-modal-title">
-    <div class="modal-dialog">
-      <button type="button" class="modal-close-btn" aria-label="Close dialog">
-        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-      </button>
-      <div id="service-modal-content">
-        <!-- Injected dynamically by JavaScript -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Project Detail Modal -->
-  <div class="modal-overlay" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
-    <div class="modal-dialog">
-      <button type="button" class="modal-close-btn" aria-label="Close dialog">
-        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-      </button>
-      <div id="project-modal-content">
-        <!-- Injected dynamically by JavaScript -->
-      </div>
-    </div>
-  </div>
-
-  
-<!-- ===================================================================
-       FOOTER
-  =================================================================== -->
-  <footer class="footer">
+<footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <!-- Brand Info -->
