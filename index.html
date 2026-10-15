@@ -33,6 +33,20 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
   <link rel="manifest" href="manifest.json">
 
+  <!-- Immediate Stale Service Worker & Cache Purge -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        for (var r of regs) { r.unregister(); }
+      }).catch(function() {});
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(keys) {
+        for (var k of keys) { caches.delete(k); }
+      }).catch(function() {});
+    }
+  </script>
+
   <!-- Geo & Local SEO Tags -->
   <meta name="geo.region" content="IN-UP">
   <meta name="geo.placename" content="Varanasi">

@@ -871,3 +871,10 @@ function initScrollListeners() {
     };
   }
 }
+
+// Global window bindings for inline HTML handlers
+window.openServiceModal = openServiceModal;
+window.openProjectModal = openProjectModal;
+window.inquireServiceWhatsApp = inquireServiceWhatsApp;
+window.inquireProjectWhatsApp = inquireProjectWhatsApp;
+window.closeAllModals = closeAllModals;
