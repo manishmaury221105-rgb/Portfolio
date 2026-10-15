@@ -916,7 +916,6 @@ let lastAvatarTouchTime = 0;
 function cycleAvatarTheme() {
   const avatarWrapper = document.getElementById('hero-avatar-wrapper');
   const avatarCard = document.getElementById('hero-avatar-card');
-  const hintText = document.querySelector('#avatar-interactive-hint .hint-text');
 
   currentAvatarThemeIdx = (currentAvatarThemeIdx + 1) % AVATAR_COLOR_THEMES.length;
   const theme = AVATAR_COLOR_THEMES[currentAvatarThemeIdx];
@@ -927,10 +926,6 @@ function cycleAvatarTheme() {
     avatarCard.classList.remove('theme-pop');
     void avatarCard.offsetWidth; // Force reflow
     avatarCard.classList.add('theme-pop');
-  }
-
-  if (hintText) {
-    hintText.textContent = `Theme: ${theme.name}`;
   }
 
   if (typeof navigator !== 'undefined' && navigator.vibrate) {

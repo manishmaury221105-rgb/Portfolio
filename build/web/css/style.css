@@ -670,38 +670,6 @@ body.light-theme .theme-toggle-btn {
   pointer-events: none;
 }
 
-/* Interactive Tap Hint Badge */
-.avatar-interactive-hint {
-  position: absolute;
-  bottom: -34px;
-  background: rgba(15, 23, 42, 0.82);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 9999px;
-  padding: 6px 14px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 14px var(--neon-glow-primary);
-  pointer-events: none;
-  transition: all 0.3s ease;
-  z-index: 10;
-  letter-spacing: 0.02em;
-}
-
-.avatar-interactive-hint .hint-sparkle {
-  animation: sparkleTwinkle 1.2s ease-in-out infinite alternate;
-}
-
-@keyframes sparkleTwinkle {
-  0% { transform: scale(0.9) rotate(0deg); opacity: 0.8; }
-  100% { transform: scale(1.25) rotate(18deg); opacity: 1; filter: drop-shadow(0 0 6px var(--neon-1)); }
-}
-
 /* Quick theme shockwave animation on tap */
 .hero-avatar-card.theme-pop {
   animation: themeShockwave 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
