@@ -306,42 +306,60 @@ const WhyWorkData = [
     title: 'User-Friendly Solutions',
     subtitle: 'Intuitive and modern design that makes customer interaction seamless and enjoyable.',
     color: '#6366f1',
-    icon: 'sentiment'
+    icon: 'sentiment',
+    badge: 'Pillar 01',
+    imageUrlWebp: 'assets/images/services/service_web_app_dev.webp',
+    imageUrlJpg: 'assets/images/services/service_web_app_dev.jpg'
   },
   {
     id: 'w2',
     title: 'Modern Technology',
     subtitle: 'Built with cutting-edge frameworks (HTML5, Next.js, Firebase) for lightning speed and reliability.',
     color: '#38bdf8',
-    icon: 'bolt'
+    icon: 'bolt',
+    badge: 'Pillar 02',
+    imageUrlWebp: 'assets/images/projects/project_school_management.webp',
+    imageUrlJpg: 'assets/images/projects/project_school_management.jpg'
   },
   {
     id: 'w3',
     title: 'Responsive Design',
     subtitle: 'Pixel-perfect responsiveness and flawless performance across mobile, tablet, and desktop screens.',
     color: '#10b981',
-    icon: 'devices'
+    icon: 'devices',
+    badge: 'Pillar 03',
+    imageUrlWebp: 'assets/images/services/service_app_dev.webp',
+    imageUrlJpg: 'assets/images/services/service_app_dev.jpg'
   },
   {
     id: 'w4',
     title: 'Business-Focused Approach',
     subtitle: 'Engineered for real business results, qualified leads, and measurable Return on Investment (ROI).',
     color: '#f59e0b',
-    icon: 'chart'
+    icon: 'chart',
+    badge: 'Pillar 04',
+    imageUrlWebp: 'assets/images/services/service_chart_ads.webp',
+    imageUrlJpg: 'assets/images/services/service_chart_ads.jpg'
   },
   {
     id: 'w5',
     title: 'Fast Communication',
     subtitle: 'Direct phone & WhatsApp support with prompt updates, clear milestones, and dedicated assistance.',
     color: '#ec4899',
-    icon: 'chat'
+    icon: 'chat',
+    badge: 'Pillar 05',
+    imageUrlWebp: 'assets/images/services/service_email_marketing.webp',
+    imageUrlJpg: 'assets/images/services/service_email_marketing.jpg'
   },
   {
     id: 'w6',
     title: 'Customized Solutions',
     subtitle: 'Tailor-made packages and execution strategies aligned with your specific business goals.',
     color: '#8b5cf6',
-    icon: 'sparkles'
+    icon: 'sparkles',
+    badge: 'Pillar 06',
+    imageUrlWebp: 'assets/images/services/service_digital_marketing.webp',
+    imageUrlJpg: 'assets/images/services/service_digital_marketing.jpg'
   }
 ];
 
@@ -380,7 +398,7 @@ const AppState = {
   projectFilter: 'All'
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+function bootApp() {
   initTheme();
   initActivePageNav();
   initSmoothNavigation();
@@ -392,7 +410,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initModals();
   initScrollListeners();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootApp);
+} else {
+  bootApp();
+}
 
 function initYearText() {
   const yearEl = document.getElementById('year-text');
@@ -639,11 +663,21 @@ function renderWhyWork() {
 
       return `
         <div class="why-card" style="--card-accent: ${w.color};">
-          <div class="why-icon-box" style="background: ${w.color}20; color: ${w.color};">
-            ${iconSvg}
+          <div class="why-card-image-box">
+            <picture>
+              <source srcset="${w.imageUrlWebp}" type="image/webp">
+              <img src="${w.imageUrlJpg}" alt="${w.title}" loading="lazy" width="400" height="200">
+            </picture>
+            <div class="why-card-image-overlay"></div>
+            <div class="why-card-icon-floating" style="background: ${w.color};">
+              ${iconSvg}
+            </div>
+            <span class="why-card-badge-floating">${w.badge}</span>
           </div>
-          <h3 class="why-title">${w.title}</h3>
-          <p class="why-desc">${w.subtitle}</p>
+          <div class="why-card-body">
+            <h3 class="why-title">${w.title}</h3>
+            <p class="why-desc">${w.subtitle}</p>
+          </div>
         </div>
       `;
     }).join('');
@@ -679,17 +713,19 @@ function closeAllModals() {
   document.body.style.overflow = '';
   if (originalDocumentPageTitle) {
     document.title = originalDocumentPageTitle;
+    originalDocumentPageTitle = '';
   }
 }
 
 function openServiceModal(serviceId) {
   const s = ServicesData.find(item => item.id === serviceId);
   if (!s) return;
-  if (!originalDocumentPageTitle) originalDocumentPageTitle = document.title;
-  document.title = `${s.title} | Digital Manish Varanasi`;
-
   const modal = document.getElementById('service-modal');
   const modalContent = document.getElementById('service-modal-content');
+  if (!modal || !modalContent) return;
+
+  if (!originalDocumentPageTitle) originalDocumentPageTitle = document.title;
+  document.title = `${s.title} | Digital Manish Varanasi`;
   const iconSvg = SvgIcons[s.icon] || SvgIcons.location;
 
   const subOfferingsHtml = s.subOfferings.map(sub => `
@@ -745,11 +781,12 @@ function openServiceModal(serviceId) {
 function openProjectModal(projectId) {
   const p = ProjectsData.find(item => item.id === projectId);
   if (!p) return;
-  if (!originalDocumentPageTitle) originalDocumentPageTitle = document.title;
-  document.title = `${p.title} | Digital Manish Projects`;
-
   const modal = document.getElementById('project-modal');
   const modalContent = document.getElementById('project-modal-content');
+  if (!modal || !modalContent) return;
+
+  if (!originalDocumentPageTitle) originalDocumentPageTitle = document.title;
+  document.title = `${p.title} | Digital Manish Projects`;
 
   const featuresHtml = p.keyFeatures.map(feat => `
     <li>
@@ -836,11 +873,11 @@ function initContactForm() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const name = document.getElementById('form-name').value.trim();
-    const phone = document.getElementById('form-phone').value.trim();
-    const email = document.getElementById('form-email').value.trim();
-    const service = document.getElementById('form-service').value;
-    const message = document.getElementById('form-message').value.trim();
+    const name = document.getElementById('form-name')?.value.trim() || '';
+    const phone = document.getElementById('form-phone')?.value.trim() || '';
+    const email = document.getElementById('form-email')?.value.trim() || '';
+    const service = document.getElementById('form-service')?.value || '';
+    const message = document.getElementById('form-message')?.value.trim() || '';
 
     const cleanPhone = phone.replace(/\D/g, '');
     if (!name || cleanPhone.length < 10 || !message) {
