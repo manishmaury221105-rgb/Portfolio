@@ -538,7 +538,8 @@ function updatePageSEO(pageKey) {
 function updateActiveNav(activeId) {
   document.querySelectorAll('.nav-pill, .mobile-nav-pill').forEach(pill => {
     const href = pill.getAttribute('href');
-    if (href === `#${activeId}`) {
+    const pageAttr = pill.getAttribute('data-page');
+    if (href === `#${activeId}` || pageAttr === activeId) {
       pill.classList.add('active');
     } else {
       pill.classList.remove('active');
