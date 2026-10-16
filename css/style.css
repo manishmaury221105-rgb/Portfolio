@@ -281,6 +281,43 @@ body.light-theme .nav-pill:hover {
   gap: 10px;
 }
 
+.nav-cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.15));
+  color: var(--primary);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+.nav-cv-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+.nav-cv-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+body.light-theme .nav-cv-btn {
+  background: #ede9fe;
+  color: #4f46e5;
+  border-color: #c7d2fe;
+}
+body.light-theme .nav-cv-btn:hover {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
 .theme-toggle-btn {
   width: 38px;
   height: 38px;
@@ -336,6 +373,12 @@ body.light-theme .theme-toggle-btn {
   font-weight: 700;
   border-color: var(--primary);
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+.mobile-nav-pill.cv-pill {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+  color: var(--primary);
+  border-color: rgba(99, 102, 241, 0.4);
+  font-weight: 700;
 }
 .mobile-nav-pill svg {
   width: 14px;
@@ -460,6 +503,43 @@ body.light-theme .theme-toggle-btn {
   width: 20px;
   height: 20px;
   fill: var(--whatsapp);
+}
+
+.btn-cv-glow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.15));
+  border: 1.5px solid rgba(99, 102, 241, 0.5);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 0.98rem;
+  padding: 13px 24px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+.btn-cv-glow:hover {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-color: #8b5cf6;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+.btn-cv-glow svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+body.light-theme .btn-cv-glow {
+  background: #f5f3ff;
+  border-color: #a5b4fc;
+  color: #4338ca;
+}
+body.light-theme .btn-cv-glow:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-color: #4f46e5;
+  color: #ffffff;
 }
 
 .trust-badges-row {

@@ -110,8 +110,12 @@
         </a>
       </nav>
 
-      <!-- Right Controls: Theme Toggle -->
+      <!-- Right Controls: Theme Toggle & CV Link -->
       <div class="nav-actions">
+        <a href="https://cv-m-3669.vercel.app/" target="_blank" rel="noopener" class="nav-cv-btn" title="View Manish's Developer CV &amp; Interactive Portfolio" aria-label="View Developer CV">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+          <span>View CV ↗</span>
+        </a>
         <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
         </button>
@@ -143,6 +147,10 @@
       <a href="contact.html" class="mobile-nav-pill" data-page="contact">
         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         <span>Contact</span>
+      </a>
+      <a href="https://cv-m-3669.vercel.app/" target="_blank" rel="noopener" class="mobile-nav-pill cv-pill">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        <span>View CV ↗</span>
       </a>
     </div>
   </header>
@@ -179,7 +187,30 @@
         <!-- Projects Grid -->
         <div class="projects-grid" id="projects-grid-container">
 
-          <!-- 1. School Management Portal -->
+          <!-- 1. Interactive Developer Portfolio & CV -->
+          <div class="project-card" onclick="openProjectModal('p_developer_portfolio')" data-category="Website">
+            <div class="project-image-box">
+              <picture>
+                <source srcset="assets/images/projects/project_developer_portfolio.webp" type="image/webp">
+                <img src="assets/images/projects/project_developer_portfolio.jpg" alt="Interactive Developer Portfolio &amp; CV" width="500" height="280" loading="lazy">
+              </picture>
+              <span class="project-tag-pill">Website</span>
+              <span class="project-metric-pill">Interactive Live Developer CV</span>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Interactive Developer Portfolio &amp; CV</h3>
+              <p class="project-desc">Futuristic animated personal developer portfolio with dynamic lighting, live code editor showcase, interactive skill cards, and project tours.</p>
+              <div class="project-tech-tags"><span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Vercel</span></div>
+              <div class="project-actions-row">
+                <span class="btn-project-details">View Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                <a href="https://cv-m-3669.vercel.app/" target="_blank" rel="noopener" class="btn-project-live" onclick="event.stopPropagation();" aria-label="Open Demo">
+                  Demo <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. School Management Portal -->
           <div class="project-card" onclick="openProjectModal('p_school')" data-category="Website">
             <div class="project-image-box">
               <picture>
@@ -327,6 +358,7 @@
             <li><a href="projects.html">Projects</a></li>
             <li><a href="why-work.html">Why Work</a></li>
             <li><a href="about.html">About</a></li>
+            <li><a href="https://cv-m-3669.vercel.app/" target="_blank" rel="noopener">Developer CV (Live) ↗</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>

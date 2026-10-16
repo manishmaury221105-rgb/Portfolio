@@ -231,6 +231,23 @@ const ServicesData = [
 
 const ProjectsData = [
   {
+    id: 'p_developer_portfolio',
+    title: 'Interactive Developer Portfolio & CV',
+    category: 'Website',
+    shortDesc: 'Futuristic animated personal developer portfolio with dynamic lighting, live code editor showcase, interactive skill cards, and project tours.',
+    detailedDesc: 'A modern, high-performance personal portfolio and CV built for Manish. Featuring dark cyberpunk ambient glow effects, responsive interactive code terminal showcase, categorized skill matrices, and seamless deployment on Vercel.',
+    techStack: ['HTML5', 'CSS3 Vanilla', 'JavaScript ES6+', 'Vercel Deployment'],
+    liveDemoUrl: 'https://cv-m-3669.vercel.app/',
+    imageUrl: 'assets/images/projects/project_developer_portfolio.jpg',
+    keyFeatures: [
+      'Interactive hero with real-time code editor visualization',
+      'Dynamic lighting effects & glassmorphism architecture',
+      'Categorized skills filter (Dev, Marketing, Creative)',
+      '100% responsive with high-speed performance score'
+    ],
+    resultsMetric: 'Interactive Live Developer CV'
+  },
+  {
     id: 'p_school',
     title: 'School Management & Academia Portal',
     category: 'Website',
