@@ -2435,6 +2435,32 @@ body.light-theme .skill-card {
   }
 }
 
+@media (max-width: 480px) {
+  .nav-cv-btn {
+    padding: 6px 10px;
+    font-size: 0.76rem;
+  }
+  .brand-name {
+    font-size: 0.95rem;
+  }
+  .brand-avatar {
+    width: 36px;
+    height: 36px;
+  }
+  .theme-toggle-btn {
+    width: 34px;
+    height: 34px;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-cta-group a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ===================================================================
    MULTI-PAGE ARCHITECTURE STYLES
 =================================================================== */
