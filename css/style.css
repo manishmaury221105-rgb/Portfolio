@@ -21,9 +21,9 @@
   --mail-red: #ea4335;
 
   /* Dynamic Gradients */
-  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --primary-gradient: linear-gradient(135deg, #38bdf8 0%, #6366f1 50%, #818cf8 100%);
   --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-  --hero-glow: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0) 70%);
+  --hero-glow: radial-gradient(circle, rgba(56, 189, 248, 0.16) 0%, rgba(99, 102, 241, 0.12) 40%, rgba(99, 102, 241, 0) 70%);
   --card-glass: rgba(30, 41, 59, 0.7);
 
   /* Dark Theme Palette (Default) */
@@ -64,6 +64,7 @@
 }
 
 /* Light Theme Mode */
+html.light-theme,
 body.light-theme {
   --bg: #f8fafc;
   --surface: #ffffff;
@@ -79,8 +80,9 @@ body.light-theme {
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.25);
-  --hero-glow: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0) 70%);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+  --primary-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 50%, #6366f1 100%);
+  --hero-glow: radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, rgba(99, 102, 241, 0.08) 50%, transparent 70%);
 }
 
 /* Base Styles */
@@ -258,6 +260,9 @@ body.light-theme .nav-links-capsule {
 .nav-pill:hover {
   color: var(--text-primary);
   background: rgba(255, 255, 255, 0.05);
+}
+body.light-theme .nav-pill:hover {
+  background: rgba(0, 0, 0, 0.06);
 }
 .nav-pill.active {
   background: var(--primary);
@@ -473,9 +478,9 @@ body.light-theme .theme-toggle-btn {
   border: 1px solid currentColor;
 }
 .trust-badge.rating {
-  color: var(--accent);
-  background: rgba(236, 72, 153, 0.1);
-  border-color: rgba(236, 72, 153, 0.3);
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
 }
 .trust-badge.location {
   color: var(--success);
@@ -488,7 +493,7 @@ body.light-theme .theme-toggle-btn {
   border-color: rgba(99, 102, 241, 0.3);
 }
 
-/* Hero Avatar Showcase - Ultra-Fast Continuous Motion & Interactive Touch Color Shift */
+/* Hero Avatar Showcase - Refined Professional Ambient Motion & Light Elegant Palette */
 .hero-avatar-wrapper {
   display: flex;
   flex-direction: column;
@@ -502,124 +507,128 @@ body.light-theme .theme-toggle-btn {
   touch-action: manipulation;
 }
 
-/* Base Neon Variables (Default Theme 0: Electric Cyan / Blue / Purple / Pink) */
+/* Base Light & Professional Color Palette (Default Theme 0: Executive Azure & Ice) */
 .hero-avatar-wrapper,
 .hero-avatar-card {
-  --neon-1: #00d2ff;
-  --neon-2: #3b82f6;
-  --neon-3: #a855f7;
-  --neon-4: #ec4899;
-  --neon-glow-primary: rgba(99, 102, 241, 0.8);
-  --neon-glow-secondary: rgba(0, 210, 255, 0.6);
-  --spin-speed: 1.2s;
-  --spin-reverse-speed: 1.6s;
-  --float-speed: 2.0s;
+  --neon-1: #38bdf8;
+  --neon-2: #818cf8;
+  --neon-3: #c7d2fe;
+  --neon-4: #60a5fa;
+  --neon-glow-primary: rgba(56, 189, 248, 0.22);
+  --neon-glow-secondary: rgba(99, 102, 241, 0.15);
+  --spin-speed: 10s;
+  --spin-reverse-speed: 14s;
+  --float-speed: 4.5s;
 }
 
-/* Theme 1: Emerald Lime & Radiant Gold */
+/* Theme 1: Subtle Sage & Pearl */
 .hero-avatar-wrapper[data-color-theme="1"],
 .hero-avatar-card[data-color-theme="1"] {
-  --neon-1: #00ff88;
-  --neon-2: #10b981;
-  --neon-3: #f59e0b;
-  --neon-4: #ffd700;
-  --neon-glow-primary: rgba(16, 185, 129, 0.9);
-  --neon-glow-secondary: rgba(245, 158, 11, 0.7);
+  --neon-1: #6ee7b7;
+  --neon-2: #38bdf8;
+  --neon-3: #a7f3d0;
+  --neon-4: #93c5fd;
+  --neon-glow-primary: rgba(110, 231, 183, 0.22);
+  --neon-glow-secondary: rgba(56, 189, 248, 0.15);
 }
 
-/* Theme 2: Fiery Sunset Crimson & Solar Amber */
+/* Theme 2: Clean Periwinkle & Lavender */
 .hero-avatar-wrapper[data-color-theme="2"],
 .hero-avatar-card[data-color-theme="2"] {
-  --neon-1: #ff0055;
-  --neon-2: #f97316;
-  --neon-3: #fbbf24;
-  --neon-4: #ef4444;
-  --neon-glow-primary: rgba(239, 68, 68, 0.9);
-  --neon-glow-secondary: rgba(249, 115, 22, 0.7);
+  --neon-1: #a78bfa;
+  --neon-2: #818cf8;
+  --neon-3: #c4b5fd;
+  --neon-4: #e0e7ff;
+  --neon-glow-primary: rgba(167, 139, 250, 0.22);
+  --neon-glow-secondary: rgba(129, 140, 248, 0.15);
 }
 
-/* Theme 3: Deep Galactic Violet & Hot Magenta */
+/* Theme 3: Soft Champagne & Light Gold */
 .hero-avatar-wrapper[data-color-theme="3"],
 .hero-avatar-card[data-color-theme="3"] {
-  --neon-1: #8b5cf6;
-  --neon-2: #d946ef;
-  --neon-3: #00f0ff;
-  --neon-4: #a855f7;
-  --neon-glow-primary: rgba(168, 85, 247, 0.9);
-  --neon-glow-secondary: rgba(217, 70, 239, 0.7);
+  --neon-1: #fcd34d;
+  --neon-2: #fbbf24;
+  --neon-3: #fed7aa;
+  --neon-4: #fef3c7;
+  --neon-glow-primary: rgba(251, 191, 36, 0.20);
+  --neon-glow-secondary: rgba(253, 230, 138, 0.15);
 }
 
-/* Theme 4: High-Voltage Rainbow Spectrum */
+/* Theme 4: Nordic Silver & Ice Frost */
 .hero-avatar-wrapper[data-color-theme="4"],
 .hero-avatar-card[data-color-theme="4"] {
-  --neon-1: #00ffff;
-  --neon-2: #ff00ff;
-  --neon-3: #ffff00;
-  --neon-4: #00ff66;
-  --neon-glow-primary: rgba(0, 255, 255, 0.9);
-  --neon-glow-secondary: rgba(255, 0, 255, 0.7);
+  --neon-1: #e2e8f0;
+  --neon-2: #94a3b8;
+  --neon-3: #38bdf8;
+  --neon-4: #f8fafc;
+  --neon-glow-primary: rgba(226, 232, 240, 0.25);
+  --neon-glow-secondary: rgba(56, 189, 248, 0.15);
 }
 
-/* Theme 5: Electric Azure & Cosmic Sapphire */
+/* Theme 5: Royal Slate & Light Cobalt */
 .hero-avatar-wrapper[data-color-theme="5"],
 .hero-avatar-card[data-color-theme="5"] {
-  --neon-1: #38bdf8;
-  --neon-2: #0284c7;
-  --neon-3: #6366f1;
-  --neon-4: #818cf8;
-  --neon-glow-primary: rgba(56, 189, 248, 0.9);
-  --neon-glow-secondary: rgba(99, 102, 241, 0.7);
+  --neon-1: #0284c7;
+  --neon-2: #38bdf8;
+  --neon-3: #818cf8;
+  --neon-4: #bae6fd;
+  --neon-glow-primary: rgba(2, 132, 199, 0.22);
+  --neon-glow-secondary: rgba(56, 189, 248, 0.15);
 }
 
-/* Theme 6: Radioactive Neon Green & Lime */
+/* Theme 6: Clean Sky & Soft Cyan */
 .hero-avatar-wrapper[data-color-theme="6"],
 .hero-avatar-card[data-color-theme="6"] {
-  --neon-1: #39ff14;
-  --neon-2: #10b981;
-  --neon-3: #00f0ff;
-  --neon-4: #a3e635;
-  --neon-glow-primary: rgba(57, 255, 20, 0.9);
-  --neon-glow-secondary: rgba(0, 240, 255, 0.7);
+  --neon-1: #22d3ee;
+  --neon-2: #38bdf8;
+  --neon-3: #a5f3fc;
+  --neon-4: #60a5fa;
+  --neon-glow-primary: rgba(34, 211, 238, 0.22);
+  --neon-glow-secondary: rgba(56, 189, 248, 0.15);
 }
 
-/* Ambient Pulsing Glow Aura behind Avatar */
+/* Ambient Pulsing Glow Aura behind Avatar - Soft & Light */
 .hero-avatar-glow-ring {
   position: absolute;
-  width: 360px;
-  height: 360px;
+  width: 330px;
+  height: 330px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--neon-glow-primary) 0%, var(--neon-glow-secondary) 42%, transparent 75%);
-  filter: blur(30px);
-  animation: auraPulseAllTime 1.6s ease-in-out infinite alternate;
+  background: radial-gradient(circle, var(--neon-glow-primary) 0%, var(--neon-glow-secondary) 48%, transparent 72%);
+  filter: blur(24px);
+  animation: auraPulseAllTime 4s ease-in-out infinite alternate;
   pointer-events: none;
   z-index: 1;
-  transition: background 0.35s ease, filter 0.35s ease;
+  transition: background 0.4s ease, filter 0.4s ease;
 }
 
-/* Outer Spinning Neon Gradient Border Ring - ULTRA-FAST ALL-TIME MOTION */
+/* Outer Refined Gradient Border Ring */
 .hero-avatar-card {
-  width: 290px;
-  height: 290px;
+  width: 285px;
+  height: 285px;
   border-radius: 50%;
-  padding: 6px;
+  padding: 4px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  animation: floatAvatarAllTime var(--float-speed) ease-in-out infinite, glowPulseAllTime 1.4s ease-in-out infinite alternate;
+  animation: floatAvatarAllTime var(--float-speed) ease-in-out infinite, glowPulseAllTime 3.5s ease-in-out infinite alternate;
   will-change: transform, box-shadow;
-  box-shadow: 0 0 45px var(--neon-glow-primary), 0 0 85px var(--neon-glow-secondary);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, filter 0.3s ease;
+  box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.45), 0 0 20px var(--neon-glow-primary), 0 0 40px var(--neon-glow-secondary);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, filter 0.3s ease;
 }
 
-/* Continuous 360-Degree Spinning Gradient Border (ULTRA-FAST 1.2s) */
+body.light-theme .hero-avatar-card {
+  box-shadow: 0 10px 30px -8px rgba(99, 102, 241, 0.14), 0 0 20px var(--neon-glow-primary);
+}
+
+/* Continuous 360-Degree Subtle Gradient Border */
 .hero-avatar-card::before {
   content: '';
   position: absolute;
-  inset: -5px;
+  inset: -3px;
   border-radius: 50%;
-  padding: 5px;
+  padding: 3px;
   background: conic-gradient(
     from 0deg,
     var(--neon-1) 0deg,
@@ -633,15 +642,15 @@ body.light-theme .theme-toggle-btn {
   mask-composite: exclude;
   animation: spinBorderAllTime var(--spin-speed) linear infinite;
   z-index: -1;
-  filter: drop-shadow(0 0 14px var(--neon-1));
-  transition: background 0.35s ease, filter 0.35s ease;
+  filter: drop-shadow(0 0 8px var(--neon-glow-primary));
+  transition: background 0.4s ease, filter 0.4s ease;
 }
 
-/* Secondary Neon Accent Halo (ULTRA-FAST 1.6s) */
+/* Secondary Soft Ambient Halo */
 .hero-avatar-card::after {
   content: '';
   position: absolute;
-  inset: -14px;
+  inset: -8px;
   border-radius: 50%;
   background: conic-gradient(
     from 180deg,
@@ -650,11 +659,11 @@ body.light-theme .theme-toggle-btn {
     var(--neon-2) 240deg,
     var(--neon-4) 360deg
   );
-  filter: blur(14px);
-  opacity: 0.85;
+  filter: blur(10px);
+  opacity: 0.4;
   animation: spinBorderReverse var(--spin-reverse-speed) linear infinite;
   z-index: -2;
-  transition: background 0.35s ease;
+  transition: background 0.4s ease, opacity 0.4s ease;
 }
 
 .hero-avatar-card img {
@@ -666,64 +675,57 @@ body.light-theme .theme-toggle-btn {
   display: block;
   position: relative;
   z-index: 3;
-  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
   pointer-events: none;
 }
 
 /* Quick theme shockwave animation on tap */
 .hero-avatar-card.theme-pop {
-  animation: themeShockwave 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: themeShockwave 0.3s ease-out;
 }
 
 @keyframes themeShockwave {
-  0% { transform: scale(0.92); filter: brightness(1.5) saturate(2.2); }
-  50% { transform: scale(1.1); filter: brightness(1.7) saturate(2.5); }
-  100% { transform: scale(1); filter: brightness(1) saturate(1); }
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
 }
 
-/* TOUCH & HOVER INTERACTIONS - Dynamic Color Shift & Turbo Acceleration */
+/* TOUCH & HOVER INTERACTIONS - Smooth Elegant Lift */
 .hero-avatar-card:hover,
 .hero-avatar-card:active,
 .hero-avatar-card.touch-active {
-  transform: translateY(-16px) scale(1.08);
-  filter: saturate(2) brightness(1.2);
-  box-shadow: 0 0 65px var(--neon-glow-primary), 0 0 120px var(--neon-glow-secondary), 0 20px 45px rgba(0, 0, 0, 0.5);
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.5), 0 0 28px var(--neon-glow-primary), 0 0 52px var(--neon-glow-secondary);
 }
 
 .hero-avatar-card:hover::before,
 .hero-avatar-card:active::before,
 .hero-avatar-card.touch-active::before {
-  animation-duration: 0.5s; /* Turbo lightning spin on hover/touch! */
-  filter: drop-shadow(0 0 22px var(--neon-4));
+  animation-duration: calc(var(--spin-speed) * 0.7);
+  filter: drop-shadow(0 0 12px var(--neon-glow-primary));
 }
 
 .hero-avatar-card:hover::after,
 .hero-avatar-card:active::after,
 .hero-avatar-card.touch-active::after {
-  animation-duration: 0.8s;
-  opacity: 1;
+  animation-duration: calc(var(--spin-reverse-speed) * 0.7);
+  opacity: 0.6;
 }
 
-/* Fast Continuous All-Time Floating (2.0s) */
+/* Smooth All-Time Floating (4.5s) */
 @keyframes floatAvatarAllTime {
   0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-14px) rotate(2deg);
+    transform: translateY(0px);
   }
   50% {
-    transform: translateY(-26px) rotate(0deg) scale(1.04);
-  }
-  75% {
-    transform: translateY(-14px) rotate(-2deg);
+    transform: translateY(-10px);
   }
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0px);
   }
 }
 
-/* Fast Continuous All-Time 360-Degree Rotation */
+/* Continuous Ambient 360-Degree Rotation */
 @keyframes spinBorderAllTime {
   0% {
     transform: rotate(0deg);
@@ -742,27 +744,27 @@ body.light-theme .theme-toggle-btn {
   }
 }
 
-/* Fast Continuous Pulsing Glow */
+/* Subtle Ambient Glow Pulse */
 @keyframes glowPulseAllTime {
   0% {
-    box-shadow: 0 0 25px var(--neon-glow-primary), 0 0 50px var(--neon-glow-secondary), 0 15px 35px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.45), 0 0 18px var(--neon-glow-primary), 0 0 36px var(--neon-glow-secondary);
   }
   50% {
-    box-shadow: 0 0 55px var(--neon-glow-primary), 0 0 95px var(--neon-glow-secondary), 0 25px 55px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 12px 34px -8px rgba(15, 23, 42, 0.5), 0 0 28px var(--neon-glow-primary), 0 0 48px var(--neon-glow-secondary);
   }
   100% {
-    box-shadow: 0 0 25px var(--neon-glow-primary), 0 0 50px var(--neon-glow-secondary), 0 15px 35px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.45), 0 0 18px var(--neon-glow-primary), 0 0 36px var(--neon-glow-secondary);
   }
 }
 
 @keyframes auraPulseAllTime {
   0% {
-    transform: scale(0.9);
-    opacity: 0.65;
+    transform: scale(0.96);
+    opacity: 0.55;
   }
   100% {
-    transform: scale(1.2);
-    opacity: 1;
+    transform: scale(1.04);
+    opacity: 0.8;
   }
 }
 
@@ -856,9 +858,10 @@ body.light-theme .theme-toggle-btn {
 .why-card-image-box {
   position: relative;
   width: 100%;
-  height: 170px;
+  height: 180px;
   overflow: hidden;
-  background: #0f172a;
+  background: var(--surface);
+  border-bottom: 1px solid var(--card-border);
 }
 .why-card-image-box img {
   width: 100%;
@@ -868,16 +871,13 @@ body.light-theme .theme-toggle-btn {
   transition: transform 0.4s ease;
 }
 .why-card:hover .why-card-image-box img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 .why-card-image-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.85) 100%);
-  pointer-events: none;
+  display: none;
 }
 body.light-theme .why-card-image-overlay {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.88) 100%);
+  display: none;
 }
 
 .why-card-icon-floating {
@@ -1047,9 +1047,11 @@ body.light-theme .why-card-badge-floating {
 }
 
 .service-image-box {
-  height: 170px;
+  height: 180px;
   position: relative;
   overflow: hidden;
+  background: var(--surface);
+  border-bottom: 1px solid var(--card-border);
 }
 .service-image-box img {
   width: 100%;
@@ -1062,12 +1064,10 @@ body.light-theme .why-card-badge-floating {
 }
 
 .service-image-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(30, 41, 59, 0.85) 100%);
+  display: none;
 }
 body.light-theme .service-image-overlay {
-  background: linear-gradient(180deg, transparent 40%, rgba(255, 255, 255, 0.85) 100%);
+  display: none;
 }
 
 .service-icon-floating {
@@ -1234,6 +1234,8 @@ body.light-theme .service-actions-row {
   height: 200px;
   position: relative;
   overflow: hidden;
+  background: var(--surface);
+  border-bottom: 1px solid var(--card-border);
 }
 .project-image-box img {
   width: 100%;
@@ -2064,6 +2066,7 @@ body.light-theme .skill-card {
   height: 220px;
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid var(--card-border);
 }
 .modal-banner img {
   width: 100%;
@@ -2071,9 +2074,7 @@ body.light-theme .skill-card {
   object-fit: cover;
 }
 .modal-banner-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 50%, var(--surface) 100%);
+  display: none;
 }
 
 .modal-header-info {
@@ -2339,6 +2340,19 @@ body.light-theme .skill-card {
   .floating-whatsapp-pill {
     padding: 12px;
   }
+
+  .modal-action-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .modal-dialog {
+    margin: 8px;
+    max-height: 94vh;
+  }
+  .hero-avatar-glow-ring {
+    width: 270px;
+    height: 270px;
+  }
 }
 
 /* ===================================================================
@@ -2413,7 +2427,8 @@ body.light-theme .skill-card {
   width: 100%;
   height: 180px;
   overflow: hidden;
-  background: #0f172a;
+  background: var(--surface);
+  border-bottom: 1px solid var(--card-border);
 }
 .hub-card-image-box img {
   width: 100%;
@@ -2423,16 +2438,13 @@ body.light-theme .skill-card {
   transition: transform 0.4s ease;
 }
 .hub-card:hover .hub-card-image-box img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 .hub-card-image-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.25) 0%, rgba(15, 23, 42, 0.85) 100%);
-  pointer-events: none;
+  display: none;
 }
 body.light-theme .hub-card-image-overlay {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.85) 100%);
+  display: none;
 }
 .hub-card-icon-floating {
   position: absolute;

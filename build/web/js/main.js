@@ -430,17 +430,16 @@ function initYearText() {
 // ============================================================================
 
 function initTheme() {
-  if (AppState.theme === 'light') {
-    document.body.classList.add('light-theme');
-  } else {
-    document.body.classList.remove('light-theme');
-  }
+  const isLightTheme = AppState.theme === 'light';
+  document.documentElement.classList.toggle('light-theme', isLightTheme);
+  document.body.classList.toggle('light-theme', isLightTheme);
   updateThemeIcon();
 
   const toggleBtn = document.getElementById('theme-toggle-btn');
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
       const isLight = document.body.classList.toggle('light-theme');
+      document.documentElement.classList.toggle('light-theme', isLight);
       AppState.theme = isLight ? 'light' : 'dark';
       localStorage.setItem('dm_theme', AppState.theme);
       updateThemeIcon();
@@ -722,7 +721,10 @@ function openServiceModal(serviceId) {
   if (!s) return;
   const modal = document.getElementById('service-modal');
   const modalContent = document.getElementById('service-modal-content');
-  if (!modal || !modalContent) return;
+  if (!modal || !modalContent) {
+    window.location.href = 'services.html';
+    return;
+  }
 
   if (!originalDocumentPageTitle) originalDocumentPageTitle = document.title;
   document.title = `${s.title} | Digital Manish Varanasi`;
@@ -783,7 +785,10 @@ function openProjectModal(projectId) {
   if (!p) return;
   const modal = document.getElementById('project-modal');
   const modalContent = document.getElementById('project-modal-content');
-  if (!modal || !modalContent) return;
+  if (!modal || !modalContent) {
+    window.location.href = 'projects.html';
+    return;
+  }
 
   if (!originalDocumentPageTitle) originalDocumentPageTitle = document.title;
   document.title = `${p.title} | Digital Manish Projects`;
@@ -945,17 +950,17 @@ function initScrollListeners() {
 }
 
 // ============================================================================
-// 12. INTERACTIVE AVATAR - ULTRA-FAST MOTION & DYNAMIC TOUCH COLOR SHIFT
+// 12. INTERACTIVE AVATAR - AMBIENT PROFESSIONAL MOTION & LIGHT COLOR SHIFT
 // ============================================================================
 
 const AVATAR_COLOR_THEMES = [
-  { id: '0', name: 'Electric Cyan & Magenta' },
-  { id: '1', name: 'Cyber Emerald & Gold' },
-  { id: '2', name: 'Fiery Sunset Crimson' },
-  { id: '3', name: 'Galactic Violet & Pink' },
-  { id: '4', name: 'High-Voltage Rainbow' },
-  { id: '5', name: 'Cosmic Azure & Sapphire' },
-  { id: '6', name: 'Radioactive Lime & Neon Green' }
+  { id: '0', name: 'Executive Azure & Ice' },
+  { id: '1', name: 'Subtle Sage & Pearl' },
+  { id: '2', name: 'Modern Lavender & Indigo' },
+  { id: '3', name: 'Soft Champagne & Gold' },
+  { id: '4', name: 'Nordic Silver & Frost' },
+  { id: '5', name: 'Royal Slate & Light Cobalt' },
+  { id: '6', name: 'Clean Sky & Soft Cyan' }
 ];
 
 let currentAvatarThemeIdx = 0;
